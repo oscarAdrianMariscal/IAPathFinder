@@ -11,7 +11,11 @@ import java.awt.*;
 import java.io.IOException;
 import java.io.File;
 import java.awt.*;
+import modelo.Casilla;
+import modelo.Coordenada;
+import modelo.Jugador;
 import modelo.Tablero;
+import modelo.Terreno;
 
 
 public class PanelModulo extends JFrame{
@@ -27,20 +31,22 @@ public class PanelModulo extends JFrame{
     
     //ELEMENTOS DE INTERFAZ COSTOS
     public JButton jbtn21 = new JButton("ENVIAR");
+    JLabel jlab21;
     
     //ELEMENTOS DE INTERFAZ DATOS
     public JButton jbtn31 = new JButton("ENVIAR");
     JTextArea txtarea31;
     JScrollPane pane31;
+    JTextField jtf31, jtf32;
  
     
     public PanelModulo(Tablero tablero){
-        //super("Proyecto IA");
+        super("Proyecto IA");
         this.tableroL = tablero;
         
         //INTERFAZ 1
         this.setLayout(new FlowLayout());
-        jlab11 = new JLabel("CRUCIGRAMA", SwingConstants.CENTER);
+        jlab11 = new JLabel("INTERFAZ PARSEAR", SwingConstants.CENTER);
         jlab11.setFont(new java.awt.Font("Tahoma", 0, 20));
         jtf11 = new JTextField("Nombre: ",30);
         //jtf1.setHorizontalAlignment(SwingConstants.CENTER); 
@@ -55,54 +61,45 @@ public class PanelModulo extends JFrame{
         this.add(jbtn11);
         
         setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-        setBounds(0,40,400,500);
+        setBounds(44,40,400,200);
         setVisible( true );
-    }
-    
-    public JPanel tablero(int nFilas, int nColumnas)
-    {
-        TableroIU tablero = new TableroIU();
-        tablero.setNumeroDeFilas(nFilas);
-        tablero.setNumeroDeColumnas(nColumnas);
-        tablero.inicializar();
-        
-        return tablero;
     }
     
     public JPanel panelCostos(){
         JPanel pCostos = new JPanel();
+        jlab21 = new JLabel("INTERFAZ COSTOS", SwingConstants.CENTER);
+        jlab21.setFont(new java.awt.Font("Tahoma", 0, 20));
 
         //Agregando los componentes a pCostos.
+        pCostos.add(jlab21);
         pCostos.add(jbtn21);
         return pCostos;
     }
     
-    public JPanel panelPrincipal(){
-        JPanel pPrincipal = new JPanel();
+    public JPanel panelDatos(){
         
-        JPanel tablero = tablero(tableroL.getNoRenglones(), tableroL.getNoColumnas());
         jDatos = new JPanel();
+       
+        jDatos.setBorder(BorderFactory.createLineBorder(Color.black));
         
         //AGREGANDO COMPONENTES DE PANEL pDatos
         JLabel pDlab1 = new JLabel("Verificar Terreno", SwingConstants.CENTER);
         pDlab1.setFont(new java.awt.Font("Tahoma", 0, 20));
-        jDatos.add(pDlab1);
         
         txtarea31 = new JTextArea(5,15);
         txtarea31.setEditable(false);
-        pane31 = new JScrollPane(txtarea31, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        jDatos.add(pane31);
+        //pane31 = new JScrollPane(txtarea31, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         
+        jtf31 = new JTextField("Renglón: ",15);
+        jtf32 = new JTextField("Columna: ",15);
         
-        //AGREGANDO TODOS LOS COMPONENTES A PANEL calculatoP, 2, 3, resultadoP, y JButton igualA; 
-        pPrincipal.setLayout(null);
-        pPrincipal.add(tablero);
-        tablero.setBounds(20,15,1000,1000);
-        pPrincipal.add(jDatos);
-        jDatos.setBounds(180,15, 50, 132);
-        jDatos.setBorder(BorderFactory.createLineBorder(Color.black));
+        jDatos.add(pDlab1);
+        jDatos.add(jtf31);
+        jDatos.add(jtf32);
+        jDatos.add(jbtn31);
+        jDatos.add(txtarea31);
         
-        return pPrincipal;
+        return jDatos;
     }
     
     public void escuchaBotonOne(ActionListener ae) {

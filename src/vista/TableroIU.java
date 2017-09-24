@@ -1,12 +1,15 @@
 package vista;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.util.Random;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class TableroIU extends JPanel implements ComponentListener , ActionListener {
@@ -70,7 +73,7 @@ public class TableroIU extends JPanel implements ComponentListener , ActionListe
                 
                 temp.addActionListener(this);
                 
-                temp.setText("[" + fila + "],[" + columna + "]");                            
+                //temp.setText("[" + fila + "],[" + columna + "]");                            
                 
                 mCasillas[fila][columna] = temp;                        
                 
