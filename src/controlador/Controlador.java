@@ -2,17 +2,15 @@ package controlador;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Random;
-import javax.swing.JButton;
+
 import javax.swing.JFrame;
-import javax.swing.JPanel;
+
 import modelo.Casilla;
-import modelo.Coordenada;
-import modelo.Jugador;
-import modelo.Tablero;
+import modelo.ParsearArchivo;
 import modelo.Terreno;
 import vista.PanelModulo;
 import vista.TableroIU;
@@ -23,17 +21,32 @@ public class Controlador implements ActionListener{
     Main m;
     private Random r = new Random();
     
+    //Archivo
+    
+    Casilla [][]mapaSinDatos;
+    ArrayList<Terreno> terrenoSinPesos;
+    
+    /*
     public Controlador(PanelModulo pm) {
         this.pm = pm;
         
         pm.escuchaBotonOne(this);
         pm.escuchaBotonTwo(this);
+        
+        // 
+        
+    }
+    */
+    
+    public void parsearArchivo(String direccion) {
+    	ParsearArchivo parseador = new ParsearArchivo(direccion);
+    	mapaSinDatos = parseador.getMapa();
+    	terrenoSinPesos= parseador.dameTerrenos();
     }
     
-    private Color getRandColor() {
     
+    private Color getRandColor() {
         return new Color( r.nextInt(255), r.nextInt(255), r.nextInt(255) );
-        
     }
     
      @Override
@@ -78,4 +91,10 @@ public class Controlador implements ActionListener{
                
             }  
     }
+
+
+	
+     public ArrayList<Terreno> getTerrenoSinPesos() {
+		return terrenoSinPesos;
+	}
 }

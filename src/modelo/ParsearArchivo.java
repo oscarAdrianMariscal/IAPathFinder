@@ -3,9 +3,9 @@ package modelo;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
-import modelo.Casilla;
-import modelo.Terreno;
+import java.util.Set;
 
 public class ParsearArchivo {
 	public int tamanioI;
@@ -58,11 +58,23 @@ public class ParsearArchivo {
 		}
 		return casillas;
 	}
-
-	public static void main(String [ ] args)
-	{
-		ParsearArchivo parseador = new ParsearArchivo("helo.txt");
-		Casilla [][] a= parseador.getMapa();
-				
+	
+	public ArrayList<Terreno> dameTerrenos() {
+		ArrayList<Terreno >terrenos = new ArrayList<>();
+		
+		
+		Set<Integer> idTerrenos = new HashSet<Integer>();
+		for (ArrayList<Integer> list : matrix) {
+			for (Integer idTerreno : list) {
+				idTerrenos.add(idTerreno);
+			}
+		}
+		for (Integer terreno : idTerrenos) {
+			terrenos.add(new Terreno(terreno, "", "", 0));
+		}
+		
+		//idTerrenos.add
+		return terrenos;
 	}
+
 }
