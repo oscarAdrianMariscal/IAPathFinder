@@ -1,11 +1,8 @@
 package controlador;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Random;
 
 import javax.swing.JFrame;
 
@@ -15,14 +12,9 @@ import modelo.Jugador;
 import modelo.ParsearArchivo;
 import modelo.Tablero;
 import modelo.Terreno;
-import vista.PanelModulo;
 import vista.TableroIU;
 
-public class Controlador implements ActionListener{
- 
-    PanelModulo pm;
-    Main m;
-    private Random r = new Random();
+public class Controlador {
     
     //Archivo
     
@@ -30,20 +22,12 @@ public class Controlador implements ActionListener{
     Casilla [][]mapaSinDatos;
     Casilla [][]mapaConNombres;
     ArrayList<Terreno> terrenoSinPesos;
+
     ArrayList<Terreno> terrenoConNombres;
     ArrayList<Jugador> jugadores = new ArrayList<>();
     
-    
-    
     /*
-    public Controlador(PanelModulo pm) {
-        this.pm = pm;
-        
-        pm.escuchaBotonOne(this);
-        pm.escuchaBotonTwo(this);
-        
-        // 
-        
+    public Controlador() {
     }
     */
     
@@ -74,11 +58,12 @@ public class Controlador implements ActionListener{
     	terrenoSinPesos= parseador.dameTerrenos();
     }
     
-    
-    private Color getRandColor() {
-        return new Color( r.nextInt(255), r.nextInt(255), r.nextInt(255) );
+    public void inicializaTablero(int noRenglones, int noColumnas, Casilla[][] mapa, Terreno[] terrenos, Jugador[] jugadores, Coordenada inicio, Coordenada fin, int tamanioI, int tamanioJ)
+    {
+        //gettablero = new Tablero(noRenglones, noColumnas, mapa, terrenos, jugadores, inicio, fin, tamanioI, tamanioJ);
     }
     
+    /*
      @Override
      public void actionPerformed(ActionEvent e) {
             if(e.getSource() == pm.jbtn11)
@@ -121,6 +106,7 @@ public class Controlador implements ActionListener{
                
             }  
     }
+     */
 
 
 	public void agregarJugador(ArrayList<Terreno> terrenos,String nombre) {
@@ -141,4 +127,5 @@ public class Controlador implements ActionListener{
 	public void setTerrenoConNombres(ArrayList<Terreno> terrenoConNombres) {
 		this.terrenoConNombres = terrenoConNombres;
 	}
+
 }
