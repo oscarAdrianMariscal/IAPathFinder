@@ -9,8 +9,6 @@ public class Tablero {
     private Jugador[] jugadores;
     private Coordenada inicio;
     private Coordenada fin;
-    private int tamanioI;
-    private int tamanioJ;
 
     public Tablero(int noRenglones, int noColumnas, Casilla[][] mapa, Terreno[] terrenos, Jugador[] jugadores, Coordenada inicio, Coordenada fin) {
         this.noRenglones = noRenglones;
@@ -20,8 +18,6 @@ public class Tablero {
         this.jugadores = jugadores;
         this.inicio = inicio;
         this.fin = fin;
-//        this.tamanioI = tamanioI;
-//        this.tamanioJ = tamanioJ;
     }
 
     public int getTamanioMaximo() {
@@ -54,14 +50,6 @@ public class Tablero {
 
     public Coordenada getFin() {
         return fin;
-    }
-
-    public int getTamanioI() {
-        return tamanioI;
-    }
-
-    public int getTamanioJ() {
-        return tamanioJ;
     }
     
     public String dameTerreno(Coordenada coordenada)

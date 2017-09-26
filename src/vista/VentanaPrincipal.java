@@ -9,13 +9,16 @@ import modelo.Tablero;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import javax.swing.border.EmptyBorder;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class VentanaPrincipal extends JFrame {
+public class VentanaPrincipal extends JFrame implements KeyListener {
     
-    TableroIU tablero = new TableroIU();
+    TableroIU tableroIU;
     Controlador controlador;
     JPanel jDatos;
     private JPanel contentPane;
+    JScrollPane scrollPaneAreaEntrada;
    
     JTextArea txtarea31;
     JTextField jtf31;
@@ -24,11 +27,11 @@ public class VentanaPrincipal extends JFrame {
     public VentanaPrincipal(Controlador controlador)
     {
         this.controlador = controlador;
-        tablero = new TableroIU();
+        tableroIU = new TableroIU(controlador);
         
         setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(50,40,700,700);
+        setBounds(50,40,500,500);
         
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -36,10 +39,10 @@ public class VentanaPrincipal extends JFrame {
         setContentPane(contentPane);
         
         //TABLERO
-        tablero.setNumeroDeColumnas(11);
-        tablero.setNumeroDeFilas(10);
-        tablero.inicializar();
-        contentPane.add(tablero, BorderLayout.CENTER);
+        tableroIU.setNumeroDeColumnas(controlador.getTamanioTerrenoColumnas());
+        tableroIU.setNumeroDeFilas(controlador.getTamanioTerrenoRenglones());
+        tableroIU.inicializar();
+        contentPane.add(tableroIU, BorderLayout.CENTER);
         
         //OTROS DATOS
         
@@ -50,8 +53,8 @@ public class VentanaPrincipal extends JFrame {
         pDlab1.setFont(new java.awt.Font("Tahoma", 0, 20));
         txtarea31 = new JTextArea(5,15);
         txtarea31.setEditable(false);
-        jtf31 = new JTextField("Renglón: ",15);
-        jtf32 = new JTextField("Columna: ",15);
+        jtf31 = new JTextField("Renglón: ",7);
+        jtf32 = new JTextField("Columna: ",7);
         jDatos.add(pDlab1);
         jDatos.add(jtf31);
         jDatos.add(jtf32);
@@ -65,15 +68,62 @@ public class VentanaPrincipal extends JFrame {
         });
         
         jDatos.add(jbtn31);
-        jDatos.add(txtarea31);
+        txtarea31.addKeyListener(this);
+        
+        scrollPaneAreaEntrada = new JScrollPane();
+        scrollPaneAreaEntrada.setBounds(10, 100, 513, 70);
+        scrollPaneAreaEntrada.setViewportView(txtarea31);
+        
+        jDatos.add(scrollPaneAreaEntrada);
         contentPane.add(jDatos, BorderLayout.SOUTH); 
     }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+    }
+ 
+    /**Este metodo se ejecuta cuando se suelta una tecla*/
+    @Override
+    public void keyReleased(KeyEvent e) {
+        if (e.getSource()==txtarea31)
+        {
+            if (e.VK_ESCAPE==e.getKeyCode())
+            {
+                int respuesta = JOptionPane.showConfirmDialog(this,
+                "Esta seguro que desea salir?", "Confirmación",
+                JOptionPane.YES_NO_OPTION);
+                if (respuesta == JOptionPane.YES_NO_OPTION)
+                {
+                    System.exit(0);
+                }
+            }
+            if(e.VK_DOWN ==e.getKeyCode())
+            {
+                System.out.println("Soltaste tecla abajo");
+            }
+            if(e.VK_LEFT ==e.getKeyCode())
+            {
+                System.out.println("Soltaste tecla izquierda");
+            }
+            if(e.VK_RIGHT ==e.getKeyCode())
+            {
+                System.out.println("Soltaste tecla derecha");
+            }
+            if(e.VK_UP ==e.getKeyCode())
+            {
+                System.out.println("Soltaste tecla arriba");
+            }
+        } 
+    }
     
-    public static void main(String[] args) {
-		
+    @Override
+    public void keyTyped(KeyEvent ke) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public static void main(String[] args) {	
         Controlador controlador = new Controlador();
 	VentanaPrincipal frame = new VentanaPrincipal(controlador);
-	frame.setVisible(true);
-				
+	frame.setVisible(true);			
     }
 }

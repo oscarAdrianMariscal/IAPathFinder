@@ -12,7 +12,7 @@ public class Casilla {
         
         this.usado = usado;
         this.tieneNiebla = tieneNiebla;
-        this.noVisitas = noVisitas;
+        this.noVisitas = null;
         this.coordenada = coordenada;
         this.terreno = terreno;
     }
@@ -42,67 +42,129 @@ public class Casilla {
         int i = 0;
         String numVisitas = new String();
         
-        for(i=0; i<noVisitas.length; i++)
+        if(noVisitas.length == 0)
         {
-            numVisitas = numVisitas + ", " + noVisitas[i]; 
+            numVisitas = "NO VISITADO";
         }
-        
+        else
+        {
+            for(i=0; i<noVisitas.length; i++)
+            {
+                numVisitas = numVisitas + ", " + noVisitas[i]; 
+            }
+        }
         return numVisitas;
     }
     
-    private String transformaCoordenadaI(int coordenadaI)
+    private String transformaCoordenadaJ(int coordenadaI)
     {
         String cI = new String();
         
         switch(coordenadaI)
         {
-            case 1:
+            case 0:
                 cI = "A";
-                break;
-            case 2:
+            case 1:
                 cI = "B";
                 break;
-            case 3:
+            case 2:
                 cI = "C";
                 break;
-            case 4:
+            case 3:
                 cI = "D";
                 break;
-            case 5:
+            case 4:
                 cI = "E";
                 break;
-            case 6:
+            case 5:
                 cI = "F";
                 break;
-            case 7:
+            case 6:
                 cI = "G";
                 break;
-            case 8:
+            case 7:
                 cI = "H";
                 break;
-            case 9:
+            case 8:
                 cI = "I";
                 break;
-            case 10:
+            case 9:
                 cI = "J";
                 break;
-            case 11:
+            case 10:
                 cI = "K";
                 break;
-            case 12:
+            case 11:
                 cI = "L";
                 break;
-            case 13:
+            case 12:
                 cI = "M";
                 break;
-            case 14:
+            case 13:
                 cI = "N";
                 break;
-            case 15:
+            case 14:
                 cI = "O";
                 break;
             default:
                 cI = "ERROR";
+                break;
+        }
+        return cI;
+    }
+    
+    private int transformaCoordenadaY(String coordenadaY)
+    {
+        int cI;
+        
+        switch(coordenadaY)
+        {
+            case "A":
+                cI = 0;
+            case "B":
+                cI = 1;
+                break;
+            case "C":
+                cI = 2;
+                break;
+            case "D":
+                cI = 3;
+                break;
+            case "E":
+                cI = 4;
+                break;
+            case "F":
+                cI = 5;
+                break;
+            case "G":
+                cI = 6;
+                break;
+            case "H":
+                cI = 7;
+                break;
+            case "I":
+                cI = 8;
+                break;
+            case "J":
+                cI = 9;
+                break;
+            case "K":
+                cI = 10;
+                break;
+            case "L":
+                cI = 11;
+                break;
+            case "M":
+                cI = 12;
+                break;
+            case "N":
+                cI = 13;
+                break;
+            case "O":
+                cI = 14;
+                break;
+            default:
+                cI = -1;
                 break;
         }
         return cI;
@@ -113,17 +175,18 @@ public class Casilla {
         return "CASILLA:\n"  
                 +"Terreno: " + getTerreno().getNombreTerreno() + "\n"
                 +"Usado: " + usado + "\n" 
-                +"Niebla: " + tieneNiebla + "\n" 
-                +"NoVisitas: " + noVisitas(noVisitas) + "\n"
-                +"Coordenada: (" + coordenada.getCoordenadaJ() +", " 
-                + transformaCoordenadaI(coordenada.getCoordenadaI())+ ")";
+                //+"Niebla: " + tieneNiebla + "\n" 
+                //+"NoVisitas: " + noVisitas(noVisitas) + "\n"
+                //ARREGLAR
+                +"Coordenada: (" + (int)(coordenada.getCoordenadaI() + 1) +", " 
+                + transformaCoordenadaJ(coordenada.getCoordenadaJ())+ ")";
     }
 
-	public void setTieneNiebla(boolean tieneNiebla) {
-		this.tieneNiebla = tieneNiebla;
-	}
+    public void setTieneNiebla(boolean tieneNiebla) {
+	this.tieneNiebla = tieneNiebla;
+    }
 
-	public void setTerreno(Terreno terreno) {
-		this.terreno = terreno;
-	}
+    public void setTerreno(Terreno terreno) {
+        this.terreno = terreno;
+    }
 }

@@ -1,10 +1,10 @@
 package modelo;
 
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 
 public class Jugador {
     private String Nombre;
-    //IMAGEN
     private ArrayList<Terreno> pesos;
     private Terreno[] terrenoPermitido;
 

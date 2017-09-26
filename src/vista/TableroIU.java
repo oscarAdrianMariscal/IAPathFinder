@@ -1,5 +1,6 @@
 package vista;
 
+import controlador.Controlador;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -8,56 +9,43 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.util.Random;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
+import modelo.Coordenada;
 
-public class TableroIU extends JPanel implements ComponentListener , ActionListener {
-
+public class TableroIU extends JPanel implements ComponentListener, ActionListener{
+    
+   Controlador controlador; 
    private JButton[][] mCasillas = null ;
-    
-   private int mNumeroDeFilas = 10 ;
-    
+   private int mNumeroDeFilas = 10 ; 
    private int mNumeroDeColumnas = 10 ;
-    
-   private int mSeparacion = 2 ;
+   private int mSeparacion = 2;
     
    public void acomodar() {
-        
         int ancho = this.getWidth();
-        
         int alto = this.getHeight();
-        
         int dimensionMenor = Math.min( ancho , alto ); 
-        
         int anchoDeCasilla = dimensionMenor / mNumeroDeColumnas ; 
-        
         int altoDeCasilla = dimensionMenor / mNumeroDeFilas ;
-        
         int xOffset = (ancho - dimensionMenor) / 2 ; 
-        
         int yOffset = (alto - dimensionMenor) / 2 ; 
         
-        for( int fila = 0 ; fila < mNumeroDeFilas ; fila ++ ) {
-            
+        for( int fila = 0 ; fila < mNumeroDeFilas ; fila ++ ) {  
             for( int columna = 0 ; columna < mNumeroDeColumnas ; columna ++ ) {
-                
-                JButton temp = mCasillas[fila][columna] ;                            
-                
+                JButton temp = mCasillas[fila][columna] ;
                 temp.setBounds(xOffset + columna * anchoDeCasilla, yOffset + fila * altoDeCasilla, anchoDeCasilla - mSeparacion, altoDeCasilla - mSeparacion );
-                            
+                if(columna == 0)
+                {
+                    JLabel temp2 = new JLabel("1");
+                    temp2.setBounds(xOffset + columna * anchoDeCasilla - 10, yOffset + fila * altoDeCasilla, anchoDeCasilla - mSeparacion, altoDeCasilla - mSeparacion );
+                }
             }
-            
         }
-        
     }
-    public TableroIU() {        
-        
+    public TableroIU(Controlador controlador) {        
         this.setBackground(Color.WHITE);
-        
         this.addComponentListener(this);
-        
-        this.setLayout(null);                
+        this.setLayout(null);   
+        this.controlador = controlador;
         
     }
 
@@ -66,29 +54,29 @@ public class TableroIU extends JPanel implements ComponentListener , ActionListe
         mCasillas = new JButton[mNumeroDeFilas][mNumeroDeColumnas];
         
         for( int fila = 0 ; fila < mNumeroDeFilas ; fila ++ ) {
-            
             for( int columna = 0 ; columna < mNumeroDeColumnas ; columna ++ ) {
-                
                 JButton temp = new JButton();
-                
                 temp.addActionListener(this);
-                
-                //temp.setText("[" + fila + "],[" + columna + "]");                            
-                
-                mCasillas[fila][columna] = temp;                        
-                
+                String nombre = new Integer(fila).toString();
+                nombre = nombre + "," + new Integer(columna).toString();
+                //temp.setText("[" + fila + "],[" + columna + "]");
+                //AGREGAR INICIO Y FIN
+                if(fila == controlador.tablero.getInicio().getCoordenadaI() && columna 
+                        == controlador.tablero.getInicio().getCoordenadaJ())
+                {
+                    //ImageIcon icono = new ImageIcon("Homero.gif");;
+                    //temp.setIcon(icono);
+                    temp.setText("[" + fila + "],[" + columna + "]");
+                }
+                mCasillas[fila][columna] = temp;
+                mCasillas[fila][columna].setActionCommand(nombre);
                 this.add(temp);
-                
             }
-                
-            
         }
     }
 
-    public void componentResized(ComponentEvent e) {
-        
+    public void componentResized(ComponentEvent e) {     
         this.acomodar();
-        
     }
 
     public void componentMoved(ComponentEvent e) {
@@ -127,12 +115,15 @@ public class TableroIU extends JPanel implements ComponentListener , ActionListe
     public void actionPerformed(ActionEvent e) {        
         
         if( e.getSource() instanceof JButton ) {
-            
             JButton temp = (JButton) e.getSource() ;
-            
             temp.setBackground( getRandColor() );
             
-        }
-        
+            //CALCULAR POSICION
+            String casilla = temp.getActionCommand();
+            String opciones[];
+            opciones = casilla.split(",");
+            Coordenada coordenada = new Coordenada(Integer.parseInt(opciones[0]), Integer.parseInt(opciones[1]));
+            JOptionPane.showMessageDialog(null, controlador.muestraDatosCasilla(coordenada));
+        }  
     }
 }

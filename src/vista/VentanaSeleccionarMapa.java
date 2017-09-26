@@ -43,6 +43,7 @@ public class VentanaSeleccionarMapa extends JFrame {
 		JButton btnAvanzar = new JButton("Avanzar");
 		btnAvanzar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+                                setVisible(false);
 				VentanaSeleccionarPesos ventana = new VentanaSeleccionarPesos(controlador);
 				ventana.setVisible(true);
 			}

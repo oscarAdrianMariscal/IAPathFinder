@@ -276,6 +276,10 @@ public class VentanaSeleccionarJugadores extends JFrame {
 				}
 				
 				controlador.crearTablero();
+                               
+                                setVisible(false);
+                                VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(controlador);
+                                ventanaPrincipal.setVisible(true);
 			}
 		});
 		panel_1.add(btnAvanzar);
