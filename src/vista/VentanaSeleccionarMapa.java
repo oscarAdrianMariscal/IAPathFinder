@@ -27,22 +27,6 @@ public class VentanaSeleccionarMapa extends JFrame {
 	private JTextField txtArchivo;
 	private Controlador controlador;
 
-	/**
-	 * Launch the application.
-	 */
-	/*
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaSeleccionarMapa frame = new VentanaSeleccionarMapa();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
 
 	/**
 	 * Create the frame.
@@ -59,7 +43,8 @@ public class VentanaSeleccionarMapa extends JFrame {
 		JButton btnAvanzar = new JButton("Avanzar");
 		btnAvanzar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				VentanaSeleccionarPesos ventana = new VentanaSeleccionarPesos(controlador);
+				ventana.setVisible(true);
 			}
 		});
 		contentPane.add(btnAvanzar, BorderLayout.SOUTH);

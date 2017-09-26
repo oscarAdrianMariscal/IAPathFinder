@@ -12,7 +12,7 @@ public class Tablero {
     private int tamanioI;
     private int tamanioJ;
 
-    public Tablero(int noRenglones, int noColumnas, Casilla[][] mapa, Terreno[] terrenos, Jugador[] jugadores, Coordenada inicio, Coordenada fin, int tamanioI, int tamanioJ) {
+    public Tablero(int noRenglones, int noColumnas, Casilla[][] mapa, Terreno[] terrenos, Jugador[] jugadores, Coordenada inicio, Coordenada fin) {
         this.noRenglones = noRenglones;
         this.noColumnas = noColumnas;
         this.mapa = mapa;
@@ -20,8 +20,8 @@ public class Tablero {
         this.jugadores = jugadores;
         this.inicio = inicio;
         this.fin = fin;
-        this.tamanioI = tamanioI;
-        this.tamanioJ = tamanioJ;
+//        this.tamanioI = tamanioI;
+//        this.tamanioJ = tamanioJ;
     }
 
     public int getTamanioMaximo() {

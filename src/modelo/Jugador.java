@@ -1,13 +1,16 @@
 package modelo;
 
+import java.util.ArrayList;
+
 public class Jugador {
     private String Nombre;
     //IMAGEN
+    private ArrayList<Terreno> pesos;
     private Terreno[] terrenoPermitido;
 
-    public Jugador(String Nombre, Terreno[] terrenoPermitido) {
+    public Jugador(String Nombre, ArrayList<Terreno> pesos) {
         this.Nombre = Nombre;
-        this.terrenoPermitido = terrenoPermitido;
+        this.pesos = pesos;
     }
 
     public String getNombre() {
