@@ -10,7 +10,10 @@ import java.util.Random;
 import javax.swing.JFrame;
 
 import modelo.Casilla;
+import modelo.Coordenada;
+import modelo.Jugador;
 import modelo.ParsearArchivo;
+import modelo.Tablero;
 import modelo.Terreno;
 import vista.PanelModulo;
 import vista.TableroIU;
@@ -23,8 +26,14 @@ public class Controlador implements ActionListener{
     
     //Archivo
     
+    Tablero tablero;
     Casilla [][]mapaSinDatos;
+    Casilla [][]mapaConNombres;
     ArrayList<Terreno> terrenoSinPesos;
+    ArrayList<Terreno> terrenoConNombres;
+    ArrayList<Jugador> jugadores = new ArrayList<>();
+    
+    
     
     /*
     public Controlador(PanelModulo pm) {
@@ -37,6 +46,27 @@ public class Controlador implements ActionListener{
         
     }
     */
+    
+    public void crearTablero() {
+    	mapaConNombres = mapaSinDatos;
+    	for (int i = 0; i < mapaSinDatos.length; i++) {
+    		for (int j = 0 ; j < mapaSinDatos[0].length;j++) {
+    			int idTerrenoActual =  mapaSinDatos[i][j].getTerreno().getIdTerreno();
+    			for (Terreno terreno: terrenoConNombres) {
+    				if (terreno.getIdTerreno()==idTerrenoActual) {
+    					mapaConNombres[i][j].setTerreno(terreno);
+    				}
+    			}
+    		}
+    	}
+    	System.out.println("");
+    	int renglones = mapaConNombres.length;
+    	int columnas = mapaConNombres[0].length;
+    	Terreno [] terrenos = terrenoConNombres.toArray(new Terreno[ terrenoConNombres.size()]);
+    	Jugador [] jugadoresArray = jugadores.toArray(new Jugador[jugadores.size()]);
+    	tablero =new Tablero(renglones, columnas, mapaConNombres, terrenos, jugadoresArray, new Coordenada(1, 1), new Coordenada(2, 2));
+    	System.out.println("");
+    }
     
     public void parsearArchivo(String direccion) {
     	ParsearArchivo parseador = new ParsearArchivo(direccion);
@@ -93,8 +123,22 @@ public class Controlador implements ActionListener{
     }
 
 
+	public void agregarJugador(ArrayList<Terreno> terrenos,String nombre) {
+		Jugador jugador = new Jugador(nombre, terrenos);
+		jugadores.add(jugador);
+	}
 	
      public ArrayList<Terreno> getTerrenoSinPesos() {
 		return terrenoSinPesos;
+	}
+
+
+	public ArrayList<Terreno> getTerrenoConNombres() {
+		return terrenoConNombres;
+	}
+
+
+	public void setTerrenoConNombres(ArrayList<Terreno> terrenoConNombres) {
+		this.terrenoConNombres = terrenoConNombres;
 	}
 }

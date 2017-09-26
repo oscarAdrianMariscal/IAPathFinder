@@ -17,6 +17,9 @@ import javax.swing.border.TitledBorder;
 
 import controlador.Controlador;
 import modelo.Terreno;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.awt.event.ActionEvent;
 
 public class VentanaSeleccionarPesos extends JFrame {
 
@@ -24,6 +27,8 @@ public class VentanaSeleccionarPesos extends JFrame {
 	private JTextField txtNombre;
 	private JTextField txtColor;
 	private Controlador controlador;
+	private ArrayList<JTextField> nombres = new ArrayList<JTextField>();
+	private ArrayList<JTextField> colores = new ArrayList<JTextField>();
 
 	/**
 	 * Launch the application.
@@ -42,6 +47,24 @@ public class VentanaSeleccionarPesos extends JFrame {
 		setContentPane(contentPane);
 		
 		JButton btnAvanzar = new JButton("Avanzar");
+		btnAvanzar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				ArrayList<Terreno> terrenos= controlador.getTerrenoSinPesos();
+				int i=0;
+				for (Terreno t: terrenos) {
+					t.setColor(colores.get(i).getText());
+					t.setNombreTerreno(nombres.get(i).getText());
+					i++;
+				}
+				controlador.setTerrenoConNombres(terrenos);
+				
+				VentanaSeleccionarJugadores ventana = new VentanaSeleccionarJugadores(controlador);
+				ventana.setVisible(true);
+				
+				
+			}
+		});
 		contentPane.add(btnAvanzar, BorderLayout.SOUTH);
 		
 		JPanel panel = new JPanel();
@@ -54,7 +77,7 @@ public class VentanaSeleccionarPesos extends JFrame {
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
-		JLabel lblIdterreno = new JLabel("idTerreno #");
+		JLabel lblIdterreno = new JLabel("numeroId");
 		GridBagConstraints gbc_lblIdterreno = new GridBagConstraints();
 		gbc_lblIdterreno.insets = new Insets(0, 0, 5, 5);
 		gbc_lblIdterreno.gridx = 0;
@@ -75,15 +98,11 @@ public class VentanaSeleccionarPesos extends JFrame {
 		gbc_lblColor.gridy = 0;
 		panel.add(lblColor, gbc_lblColor);
 		
-		JLabel lblCosto = new JLabel("Costo");
-		GridBagConstraints gbc_lblCosto = new GridBagConstraints();
-		gbc_lblCosto.insets = new Insets(0, 0, 5, 0);
-		gbc_lblCosto.gridx = 3;
-		gbc_lblCosto.gridy = 0;
-		panel.add(lblCosto, gbc_lblCosto);
 		int gridY=1;
 		for (Terreno terreno : controlador.getTerrenoSinPesos()) {
-			JLabel lblid = new JLabel("#id" + terreno);
+			
+			
+			JLabel lblid = new JLabel("#" + terreno.getIdTerreno());
 			GridBagConstraints gbc_lblid = new GridBagConstraints();
 			gbc_lblid.anchor = GridBagConstraints.EAST;
 			gbc_lblid.insets = new Insets(0, 0, 0, 5);
@@ -92,7 +111,7 @@ public class VentanaSeleccionarPesos extends JFrame {
 			panel.add(lblid, gbc_lblid);
 			
 			txtNombre = new JTextField();
-			txtNombre.setText("nombre");
+			
 			GridBagConstraints gbc_txtNombre = new GridBagConstraints();
 			gbc_txtNombre.insets = new Insets(0, 0, 0, 5);
 			gbc_txtNombre.fill = GridBagConstraints.HORIZONTAL;
@@ -102,7 +121,7 @@ public class VentanaSeleccionarPesos extends JFrame {
 			txtNombre.setColumns(10);
 			
 			txtColor = new JTextField();
-			txtColor.setText("color");
+			
 			GridBagConstraints gbc_txtColor = new GridBagConstraints();
 			gbc_txtColor.insets = new Insets(0, 0, 0, 5);
 			gbc_txtColor.fill = GridBagConstraints.HORIZONTAL;
@@ -110,19 +129,11 @@ public class VentanaSeleccionarPesos extends JFrame {
 			gbc_txtColor.gridy = gridY;
 			panel.add(txtColor, gbc_txtColor);
 			txtColor.setColumns(10);
-			
-			JSpinner spinner = new JSpinner();
-			spinner.setModel(new SpinnerNumberModel(new Float(0), null, null, new Float(1)));
-			GridBagConstraints gbc_spinner = new GridBagConstraints();
-			gbc_spinner.gridx = 3;
-			gbc_spinner.gridy = gridY;
-			panel.add(spinner, gbc_spinner);
+			nombres.add(txtNombre);
+			colores.add(txtColor);
+			gridY++;
 			
 		}
-		//
-		
-		
-		//
 	}
 
 }

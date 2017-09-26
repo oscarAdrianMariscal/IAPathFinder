@@ -118,4 +118,12 @@ public class Casilla {
                 +"Coordenada: (" + coordenada.getCoordenadaJ() +", " 
                 + transformaCoordenadaI(coordenada.getCoordenadaI())+ ")";
     }
+
+	public void setTieneNiebla(boolean tieneNiebla) {
+		this.tieneNiebla = tieneNiebla;
+	}
+
+	public void setTerreno(Terreno terreno) {
+		this.terreno = terreno;
+	}
 }

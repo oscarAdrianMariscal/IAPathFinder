@@ -37,4 +37,16 @@ public class Terreno {
                 + "Color: " + color + "\n" 
                 + "Costo: " + costo;
     }
+
+	public void setNombreTerreno(String nombreTerreno) {
+		this.nombreTerreno = nombreTerreno;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public void setCosto(float costo) {
+		this.costo = costo;
+	}
 }
