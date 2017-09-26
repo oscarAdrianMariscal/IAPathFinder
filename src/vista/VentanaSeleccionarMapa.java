@@ -1,7 +1,6 @@
 package vista;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -13,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -45,6 +45,9 @@ public class VentanaSeleccionarMapa extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				VentanaSeleccionarPesos ventana = new VentanaSeleccionarPesos(controlador);
 				ventana.setVisible(true);
+				setVisible(false);
+				dispose();
+				
 			}
 		});
 		contentPane.add(btnAvanzar, BorderLayout.SOUTH);
@@ -68,6 +71,7 @@ public class VentanaSeleccionarMapa extends JFrame {
 		panel.add(lblSeleccionarMapa, gbc_lblSeleccionarMapa);
 
 		txtArchivo = new JTextField();
+		txtArchivo.setEditable(false);
 		txtArchivo.setText("archivo");
 		GridBagConstraints gbc_txtArchivo = new GridBagConstraints();
 		gbc_txtArchivo.insets = new Insets(0, 0, 5, 0);
@@ -86,8 +90,16 @@ public class VentanaSeleccionarMapa extends JFrame {
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = jfc.getSelectedFile();
 					filePath = selectedFile.getAbsolutePath();
+					txtArchivo.setText(selectedFile.getAbsolutePath());
 					controlador.parsearArchivo(selectedFile.getAbsolutePath());
-
+					if (!controlador.esValidoElMapa) {
+						JOptionPane.showMessageDialog(new JFrame(), "El mapa no es valido",  "Error",
+							    JOptionPane.ERROR_MESSAGE);
+						setVisible(false);
+						dispose();
+						System.exit(0);
+					}
+					System.out.println("");
 
 				}
 			}

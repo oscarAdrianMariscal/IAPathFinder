@@ -24,6 +24,9 @@ import javax.swing.border.TitledBorder;
 
 import controlador.Controlador;
 import modelo.Terreno;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.MatteBorder;
 
 public class VentanaSeleccionarJugadores extends JFrame {
 
@@ -35,6 +38,8 @@ public class VentanaSeleccionarJugadores extends JFrame {
 	ArrayList<JSpinner> spinnerJugadorUno = new ArrayList<>();
 	ArrayList<JSpinner> spinnerJugadorDos = new ArrayList<>();
 	ArrayList<JSpinner> spinnerJugadorTres = new ArrayList<>();
+	private JTextField textField;
+	private JTextField textField_1;
 	
 
 
@@ -209,35 +214,55 @@ public class VentanaSeleccionarJugadores extends JFrame {
 		gbc_textFieldNombreTres.gridy = 2;
 		panelTres.add(textFieldNombreTres, gbc_textFieldNombreTres);
 		
-		gridYInicial =4;
-		for (Terreno t: terrenos) {
-			JLabel labelTerrenoTres = new JLabel("#"+ t.getIdTerreno() +" " +  t.getNombreTerreno());
-			GridBagConstraints gbc_labelTerrenoTres = new GridBagConstraints();
-			gbc_labelTerrenoTres.insets = new Insets(0, 0, 0, 5);
-			gbc_labelTerrenoTres.gridx = 0;
-			gbc_labelTerrenoTres.gridy = gridYInicial;
-			panelTres.add(labelTerrenoTres, gbc_labelTerrenoTres);
-			
-			JSpinner spinnerTres = new JSpinner();
-			spinnerTres.setModel(new SpinnerNumberModel(new Float(0), null, null, new Float(1)));
-			GridBagConstraints gbc_spinnerTres = new GridBagConstraints();
-			gbc_spinnerTres.fill = GridBagConstraints.HORIZONTAL;
-			gbc_spinnerTres.gridx = 1;
-			gbc_spinnerTres.gridy = gridYInicial;
-			panelTres.add(spinnerTres, gbc_spinnerTres);
-			spinnerJugadorTres.add(spinnerTres);
-			gridYInicial++;
-		}
+		JPanel panel = new JPanel();
+		panel.setBorder(new EmptyBorder(0, 0, 0, 0));
+		contentPane.add(panel, BorderLayout.SOUTH);
+		GridBagLayout gbl_panel = new GridBagLayout();
+		gbl_panel.columnWidths = new int[]{0, 0, 0};
+		gbl_panel.rowHeights = new int[]{0, 0, 0, 0};
+		gbl_panel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		panel.setLayout(gbl_panel);
 		
+		JLabel lblCasillaInicial = new JLabel("Casilla inicial: ");
+		GridBagConstraints gbc_lblCasillaInicial = new GridBagConstraints();
+		gbc_lblCasillaInicial.insets = new Insets(0, 0, 5, 5);
+		gbc_lblCasillaInicial.anchor = GridBagConstraints.EAST;
+		gbc_lblCasillaInicial.gridx = 0;
+		gbc_lblCasillaInicial.gridy = 0;
+		panel.add(lblCasillaInicial, gbc_lblCasillaInicial);
 		
-		JPanel panel_1 = new JPanel();
-		contentPane.add(panel_1, BorderLayout.SOUTH);
-		panel_1.setLayout(new BorderLayout(0, 0));
+		textField = new JTextField();
+		GridBagConstraints gbc_textField = new GridBagConstraints();
+		gbc_textField.insets = new Insets(0, 0, 5, 0);
+		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField.gridx = 1;
+		gbc_textField.gridy = 0;
+		panel.add(textField, gbc_textField);
+		textField.setColumns(10);
+		
+		JLabel lblCasillaFinal = new JLabel("Casilla Final: ");
+		GridBagConstraints gbc_lblCasillaFinal = new GridBagConstraints();
+		gbc_lblCasillaFinal.anchor = GridBagConstraints.EAST;
+		gbc_lblCasillaFinal.insets = new Insets(0, 0, 5, 5);
+		gbc_lblCasillaFinal.gridx = 0;
+		gbc_lblCasillaFinal.gridy = 1;
+		panel.add(lblCasillaFinal, gbc_lblCasillaFinal);
+		
+		textField_1 = new JTextField();
+		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
+		gbc_textField_1.insets = new Insets(0, 0, 5, 0);
+		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_1.gridx = 1;
+		gbc_textField_1.gridy = 1;
+		panel.add(textField_1, gbc_textField_1);
+		textField_1.setColumns(10);
 		
 		JButton btnAvanzar = new JButton("Avanzar");
 		btnAvanzar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(chckbxUsarUno.isSelected()) {
+				
+if(chckbxUsarUno.isSelected()) {
 					
 					String nombre = txtNombreUno.getText();
 					ArrayList<Terreno> terrenos = controlador.getTerrenoConNombres();
@@ -278,7 +303,31 @@ public class VentanaSeleccionarJugadores extends JFrame {
 				controlador.crearTablero();
 			}
 		});
-		panel_1.add(btnAvanzar);
+		GridBagConstraints gbc_btnAvanzar = new GridBagConstraints();
+		gbc_btnAvanzar.gridwidth = 2;
+		gbc_btnAvanzar.gridx = 0;
+		gbc_btnAvanzar.gridy = 2;
+		panel.add(btnAvanzar, gbc_btnAvanzar);
+		
+		gridYInicial =4;
+		for (Terreno t: terrenos) {
+			JLabel labelTerrenoTres = new JLabel("#"+ t.getIdTerreno() +" " +  t.getNombreTerreno());
+			GridBagConstraints gbc_labelTerrenoTres = new GridBagConstraints();
+			gbc_labelTerrenoTres.insets = new Insets(0, 0, 0, 5);
+			gbc_labelTerrenoTres.gridx = 0;
+			gbc_labelTerrenoTres.gridy = gridYInicial;
+			panelTres.add(labelTerrenoTres, gbc_labelTerrenoTres);
+			
+			JSpinner spinnerTres = new JSpinner();
+			spinnerTres.setModel(new SpinnerNumberModel(new Float(0), null, null, new Float(1)));
+			GridBagConstraints gbc_spinnerTres = new GridBagConstraints();
+			gbc_spinnerTres.fill = GridBagConstraints.HORIZONTAL;
+			gbc_spinnerTres.gridx = 1;
+			gbc_spinnerTres.gridy = gridYInicial;
+			panelTres.add(spinnerTres, gbc_spinnerTres);
+			spinnerJugadorTres.add(spinnerTres);
+			gridYInicial++;
+		}
 	}
 
 }

@@ -18,6 +18,7 @@ public class Controlador {
     
     //Archivo
     
+	public boolean esValidoElMapa;
     Tablero tablero;
     Casilla [][]mapaSinDatos;
     Casilla [][]mapaConNombres;
@@ -56,6 +57,7 @@ public class Controlador {
     	ParsearArchivo parseador = new ParsearArchivo(direccion);
     	mapaSinDatos = parseador.getMapa();
     	terrenoSinPesos= parseador.dameTerrenos();
+    	esValidoElMapa= parseador.esValido();
     }
     
     public void inicializaTablero(int noRenglones, int noColumnas, Casilla[][] mapa, Terreno[] terrenos, Jugador[] jugadores, Coordenada inicio, Coordenada fin, int tamanioI, int tamanioJ)

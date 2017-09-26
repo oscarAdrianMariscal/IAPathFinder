@@ -61,7 +61,8 @@ public class VentanaSeleccionarPesos extends JFrame {
 				
 				VentanaSeleccionarJugadores ventana = new VentanaSeleccionarJugadores(controlador);
 				ventana.setVisible(true);
-				
+				setVisible(false);
+				dispose();
 				
 			}
 		});

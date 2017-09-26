@@ -38,6 +38,16 @@ public class ParsearArchivo {
 			input.close();
 			tamanioI = matrix.size();
 			tamanioJ = matrix.get(0).size();
+			int tamanio= matrix.get(0).size();
+			//Verificando que todos los renglones tengan la misma longitud
+			for (ArrayList<Integer> lista : matrix) {
+				if (! (tamanio==lista.size() )) {
+					esValido = false;
+					break;
+				}
+				tamanio = lista.size();
+			}
+			
 		}catch(FileNotFoundException ex){
 			esValido=false;
 		}
