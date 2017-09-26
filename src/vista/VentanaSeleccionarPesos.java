@@ -59,11 +59,11 @@ public class VentanaSeleccionarPesos extends JFrame {
 				}
 				controlador.setTerrenoConNombres(terrenos);
 				
+                                setVisible(false);
 				VentanaSeleccionarJugadores ventana = new VentanaSeleccionarJugadores(controlador);
 				ventana.setVisible(true);
 				setVisible(false);
 				dispose();
-				
 			}
 		});
 		contentPane.add(btnAvanzar, BorderLayout.SOUTH);

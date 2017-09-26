@@ -301,6 +301,10 @@ if(chckbxUsarUno.isSelected()) {
 				}
 				
 				controlador.crearTablero();
+                               
+                                setVisible(false);
+                                VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(controlador);
+                                ventanaPrincipal.setVisible(true);
 			}
 		});
 		GridBagConstraints gbc_btnAvanzar = new GridBagConstraints();
