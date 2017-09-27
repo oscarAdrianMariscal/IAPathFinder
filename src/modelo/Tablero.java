@@ -9,6 +9,7 @@ public class Tablero {
     private Jugador[] jugadores;
     private Coordenada inicio;
     private Coordenada fin;
+    private Casilla actual;
 
     public Tablero(int noRenglones, int noColumnas, Casilla[][] mapa, Terreno[] terrenos, Jugador[] jugadores, Coordenada inicio, Coordenada fin) {
         this.noRenglones = noRenglones;
@@ -50,6 +51,11 @@ public class Tablero {
 
     public Coordenada getFin() {
         return fin;
+    }
+    
+    public Casilla getCoordenadaEspecial(int renglon, int columna)
+    {
+        return mapa[renglon][columna];
     }
     
     public String dameTerreno(Coordenada coordenada)
