@@ -63,7 +63,7 @@ public class ParsearArchivo {
 			for ( int j = 0; j < tamanioJ ; j++){
 				Coordenada cor = new Coordenada(i,j);
 				Terreno ter = new Terreno (matrix.get(i).get(j),"","",0 );
-				casillas[i][j] = new Casilla(false,true,null,cor,ter);
+				casillas[i][j] = new Casilla(false,true,cor,ter);
 			}
 		}
 		return casillas;
