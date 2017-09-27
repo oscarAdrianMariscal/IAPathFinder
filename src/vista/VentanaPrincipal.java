@@ -11,6 +11,7 @@ import java.awt.EventQueue;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import modelo.Casilla;
 import modelo.Coordenada;
 
 public class VentanaPrincipal extends JFrame implements KeyListener {
@@ -31,7 +32,7 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
         tableroIU = new TableroIU(controlador);
         
         setLayout(new BorderLayout());
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(50,40,500,500);
         
         contentPane = new JPanel();
@@ -136,22 +137,26 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
             if(e.VK_DOWN ==e.getKeyCode())
             {
                 System.out.println("Soltaste tecla abajo");
-                hacerMovimientoAbajo(2,0);
+                Coordenada c = getCasillaUsada();
+                hacerMovimientoAbajo(c.getCoordenadaI(), c.getCoordenadaJ());
             }
             if(e.VK_LEFT ==e.getKeyCode())
             {
                 System.out.println("Soltaste tecla izquierda");
-                hacerMovimientoIzquierda(0,2);
+                Coordenada c = getCasillaUsada();
+                hacerMovimientoIzquierda(c.getCoordenadaI(),c.getCoordenadaJ());
             }
             if(e.VK_RIGHT ==e.getKeyCode())
             {
                 System.out.println("Soltaste tecla derecha");
-                hacerMovimientoDerecha(1,2);
+                Coordenada c = getCasillaUsada();
+                hacerMovimientoDerecha(c.getCoordenadaI(),c.getCoordenadaJ());
             }
             if(e.VK_UP ==e.getKeyCode())
             {
                 System.out.println("Soltaste tecla arriba");
-                hacerMovimientoArriba(0,2);
+                Coordenada c = getCasillaUsada();
+                hacerMovimientoArriba(c.getCoordenadaI(),c.getCoordenadaJ());
             }
         } 
     }
@@ -161,13 +166,32 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    public Coordenada getCasillaUsada()
+    {
+        Coordenada c = null;
+        int renglon, columna;
+        Casilla[][] casillas = controlador.getTablero().getMapa();
+        for(int i = 0; i<controlador.getTablero().getNoRenglones(); i++)
+        {
+            for(int j=0; j<controlador.getTablero().getNoColumnas(); j++)
+            {
+                if(casillas[i][j].isUsado() == true)
+                {
+                    renglon = i;
+                    columna = j;
+                    c = new Coordenada(renglon, columna);
+                }
+            }
+        }
+        return c;
+    }
+    
     public void hacerMovimientoArriba(int renglon, int columna)
     {
         if(renglon !=0)
         {
-            /*Casilla[][] casillas = controlador.getTablero().getMapa();
-            int idTerreno = casillas[renglon-1][columna].getTerreno().getIdTerreno();*/
             System.out.println("JUGADOR MOVIDO ARRIBA");
+            tableroIU.moverArriba(renglon, columna);
         }
     }
     
@@ -175,9 +199,8 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
     {
         if(renglon !=controlador.getTablero().getNoRenglones()-1)
         {
-            /*Casilla[][] casillas = controlador.getTablero().getMapa();
-            int idTerreno = casillas[renglon-1][columna].getTerreno().getIdTerreno();*/
             System.out.println("JUGADOR MOVIDO ABAJO");
+            tableroIU.moverAbajo(renglon, columna);
         }
     }
     
@@ -185,9 +208,8 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
     {
         if(columna !=0)
         {
-            /*Casilla[][] casillas = controlador.getTablero().getMapa();
-            int idTerreno = casillas[renglon-1][columna].getTerreno().getIdTerreno();*/
             System.out.println("JUGADOR MOVIDO IZQUIERDA");
+            tableroIU.moverIzquierda(renglon, columna);
         }
     }
     
@@ -195,9 +217,8 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
     {
         if(columna != controlador.getTablero().getNoColumnas()-1)
         {
-            /*Casilla[][] casillas = controlador.getTablero().getMapa();
-            int idTerreno = casillas[renglon-1][columna].getTerreno().getIdTerreno();*/
             System.out.println("JUGADOR MOVIDO DERECHA");
+            tableroIU.moverDerecha(renglon, columna);
         }
     }
     

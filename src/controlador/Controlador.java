@@ -105,7 +105,12 @@ public class Controlador {
         return tablero;
     }
 
-	public ArrayList<Jugador> getJugadores() {
-		return jugadores;
-	}
+    public ArrayList<Jugador> getJugadores() {
+	return jugadores;
+    }
+    
+    public ArrayList<Jugador> getArregloJugadores()
+    {
+	return jugadores;
+    }   
 }

@@ -8,19 +8,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.*;
 import modelo.Casilla;
 import modelo.Coordenada;
+import modelo.Jugador;
+import modelo.Terreno;
 
 public class TableroIU extends JPanel implements ComponentListener, ActionListener{
     
    Controlador controlador; 
-   private JButton[][] mCasillas = null ;
    private int mNumeroDeFilas = 10 ; 
    private int mNumeroDeColumnas = 10 ;
    private int mSeparacion = 2;
    private static int movimiento;
+   private JButton[][] mCasillas = new JButton[mNumeroDeFilas][mNumeroDeColumnas];
     
    public void acomodar() {
         int ancho = this.getWidth();
@@ -53,7 +56,7 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
 
     public void inicializar() {
         
-        mCasillas = new JButton[mNumeroDeFilas][mNumeroDeColumnas];
+        //mCasillas = new JButton[mNumeroDeFilas][mNumeroDeColumnas];
         movimiento = 1; 
         
         Casilla[][] aux = controlador.getTablero().getMapa();
@@ -63,7 +66,6 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
                 temp.addActionListener(this);
                 String nombre = new Integer(fila).toString();
                 nombre = nombre + "," + new Integer(columna).toString();
-                //temp.setText("[" + fila + "],[" + columna + "]");
                 
                 //PINTAR COLOR
                 Color color = aux[fila][columna].getTerreno().getColorRgb();
@@ -73,19 +75,17 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
                 if(fila == controlador.getTablero().getInicio().getCoordenadaI() && columna 
                         == controlador.getTablero().getInicio().getCoordenadaJ())
                 {
-                    //ImageIcon icono = new ImageIcon("agua.gif");;
-                    temp.setIcon(new ImageIcon(TableroIU.class.getResource("Homero.gif")));
+                    ArrayList<Jugador> jugadores = controlador.getArregloJugadores();
+                    temp.setIcon(jugadores.get(0).getImagen());
                     temp.setText("INICIO");
                     controlador.getTablero().getCoordenadaEspecial(fila, columna).setUsado(true);
                     controlador.getTablero().getCoordenadaEspecial(fila, columna).setNoVisitas(movimiento);
                     movimiento++;
                 }
                 
-                if(fila == controlador.getTablero().getFin().getCoordenadaI() && columna 
-                        == controlador.getTablero().getFin().getCoordenadaJ())
+                if(fila == controlador.getTablero().getFin().getCoordenadaJ() && columna 
+                        == controlador.getTablero().getFin().getCoordenadaI())
                 {
-                    //ImageIcon icono = new ImageIcon("Homero.gif");;
-                    //temp.setIcon(icono);
                     temp.setText("FINAL");
                 }
                 mCasillas[fila][columna] = temp;
@@ -93,6 +93,106 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
                 this.add(temp);
             }
         }
+    }
+    
+    public void moverArriba(int renglon, int columna)
+    {
+       int idTerreno = controlador.getTablero().getCoordenadaEspecial(renglon-1, columna).getTerreno().getIdTerreno();
+       ArrayList<Jugador> jugadores = controlador.getArregloJugadores();
+       ArrayList<Terreno> terrenos = jugadores.get(0).getTerrenosPesos();
+       int posicion = 0;
+       for(int i=0; i<terrenos.size(); i++)
+       {
+           if(terrenos.get(i).getIdTerreno() == idTerreno)
+           {
+               posicion = i;
+           }
+       }
+       if(terrenos.get(posicion).getCosto() != -1)
+       {
+            ImageIcon icono = new ImageIcon("");;  
+            mCasillas[renglon][columna].setIcon(icono);
+            controlador.getTablero().getCoordenadaEspecial(renglon, columna).setUsado(false);
+            controlador.getTablero().getCoordenadaEspecial(renglon-1, columna).setNoVisitas(movimiento);
+            movimiento++;
+            controlador.getTablero().getCoordenadaEspecial(renglon-1, columna).setUsado(true);
+            mCasillas[renglon-1][columna].setIcon(jugadores.get(0).getImagen());
+       }
+    }
+    
+    public void moverAbajo(int renglon, int columna)
+    {
+        int idTerreno = controlador.getTablero().getCoordenadaEspecial(renglon+1, columna).getTerreno().getIdTerreno();
+        ArrayList<Jugador> jugadores = controlador.getArregloJugadores();
+        ArrayList<Terreno> terrenos = jugadores.get(0).getTerrenosPesos();
+        int posicion = 0;
+        for(int i=0; i<terrenos.size(); i++)
+        {
+            if(terrenos.get(i).getIdTerreno() == idTerreno)
+            {
+               posicion = i;
+            }
+        }
+        if(terrenos.get(posicion).getCosto() != -1)
+        {
+           ImageIcon icono = new ImageIcon("");;  
+           mCasillas[renglon][columna].setIcon(icono);
+           controlador.getTablero().getCoordenadaEspecial(renglon, columna).setUsado(false);
+           controlador.getTablero().getCoordenadaEspecial(renglon+1, columna).setNoVisitas(movimiento);
+           movimiento++;
+           controlador.getTablero().getCoordenadaEspecial(renglon+1, columna).setUsado(true);
+           mCasillas[renglon+1][columna].setIcon(jugadores.get(0).getImagen());
+        }
+    }
+    
+    public void moverIzquierda(int renglon, int columna)
+    { 
+        int idTerreno = controlador.getTablero().getCoordenadaEspecial(renglon, columna-1).getTerreno().getIdTerreno();
+        ArrayList<Jugador> jugadores = controlador.getArregloJugadores();
+        ArrayList<Terreno> terrenos = jugadores.get(0).getTerrenosPesos();
+        int posicion = 0;
+        for(int i=0; i<terrenos.size(); i++)
+        {
+            if(terrenos.get(i).getIdTerreno() == idTerreno)
+            {
+               posicion = i;
+            }
+        }
+        if(terrenos.get(posicion).getCosto() != -1)
+        {
+            ImageIcon icono = new ImageIcon("");;  
+            mCasillas[renglon][columna].setIcon(icono);
+            controlador.getTablero().getCoordenadaEspecial(renglon, columna).setUsado(false);
+            controlador.getTablero().getCoordenadaEspecial(renglon, columna-1).setNoVisitas(movimiento);
+            movimiento++;
+            controlador.getTablero().getCoordenadaEspecial(renglon, columna-1).setUsado(true);
+            mCasillas[renglon][columna-1].setIcon(jugadores.get(0).getImagen());
+        }
+    }
+    
+    public void moverDerecha(int renglon, int columna)
+    {
+        int idTerreno = controlador.getTablero().getCoordenadaEspecial(renglon, columna+1).getTerreno().getIdTerreno();
+        ArrayList<Jugador> jugadores = controlador.getArregloJugadores();
+        ArrayList<Terreno> terrenos = jugadores.get(0).getTerrenosPesos();
+        int posicion = 0;
+        for(int i=0; i<terrenos.size(); i++)
+        {
+            if(terrenos.get(i).getIdTerreno() == idTerreno)
+            {
+               posicion = i;
+            }
+        }
+        if(terrenos.get(posicion).getCosto() != -1)
+        {
+            ImageIcon icono = new ImageIcon("");;  
+            mCasillas[renglon][columna].setIcon(icono);
+            controlador.getTablero().getCoordenadaEspecial(renglon, columna).setUsado(false);
+            controlador.getTablero().getCoordenadaEspecial(renglon, columna+1).setNoVisitas(movimiento);
+            movimiento++;
+            controlador.getTablero().getCoordenadaEspecial(renglon, columna+1).setUsado(true);
+            mCasillas[renglon][columna+1].setIcon(jugadores.get(0).getImagen());
+        }   
     }
 
     public void componentResized(ComponentEvent e) {     
@@ -124,20 +224,10 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
         return mNumeroDeColumnas;
     }
 
-    private Random r = new Random();
-    
-    private Color getRandColor() {
-    
-        return new Color( r.nextInt(255), r.nextInt(255), r.nextInt(255) );
-        
-    }
-
     public void actionPerformed(ActionEvent e) {        
         
         if( e.getSource() instanceof JButton ) {
             JButton temp = (JButton) e.getSource() ;
-            //temp.setBackground( getRandColor() );
-            //temp.setBackground(Color.cyan);
             
             //CALCULAR POSICION
             String casilla = temp.getActionCommand();
