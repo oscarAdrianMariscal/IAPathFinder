@@ -41,9 +41,53 @@ public class VentanaSeleccionarJugadores extends JFrame {
 	ArrayList<JSpinner> spinnerJugadorTres = new ArrayList<>();
 	private JTextField txtInicial;
 	private JTextField textFinal;
+	private JCheckBox chckbxUsarUno;
+	private JCheckBox checkBoxDos;
+	private JCheckBox checkBoxTres;
 
 
 
+	public void toggleJugadorUno() {
+		for (JSpinner spinner: spinnerJugadorUno) {
+			spinner.setEnabled(chckbxUsarUno.isSelected());
+		}
+		txtNombreUno.setEnabled(chckbxUsarUno.isSelected());
+		if (chckbxUsarUno.isSelected()==true) {
+			checkBoxDos.setSelected(false);
+			toggleJugadorDos();
+			checkBoxTres.setSelected(false);
+			toggleJugadorTres();
+		}
+	}
+	
+	public void toggleJugadorDos() {
+		for (JSpinner spinner: spinnerJugadorDos) {
+			spinner.setEnabled(checkBoxDos.isSelected());
+		}
+		textFieldNombreDos.setEnabled(checkBoxDos.isSelected());
+		
+		if (checkBoxDos.isSelected()==true) {
+			chckbxUsarUno.setSelected(false);
+			toggleJugadorUno();
+			checkBoxTres.setSelected(false);
+			toggleJugadorTres();
+		}
+	}
+	
+	public void toggleJugadorTres() {
+		for (JSpinner spinner: spinnerJugadorTres) {
+			spinner.setEnabled(checkBoxTres.isSelected());
+		}
+		textFieldNombreTres.setEnabled(checkBoxTres.isSelected());
+		
+		if (checkBoxTres.isSelected()==true) {
+			checkBoxDos.setSelected(false);
+			toggleJugadorDos();
+			chckbxUsarUno.setSelected(false);
+			toggleJugadorUno();
+		}
+	}
+	
 	public VentanaSeleccionarJugadores(Controlador controlador) {
 		this.controlador =controlador;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,11 +111,10 @@ public class VentanaSeleccionarJugadores extends JFrame {
 		gbl_panelUno.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panelUno.setLayout(gbl_panelUno);
 
-		JCheckBox chckbxUsarUno = new JCheckBox("Usar");
+		chckbxUsarUno = new JCheckBox("Usar");
 		chckbxUsarUno.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
-
+				toggleJugadorUno();
 			}
 		});
 		GridBagConstraints gbc_chckbxUsarUno = new GridBagConstraints();
@@ -134,7 +177,13 @@ public class VentanaSeleccionarJugadores extends JFrame {
 		gbl_panelDos.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panelDos.setLayout(gbl_panelDos);
 
-		JCheckBox checkBoxDos = new JCheckBox("Usar");
+		checkBoxDos = new JCheckBox("Usar");
+		checkBoxDos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//jUGADOR 2
+				toggleJugadorDos();
+			}
+		});
 		GridBagConstraints gbc_checkBoxDos = new GridBagConstraints();
 		gbc_checkBoxDos.gridwidth = 2;
 		gbc_checkBoxDos.insets = new Insets(0, 0, 5, 0);
@@ -189,7 +238,13 @@ public class VentanaSeleccionarJugadores extends JFrame {
 		gbl_panelTres.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panelTres.setLayout(gbl_panelTres);
 
-		JCheckBox checkBoxTres = new JCheckBox("Usar");
+		checkBoxTres = new JCheckBox("Usar");
+		checkBoxTres.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//jugador 3
+				toggleJugadorTres();
+			}
+		});
 		GridBagConstraints gbc_checkBoxTres = new GridBagConstraints();
 		gbc_checkBoxTres.gridwidth = 2;
 		gbc_checkBoxTres.insets = new Insets(0, 0, 5, 0);
@@ -295,19 +350,19 @@ public class VentanaSeleccionarJugadores extends JFrame {
 						float peso=(float)spinnerJugadorTres.get(i).getModel().getValue();
 						terrenos.get(i).setCosto(peso);
 					}
-					controlador.agregarJugador(terrenos, textFieldNombreDos.getText());
+					controlador.agregarJugador(terrenos, textFieldNombreTres.getText());
 
 
 					textFieldNombreTres.getText();					
 				}
-				
+
 				Coordenada inicial = new Coordenada(0, 0);
 				Coordenada meta= new Coordenada(1, 1);
 				inicial.setComoTexto(txtInicial.getText());
 				meta.setComoTexto(textFinal.getText());
 				controlador.crearTablero(inicial,meta);
 
-				setVisible(false);
+				//setVisible(false);
 				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(controlador);
 				ventanaPrincipal.setVisible(true);
 			}
@@ -337,6 +392,11 @@ public class VentanaSeleccionarJugadores extends JFrame {
 			spinnerJugadorTres.add(spinnerTres);
 			gridYInicial++;
 		}
+		
+		toggleJugadorUno();
+		toggleJugadorDos();
+		toggleJugadorTres();
+		
 	}
 
 }
