@@ -7,6 +7,7 @@ public class Jugador {
     private String Nombre;
     private ArrayList<Terreno> pesos;
     private Terreno[] terrenoPermitido;
+    private Coordenada casillaInicial;
 
     public Jugador(String Nombre, ArrayList<Terreno> pesos) {
         this.Nombre = Nombre;

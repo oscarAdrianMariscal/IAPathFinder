@@ -23,6 +23,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import controlador.Controlador;
+import modelo.Coordenada;
 import modelo.Terreno;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
@@ -38,8 +39,8 @@ public class VentanaSeleccionarJugadores extends JFrame {
 	ArrayList<JSpinner> spinnerJugadorUno = new ArrayList<>();
 	ArrayList<JSpinner> spinnerJugadorDos = new ArrayList<>();
 	ArrayList<JSpinner> spinnerJugadorTres = new ArrayList<>();
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField txtInicial;
+	private JTextField textFinal;
 
 
 
@@ -232,14 +233,14 @@ public class VentanaSeleccionarJugadores extends JFrame {
 		gbc_lblCasillaInicial.gridy = 0;
 		panel.add(lblCasillaInicial, gbc_lblCasillaInicial);
 
-		textField = new JTextField();
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.insets = new Insets(0, 0, 5, 0);
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.gridx = 1;
-		gbc_textField.gridy = 0;
-		panel.add(textField, gbc_textField);
-		textField.setColumns(10);
+		txtInicial = new JTextField();
+		GridBagConstraints gbc_txtInicial = new GridBagConstraints();
+		gbc_txtInicial.insets = new Insets(0, 0, 5, 0);
+		gbc_txtInicial.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtInicial.gridx = 1;
+		gbc_txtInicial.gridy = 0;
+		panel.add(txtInicial, gbc_txtInicial);
+		txtInicial.setColumns(10);
 
 		JLabel lblCasillaFinal = new JLabel("Casilla Final: ");
 		GridBagConstraints gbc_lblCasillaFinal = new GridBagConstraints();
@@ -249,14 +250,14 @@ public class VentanaSeleccionarJugadores extends JFrame {
 		gbc_lblCasillaFinal.gridy = 1;
 		panel.add(lblCasillaFinal, gbc_lblCasillaFinal);
 
-		textField_1 = new JTextField();
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_1.gridx = 1;
-		gbc_textField_1.gridy = 1;
-		panel.add(textField_1, gbc_textField_1);
-		textField_1.setColumns(10);
+		textFinal = new JTextField();
+		GridBagConstraints gbc_textFinal = new GridBagConstraints();
+		gbc_textFinal.insets = new Insets(0, 0, 5, 0);
+		gbc_textFinal.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textFinal.gridx = 1;
+		gbc_textFinal.gridy = 1;
+		panel.add(textFinal, gbc_textFinal);
+		textFinal.setColumns(10);
 
 		JButton btnAvanzar = new JButton("Avanzar");
 		btnAvanzar.addActionListener(new ActionListener() {
@@ -299,8 +300,12 @@ public class VentanaSeleccionarJugadores extends JFrame {
 
 					textFieldNombreTres.getText();					
 				}
-
-				controlador.crearTablero();
+				
+				Coordenada inicial = new Coordenada(0, 0);
+				Coordenada meta= new Coordenada(1, 1);
+				inicial.setComoTexto(txtInicial.getText());
+				meta.setComoTexto(textFinal.getText());
+				controlador.crearTablero(inicial,meta);
 
 				setVisible(false);
 				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(controlador);

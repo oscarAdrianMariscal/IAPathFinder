@@ -36,7 +36,7 @@ public class Controlador {
     }
     */
     
-    public void crearTablero() {
+    public void crearTablero(Coordenada inicial,Coordenada meta) {
     	mapaConNombres = mapaSinDatos;
     	for (int i = 0; i < mapaSinDatos.length; i++) {
     		for (int j = 0 ; j < mapaSinDatos[0].length;j++) {
@@ -53,7 +53,7 @@ public class Controlador {
     	int columnas = mapaConNombres[0].length;
     	Terreno [] terrenos = terrenoConNombres.toArray(new Terreno[ terrenoConNombres.size()]);
     	Jugador [] jugadoresArray = jugadores.toArray(new Jugador[jugadores.size()]);
-    	tablero =new Tablero(renglones, columnas, mapaConNombres, terrenos, jugadoresArray, new Coordenada(1, 1), new Coordenada(2, 2));
+    	tablero =new Tablero(renglones, columnas, mapaConNombres, terrenos, jugadoresArray, inicial, meta);
     	System.out.println("");
     }
     
