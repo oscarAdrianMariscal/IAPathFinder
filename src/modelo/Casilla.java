@@ -1,5 +1,7 @@
 package modelo;
 
+import java.util.ArrayList;
+
 public class Casilla {
     private boolean usado;
     private boolean tieneNiebla;
@@ -7,14 +9,14 @@ public class Casilla {
     private Coordenada coordenada;
     private Terreno terreno;
     
-    public Casilla(boolean usado, boolean tieneNiebla,
-                     ArrayList<Integer> noVisitas, Coordenada coordenada, Terreno terreno){
+    public Casilla(boolean usado, boolean tieneNiebla, Coordenada coordenada, Terreno terreno){
         
         this.usado = usado;
         this.tieneNiebla = tieneNiebla;
-        this.noVisitas = null;
+        //this.noVisitas = noVisitas;
         this.coordenada = coordenada;
         this.terreno = terreno;
+        this.noVisitas = new ArrayList<>();
     }
 
     public Terreno getTerreno() {
@@ -157,8 +159,7 @@ public class Casilla {
                 +"Terreno: " + getTerreno().getNombreTerreno() + "\n"
                 +"Usado: " + usado + "\n" 
                 //+"Niebla: " + tieneNiebla + "\n" 
-                //+"NoVisitas: " + noVisitas(noVisitas) + "\n"
-                //ARREGLAR
+                +"NoVisitas: " + noVisitas.toString() + "\n"
                 +"Coordenada: (" + (int)(coordenada.getCoordenadaI() + 1) +", " 
                 + transformaCoordenadaJ(coordenada.getCoordenadaJ())+ ")";
     }
@@ -173,5 +174,10 @@ public class Casilla {
     
     public void setUsado(boolean bool) {
         this.usado = bool;
+    }
+    
+    public void setNoVisitas(int numero)
+    {
+        noVisitas.add(numero);
     }
 }

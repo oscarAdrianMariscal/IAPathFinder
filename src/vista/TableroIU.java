@@ -10,6 +10,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.util.Random;
 import javax.swing.*;
+import modelo.Casilla;
 import modelo.Coordenada;
 
 public class TableroIU extends JPanel implements ComponentListener, ActionListener{
@@ -19,6 +20,7 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
    private int mNumeroDeFilas = 10 ; 
    private int mNumeroDeColumnas = 10 ;
    private int mSeparacion = 2;
+   private static int movimiento;
     
    public void acomodar() {
         int ancho = this.getWidth();
@@ -52,7 +54,9 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
     public void inicializar() {
         
         mCasillas = new JButton[mNumeroDeFilas][mNumeroDeColumnas];
+        movimiento = 1; 
         
+        Casilla[][] aux = controlador.getTablero().getMapa();
         for( int fila = 0 ; fila < mNumeroDeFilas ; fila ++ ) {
             for( int columna = 0 ; columna < mNumeroDeColumnas ; columna ++ ) {
                 JButton temp = new JButton();
@@ -60,13 +64,29 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
                 String nombre = new Integer(fila).toString();
                 nombre = nombre + "," + new Integer(columna).toString();
                 //temp.setText("[" + fila + "],[" + columna + "]");
+                
+                //PINTAR COLOR
+                Color color = aux[fila][columna].getTerreno().getColorRgb();
+                temp.setBackground(color);
+                
                 //AGREGAR INICIO Y FIN
-                if(fila == controlador.tablero.getInicio().getCoordenadaI() && columna 
-                        == controlador.tablero.getInicio().getCoordenadaJ())
+                if(fila == controlador.getTablero().getInicio().getCoordenadaI() && columna 
+                        == controlador.getTablero().getInicio().getCoordenadaJ())
+                {
+                    //ImageIcon icono = new ImageIcon("agua.gif");;
+                    temp.setIcon(new ImageIcon(TableroIU.class.getResource("Homero.gif")));
+                    temp.setText("INICIO");
+                    controlador.getTablero().getCoordenadaEspecial(fila, columna).setUsado(true);
+                    controlador.getTablero().getCoordenadaEspecial(fila, columna).setNoVisitas(movimiento);
+                    movimiento++;
+                }
+                
+                if(fila == controlador.getTablero().getFin().getCoordenadaI() && columna 
+                        == controlador.getTablero().getFin().getCoordenadaJ())
                 {
                     //ImageIcon icono = new ImageIcon("Homero.gif");;
                     //temp.setIcon(icono);
-                    temp.setText("[" + fila + "],[" + columna + "]");
+                    temp.setText("FINAL");
                 }
                 mCasillas[fila][columna] = temp;
                 mCasillas[fila][columna].setActionCommand(nombre);
@@ -116,7 +136,8 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
         
         if( e.getSource() instanceof JButton ) {
             JButton temp = (JButton) e.getSource() ;
-            temp.setBackground( getRandColor() );
+            //temp.setBackground( getRandColor() );
+            //temp.setBackground(Color.cyan);
             
             //CALCULAR POSICION
             String casilla = temp.getActionCommand();
