@@ -25,11 +25,22 @@ public class Jugador {
                 + "Terreno(Costos): " + pesos.toString();
     }
 
+    public ArrayList<Terreno> getTerrenosPesos() {
+		return pesos;
+	}
 	public ArrayList<Terreno> getPesos() {
 		return pesos;
 	}
 
 	public void setPesos(ArrayList<Terreno> pesos) {
 		this.pesos = pesos;
+	}
+
+	public ImageIcon getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(ImageIcon imagen) {
+		this.imagen = imagen;
 	}
 }

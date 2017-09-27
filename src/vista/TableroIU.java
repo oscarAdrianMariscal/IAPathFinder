@@ -129,6 +129,8 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
     
     public void moverAbajo(int renglon, int columna)
     {
+    	repaint();
+    	revalidate();
         int idTerreno = controlador.getTablero().getCoordenadaEspecial(renglon+1, columna).getTerreno().getIdTerreno();
         ArrayList<Jugador> jugadores = controlador.getArregloJugadores();
         ArrayList<Terreno> terrenos = jugadores.get(0).getTerrenosPesos();

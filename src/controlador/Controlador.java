@@ -57,6 +57,7 @@ public class Controlador {
     	Terreno [] terrenos = terrenoConNombres.toArray(new Terreno[ terrenoConNombres.size()]);
     	Jugador [] jugadoresArray = jugadores.toArray(new Jugador[jugadores.size()]);
     	tablero =new Tablero(renglones, columnas, mapaConNombres, terrenos, jugadoresArray, inicial, meta);
+    	tablero.reiniciarCasillasUsadas();
     	esValidaPosicionInicial= tablero.posicionInicialEsValida();
     	System.out.println("");
     }
@@ -130,4 +131,5 @@ public class Controlador {
             }
         }
     }
+    
 }

@@ -180,4 +180,9 @@ public class Casilla {
     {
         noVisitas.add(numero);
     }
+
+	public void reiniciaNoVisitas() {
+		noVisitas.clear();
+		
+	}
 }
