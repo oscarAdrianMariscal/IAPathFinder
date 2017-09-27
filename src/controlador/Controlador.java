@@ -96,4 +96,9 @@ public class Controlador {
         String informacion = casilla[coordenada.getCoordenadaI()][coordenada.getCoordenadaJ()].toString();
         return informacion;
     }
+
+    public Tablero getTablero()
+    {
+        return tablero;
+    }
 }
