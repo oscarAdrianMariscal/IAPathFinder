@@ -3,12 +3,12 @@ package modelo;
 public class Casilla {
     private boolean usado;
     private boolean tieneNiebla;
-    private int[] noVisitas;
+    private ArrayList<Integer> noVisitas;
     private Coordenada coordenada;
     private Terreno terreno;
     
     public Casilla(boolean usado, boolean tieneNiebla,
-                     int[] noVisitas, Coordenada coordenada, Terreno terreno){
+                     ArrayList<Integer> noVisitas, Coordenada coordenada, Terreno terreno){
         
         this.usado = usado;
         this.tieneNiebla = tieneNiebla;
@@ -29,31 +29,12 @@ public class Casilla {
         return tieneNiebla;
     }
 
-    public int[] getNoVisitas() {
+    public ArrayList<Integer> getNoVisitas() {
         return noVisitas;
     }
 
     public Coordenada getCoordenada() {
         return coordenada;
-    }
-    
-    public String noVisitas(int[] noVisitas){
-        
-        int i = 0;
-        String numVisitas = new String();
-        
-        if(noVisitas.length == 0)
-        {
-            numVisitas = "NO VISITADO";
-        }
-        else
-        {
-            for(i=0; i<noVisitas.length; i++)
-            {
-                numVisitas = numVisitas + ", " + noVisitas[i]; 
-            }
-        }
-        return numVisitas;
     }
     
     private String transformaCoordenadaJ(int coordenadaI)
@@ -188,5 +169,9 @@ public class Casilla {
 
     public void setTerreno(Terreno terreno) {
         this.terreno = terreno;
+    }
+    
+    public void setUsado(boolean bool) {
+        this.usado = bool;
     }
 }
