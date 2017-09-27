@@ -72,12 +72,12 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
                 temp.setBackground(color);
                 
                 //AGREGAR INICIO Y FIN
-                if(fila == controlador.getTablero().getInicio().getCoordenadaI() && columna 
-                        == controlador.getTablero().getInicio().getCoordenadaJ())
+                if(fila == controlador.getTablero().getInicio().getCoordenadaJ() && columna 
+                        == controlador.getTablero().getInicio().getCoordenadaI())
                 {
                     ArrayList<Jugador> jugadores = controlador.getArregloJugadores();
                     temp.setIcon(jugadores.get(0).getImagen());
-                    temp.setText("INICIO");
+                    temp.setText("I");
                     controlador.getTablero().getCoordenadaEspecial(fila, columna).setUsado(true);
                     controlador.getTablero().getCoordenadaEspecial(fila, columna).setNoVisitas(movimiento);
                     movimiento++;
@@ -86,7 +86,7 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
                 if(fila == controlador.getTablero().getFin().getCoordenadaJ() && columna 
                         == controlador.getTablero().getFin().getCoordenadaI())
                 {
-                    temp.setText("FINAL");
+                    temp.setText("F");
                 }
                 mCasillas[fila][columna] = temp;
                 mCasillas[fila][columna].setActionCommand(nombre);
@@ -117,6 +117,13 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
             movimiento++;
             controlador.getTablero().getCoordenadaEspecial(renglon-1, columna).setUsado(true);
             mCasillas[renglon-1][columna].setIcon(jugadores.get(0).getImagen());
+            
+            if(controlador.getTablero().getFin().getCoordenadaJ() == renglon-1 && controlador.getTablero().getFin().getCoordenadaI() == columna)
+            {
+                JOptionPane.showMessageDialog(null, "Felicidades, ha llegado a la meta");
+                controlador.eliminarJugador(0);
+                controlador.reiniciaArregloVisitas();  
+            }
        }
     }
     
@@ -142,6 +149,13 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
            movimiento++;
            controlador.getTablero().getCoordenadaEspecial(renglon+1, columna).setUsado(true);
            mCasillas[renglon+1][columna].setIcon(jugadores.get(0).getImagen());
+           
+           if(controlador.getTablero().getFin().getCoordenadaJ() == renglon+1 && controlador.getTablero().getFin().getCoordenadaI() == columna)
+            {
+                JOptionPane.showMessageDialog(null, "Felicidades, ha llegado a la meta");
+                controlador.eliminarJugador(0);
+                controlador.reiniciaArregloVisitas();
+            }
         }
     }
     
@@ -167,6 +181,13 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
             movimiento++;
             controlador.getTablero().getCoordenadaEspecial(renglon, columna-1).setUsado(true);
             mCasillas[renglon][columna-1].setIcon(jugadores.get(0).getImagen());
+            
+            if(controlador.getTablero().getFin().getCoordenadaJ() == renglon && controlador.getTablero().getFin().getCoordenadaI() == columna-1)
+            {
+                JOptionPane.showMessageDialog(null, "Felicidades, ha llegado a la meta");
+                controlador.eliminarJugador(0);
+                controlador.reiniciaArregloVisitas();
+            }
         }
     }
     
@@ -192,6 +213,13 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
             movimiento++;
             controlador.getTablero().getCoordenadaEspecial(renglon, columna+1).setUsado(true);
             mCasillas[renglon][columna+1].setIcon(jugadores.get(0).getImagen());
+            
+            if(controlador.getTablero().getFin().getCoordenadaJ() == renglon && controlador.getTablero().getFin().getCoordenadaI() == columna+1)
+            {
+                JOptionPane.showMessageDialog(null, "Felicidades, ha llegado a la meta");
+                controlador.eliminarJugador(0);
+                controlador.reiniciaArregloVisitas();
+            }
         }   
     }
 

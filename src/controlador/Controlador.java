@@ -21,7 +21,8 @@ public class Controlador {
     //Archivo
     
 	public boolean esValidoElMapa;
-	public boolean esValidaPosicionInicial; 
+	public boolean esValidaPosicionInicial;
+        public boolean nuevaPartida;
 
    
     Tablero tablero;
@@ -71,6 +72,11 @@ public class Controlador {
 	Jugador jugador = new Jugador(nombre, terrenos, imagen);
 	jugadores.add(jugador);
     }
+    
+    public void eliminarJugador(int posicion)
+    {
+        jugadores.remove(posicion);
+    }
 	
     public ArrayList<Terreno> getTerrenoSinPesos() {
 		return terrenoSinPesos;
@@ -112,5 +118,16 @@ public class Controlador {
     public ArrayList<Jugador> getArregloJugadores()
     {
 	return jugadores;
-    }   
+    }
+    
+    public void reiniciaArregloVisitas()
+    {
+        for(int i = 0; i<tablero.getNoRenglones(); i++)
+        {
+            for(int j=0; j<tablero.getNoColumnas(); j++)
+            {
+                tablero.getCoordenadaEspecial(i, j).reiniciaNoVisitas();
+            }
+        }
+    }
 }
