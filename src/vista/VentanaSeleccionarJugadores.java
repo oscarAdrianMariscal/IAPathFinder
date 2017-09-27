@@ -40,7 +40,7 @@ public class VentanaSeleccionarJugadores extends JFrame {
 	ArrayList<JSpinner> spinnerJugadorTres = new ArrayList<>();
 	private JTextField textField;
 	private JTextField textField_1;
-	
+
 
 
 	public VentanaSeleccionarJugadores(Controlador controlador) {
@@ -51,11 +51,11 @@ public class VentanaSeleccionarJugadores extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
+
 		JPanel panelJugadores = new JPanel();
 		contentPane.add(panelJugadores, BorderLayout.CENTER);
 		panelJugadores.setLayout(new BoxLayout(panelJugadores, BoxLayout.X_AXIS));
-		
+
 		JPanel panelUno = new JPanel();
 		panelUno.setBorder(new TitledBorder(null, "Jugador #1", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelJugadores.add(panelUno);
@@ -65,12 +65,12 @@ public class VentanaSeleccionarJugadores extends JFrame {
 		gbl_panelUno.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		gbl_panelUno.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panelUno.setLayout(gbl_panelUno);
-		
+
 		JCheckBox chckbxUsarUno = new JCheckBox("Usar");
 		chckbxUsarUno.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				
+
+
 			}
 		});
 		GridBagConstraints gbc_chckbxUsarUno = new GridBagConstraints();
@@ -79,7 +79,7 @@ public class VentanaSeleccionarJugadores extends JFrame {
 		gbc_chckbxUsarUno.gridx = 0;
 		gbc_chckbxUsarUno.gridy = 0;
 		panelUno.add(chckbxUsarUno, gbc_chckbxUsarUno);
-		
+
 		JLabel lblNombreUno = new JLabel("Nombre: ");
 		GridBagConstraints gbc_lblNombreUno = new GridBagConstraints();
 		gbc_lblNombreUno.insets = new Insets(0, 0, 5, 5);
@@ -87,7 +87,7 @@ public class VentanaSeleccionarJugadores extends JFrame {
 		gbc_lblNombreUno.gridx = 0;
 		gbc_lblNombreUno.gridy = 2;
 		panelUno.add(lblNombreUno, gbc_lblNombreUno);
-		
+
 		txtNombreUno = new JTextField();
 		txtNombreUno.setText("Nombre");
 		GridBagConstraints gbc_txtNombreUno = new GridBagConstraints();
@@ -97,20 +97,20 @@ public class VentanaSeleccionarJugadores extends JFrame {
 		gbc_txtNombreUno.gridy = 2;
 		panelUno.add(txtNombreUno, gbc_txtNombreUno);
 		txtNombreUno.setColumns(10);
-		
-		
+
+
 		//
 		ArrayList<Terreno> terrenos =  controlador.getTerrenoConNombres();
 		int gridYInicial = 4;
 		for (Terreno t: terrenos) {
-			
+
 			JLabel lblTerrenoUno = new JLabel("#"+ t.getIdTerreno() +" " +  t.getNombreTerreno());
 			GridBagConstraints gbc_lblTerrenoUno = new GridBagConstraints();
 			gbc_lblTerrenoUno.insets = new Insets(0, 0, 0, 5);
 			gbc_lblTerrenoUno.gridx = 0;
 			gbc_lblTerrenoUno.gridy = gridYInicial;
 			panelUno.add(lblTerrenoUno, gbc_lblTerrenoUno);
-			
+
 			JSpinner spinnerUno = new JSpinner();
 			spinnerUno.setModel(new SpinnerNumberModel(new Float(0), null, null, new Float(1)));
 			GridBagConstraints gbc_spinnerUno = new GridBagConstraints();
@@ -121,7 +121,7 @@ public class VentanaSeleccionarJugadores extends JFrame {
 			panelUno.add(spinnerUno, gbc_spinnerUno);
 			gridYInicial++;
 		}
-		
+
 		//
 		JPanel panelDos = new JPanel();
 		panelDos.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Jugador #2", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
@@ -132,7 +132,7 @@ public class VentanaSeleccionarJugadores extends JFrame {
 		gbl_panelDos.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		gbl_panelDos.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panelDos.setLayout(gbl_panelDos);
-		
+
 		JCheckBox checkBoxDos = new JCheckBox("Usar");
 		GridBagConstraints gbc_checkBoxDos = new GridBagConstraints();
 		gbc_checkBoxDos.gridwidth = 2;
@@ -140,7 +140,7 @@ public class VentanaSeleccionarJugadores extends JFrame {
 		gbc_checkBoxDos.gridx = 0;
 		gbc_checkBoxDos.gridy = 0;
 		panelDos.add(checkBoxDos, gbc_checkBoxDos);
-		
+
 		JLabel labelNombreDos = new JLabel("Nombre: ");
 		GridBagConstraints gbc_labelNombreDos = new GridBagConstraints();
 		gbc_labelNombreDos.anchor = GridBagConstraints.EAST;
@@ -148,7 +148,7 @@ public class VentanaSeleccionarJugadores extends JFrame {
 		gbc_labelNombreDos.gridx = 0;
 		gbc_labelNombreDos.gridy = 2;
 		panelDos.add(labelNombreDos, gbc_labelNombreDos);
-		
+
 		textFieldNombreDos = new JTextField();
 		textFieldNombreDos.setText("Nombre");
 		textFieldNombreDos.setColumns(10);
@@ -166,7 +166,7 @@ public class VentanaSeleccionarJugadores extends JFrame {
 			gbc_labelTerrenoDos.gridx = 0;
 			gbc_labelTerrenoDos.gridy = gridYInicial;
 			panelDos.add(labelTerrenoDos, gbc_labelTerrenoDos);
-			
+
 			JSpinner spinnerDos = new JSpinner();
 			spinnerDos.setModel(new SpinnerNumberModel(new Float(0), null, null, new Float(1)));
 			GridBagConstraints gbc_spinnerDos = new GridBagConstraints();
@@ -177,7 +177,7 @@ public class VentanaSeleccionarJugadores extends JFrame {
 			spinnerJugadorDos.add(spinnerDos);
 			gridYInicial++;
 		}
-		
+
 		JPanel panelTres = new JPanel();
 		panelTres.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Jugador #3", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
 		panelJugadores.add(panelTres);
@@ -187,7 +187,7 @@ public class VentanaSeleccionarJugadores extends JFrame {
 		gbl_panelTres.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		gbl_panelTres.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panelTres.setLayout(gbl_panelTres);
-		
+
 		JCheckBox checkBoxTres = new JCheckBox("Usar");
 		GridBagConstraints gbc_checkBoxTres = new GridBagConstraints();
 		gbc_checkBoxTres.gridwidth = 2;
@@ -195,7 +195,7 @@ public class VentanaSeleccionarJugadores extends JFrame {
 		gbc_checkBoxTres.gridx = 0;
 		gbc_checkBoxTres.gridy = 0;
 		panelTres.add(checkBoxTres, gbc_checkBoxTres);
-		
+
 		JLabel labelNombreTres = new JLabel("Nombre: ");
 		GridBagConstraints gbc_labelNombreTres = new GridBagConstraints();
 		gbc_labelNombreTres.anchor = GridBagConstraints.EAST;
@@ -203,7 +203,7 @@ public class VentanaSeleccionarJugadores extends JFrame {
 		gbc_labelNombreTres.gridx = 0;
 		gbc_labelNombreTres.gridy = 2;
 		panelTres.add(labelNombreTres, gbc_labelNombreTres);
-		
+
 		textFieldNombreTres = new JTextField();
 		textFieldNombreTres.setText("Nombre");
 		textFieldNombreTres.setColumns(10);
@@ -213,7 +213,7 @@ public class VentanaSeleccionarJugadores extends JFrame {
 		gbc_textFieldNombreTres.gridx = 1;
 		gbc_textFieldNombreTres.gridy = 2;
 		panelTres.add(textFieldNombreTres, gbc_textFieldNombreTres);
-		
+
 		JPanel panel = new JPanel();
 		panel.setBorder(new EmptyBorder(0, 0, 0, 0));
 		contentPane.add(panel, BorderLayout.SOUTH);
@@ -223,7 +223,7 @@ public class VentanaSeleccionarJugadores extends JFrame {
 		gbl_panel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
-		
+
 		JLabel lblCasillaInicial = new JLabel("Casilla inicial: ");
 		GridBagConstraints gbc_lblCasillaInicial = new GridBagConstraints();
 		gbc_lblCasillaInicial.insets = new Insets(0, 0, 5, 5);
@@ -231,7 +231,7 @@ public class VentanaSeleccionarJugadores extends JFrame {
 		gbc_lblCasillaInicial.gridx = 0;
 		gbc_lblCasillaInicial.gridy = 0;
 		panel.add(lblCasillaInicial, gbc_lblCasillaInicial);
-		
+
 		textField = new JTextField();
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.insets = new Insets(0, 0, 5, 0);
@@ -240,7 +240,7 @@ public class VentanaSeleccionarJugadores extends JFrame {
 		gbc_textField.gridy = 0;
 		panel.add(textField, gbc_textField);
 		textField.setColumns(10);
-		
+
 		JLabel lblCasillaFinal = new JLabel("Casilla Final: ");
 		GridBagConstraints gbc_lblCasillaFinal = new GridBagConstraints();
 		gbc_lblCasillaFinal.anchor = GridBagConstraints.EAST;
@@ -248,7 +248,7 @@ public class VentanaSeleccionarJugadores extends JFrame {
 		gbc_lblCasillaFinal.gridx = 0;
 		gbc_lblCasillaFinal.gridy = 1;
 		panel.add(lblCasillaFinal, gbc_lblCasillaFinal);
-		
+
 		textField_1 = new JTextField();
 		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
 		gbc_textField_1.insets = new Insets(0, 0, 5, 0);
@@ -257,54 +257,54 @@ public class VentanaSeleccionarJugadores extends JFrame {
 		gbc_textField_1.gridy = 1;
 		panel.add(textField_1, gbc_textField_1);
 		textField_1.setColumns(10);
-		
+
 		JButton btnAvanzar = new JButton("Avanzar");
 		btnAvanzar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-if(chckbxUsarUno.isSelected()) {
-					
+
+				if(chckbxUsarUno.isSelected()) {
+
 					String nombre = txtNombreUno.getText();
 					ArrayList<Terreno> terrenos = controlador.getTerrenoConNombres();
 					for (int i = 0; i < spinnerJugadorUno.size() ; i++) {
-						
+
 						float peso=(float)spinnerJugadorUno.get(i).getModel().getValue();
 						terrenos.get(i).setCosto(peso);
 					}
 					controlador.agregarJugador(terrenos, nombre);
-					
+
 				}
 				if(checkBoxDos.isSelected()) {
-					
 
-					
+
+
 					ArrayList<Terreno> terrenos = controlador.getTerrenoConNombres();
 					for (int i = 0; i < spinnerJugadorDos.size() ; i++) {
-						
+
 						float peso=(float)spinnerJugadorDos.get(i).getModel().getValue();
 						terrenos.get(i).setCosto(peso);
 					}
 					controlador.agregarJugador(terrenos, textFieldNombreDos.getText());					
 				}
 				if(checkBoxTres.isSelected()) {
-					
+
 					ArrayList<Terreno> terrenos = controlador.getTerrenoConNombres();
 					for (int i = 0; i < spinnerJugadorTres.size() ; i++) {
-						
+
 						float peso=(float)spinnerJugadorTres.get(i).getModel().getValue();
 						terrenos.get(i).setCosto(peso);
 					}
 					controlador.agregarJugador(terrenos, textFieldNombreDos.getText());
-					
-					
+
+
 					textFieldNombreTres.getText();					
 				}
-				
+
 				controlador.crearTablero();
-                               
-                                setVisible(false);
-                                VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(controlador);
-                                ventanaPrincipal.setVisible(true);
+
+				setVisible(false);
+				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(controlador);
+				ventanaPrincipal.setVisible(true);
 			}
 		});
 		GridBagConstraints gbc_btnAvanzar = new GridBagConstraints();
@@ -312,7 +312,7 @@ if(chckbxUsarUno.isSelected()) {
 		gbc_btnAvanzar.gridx = 0;
 		gbc_btnAvanzar.gridy = 2;
 		panel.add(btnAvanzar, gbc_btnAvanzar);
-		
+
 		gridYInicial =4;
 		for (Terreno t: terrenos) {
 			JLabel labelTerrenoTres = new JLabel("#"+ t.getIdTerreno() +" " +  t.getNombreTerreno());
@@ -321,7 +321,7 @@ if(chckbxUsarUno.isSelected()) {
 			gbc_labelTerrenoTres.gridx = 0;
 			gbc_labelTerrenoTres.gridy = gridYInicial;
 			panelTres.add(labelTerrenoTres, gbc_labelTerrenoTres);
-			
+
 			JSpinner spinnerTres = new JSpinner();
 			spinnerTres.setModel(new SpinnerNumberModel(new Float(0), null, null, new Float(1)));
 			GridBagConstraints gbc_spinnerTres = new GridBagConstraints();

@@ -55,6 +55,7 @@ public class VentanaSeleccionarPesos extends JFrame {
 				for (Terreno t: terrenos) {
 					t.setColor(colores.get(i).getText());
 					t.setNombreTerreno(nombres.get(i).getText());
+					t.crearColorRgb();
 					i++;
 				}
 				controlador.setTerrenoConNombres(terrenos);
