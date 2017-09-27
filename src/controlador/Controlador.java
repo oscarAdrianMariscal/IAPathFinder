@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import modelo.Casilla;
@@ -20,6 +21,7 @@ public class Controlador {
     //Archivo
     
 	public boolean esValidoElMapa;
+	public boolean esValidaPosicionInicial; 
 
    
     Tablero tablero;
@@ -54,6 +56,7 @@ public class Controlador {
     	Terreno [] terrenos = terrenoConNombres.toArray(new Terreno[ terrenoConNombres.size()]);
     	Jugador [] jugadoresArray = jugadores.toArray(new Jugador[jugadores.size()]);
     	tablero =new Tablero(renglones, columnas, mapaConNombres, terrenos, jugadoresArray, inicial, meta);
+    	esValidaPosicionInicial= tablero.posicionInicialEsValida();
     	System.out.println("");
     }
     
@@ -64,8 +67,8 @@ public class Controlador {
     	esValidoElMapa= parseador.esValido();
     }
     
-    public void agregarJugador(ArrayList<Terreno> terrenos,String nombre) {
-	Jugador jugador = new Jugador(nombre, terrenos);
+    public void agregarJugador(ArrayList<Terreno> terrenos,String nombre, ImageIcon imagen) {
+	Jugador jugador = new Jugador(nombre, terrenos, imagen);
 	jugadores.add(jugador);
     }
 	
@@ -101,4 +104,8 @@ public class Controlador {
     {
         return tablero;
     }
+
+	public ArrayList<Jugador> getJugadores() {
+		return jugadores;
+	}
 }

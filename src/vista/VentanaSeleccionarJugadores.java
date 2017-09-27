@@ -28,12 +28,16 @@ import modelo.Terreno;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.MatteBorder;
+import javax.swing.ImageIcon;
 
 public class VentanaSeleccionarJugadores extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtNombreUno;
 	private Controlador controlador;
+	ImageIcon jugador1 =  new ImageIcon(VentanaSeleccionarJugadores.class.getResource("/vista/jugador1.gif"));
+	ImageIcon jugador2 =  new ImageIcon(VentanaSeleccionarJugadores.class.getResource("/vista/jugador2.gif"));
+	ImageIcon jugador3 =  new ImageIcon(VentanaSeleccionarJugadores.class.getResource("/vista/jugador3.gif"));
 	private JTextField textFieldNombreDos;
 	private JTextField textFieldNombreTres;
 	ArrayList<JSpinner> spinnerJugadorUno = new ArrayList<>();
@@ -91,7 +95,7 @@ public class VentanaSeleccionarJugadores extends JFrame {
 	public VentanaSeleccionarJugadores(Controlador controlador) {
 		this.controlador =controlador;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 517, 443);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -123,6 +127,15 @@ public class VentanaSeleccionarJugadores extends JFrame {
 		gbc_chckbxUsarUno.gridx = 0;
 		gbc_chckbxUsarUno.gridy = 0;
 		panelUno.add(chckbxUsarUno, gbc_chckbxUsarUno);
+		
+		JLabel lblJugador = new JLabel("");
+		lblJugador.setIcon(new ImageIcon(VentanaSeleccionarJugadores.class.getResource("/vista/jugador1.gif")));
+		GridBagConstraints gbc_lblJugador = new GridBagConstraints();
+		gbc_lblJugador.gridwidth = 2;
+		gbc_lblJugador.insets = new Insets(0, 0, 5, 5);
+		gbc_lblJugador.gridx = 0;
+		gbc_lblJugador.gridy = 1;
+		panelUno.add(lblJugador, gbc_lblJugador);
 
 		JLabel lblNombreUno = new JLabel("Nombre: ");
 		GridBagConstraints gbc_lblNombreUno = new GridBagConstraints();
@@ -190,6 +203,15 @@ public class VentanaSeleccionarJugadores extends JFrame {
 		gbc_checkBoxDos.gridx = 0;
 		gbc_checkBoxDos.gridy = 0;
 		panelDos.add(checkBoxDos, gbc_checkBoxDos);
+		
+		JLabel lblJugador_1 = new JLabel("");
+		lblJugador_1.setIcon(new ImageIcon(VentanaSeleccionarJugadores.class.getResource("/vista/jugador2.gif")));
+		GridBagConstraints gbc_lblJugador_1 = new GridBagConstraints();
+		gbc_lblJugador_1.gridwidth = 2;
+		gbc_lblJugador_1.insets = new Insets(0, 0, 5, 5);
+		gbc_lblJugador_1.gridx = 0;
+		gbc_lblJugador_1.gridy = 1;
+		panelDos.add(lblJugador_1, gbc_lblJugador_1);
 
 		JLabel labelNombreDos = new JLabel("Nombre: ");
 		GridBagConstraints gbc_labelNombreDos = new GridBagConstraints();
@@ -241,7 +263,6 @@ public class VentanaSeleccionarJugadores extends JFrame {
 		checkBoxTres = new JCheckBox("Usar");
 		checkBoxTres.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//jugador 3
 				toggleJugadorTres();
 			}
 		});
@@ -251,6 +272,15 @@ public class VentanaSeleccionarJugadores extends JFrame {
 		gbc_checkBoxTres.gridx = 0;
 		gbc_checkBoxTres.gridy = 0;
 		panelTres.add(checkBoxTres, gbc_checkBoxTres);
+		
+		JLabel lblJugador_2 = new JLabel("");
+		lblJugador_2.setIcon(new ImageIcon(VentanaSeleccionarJugadores.class.getResource("/vista/jugador3.gif")));
+		GridBagConstraints gbc_lblJugador_2 = new GridBagConstraints();
+		gbc_lblJugador_2.gridwidth = 2;
+		gbc_lblJugador_2.insets = new Insets(0, 0, 5, 5);
+		gbc_lblJugador_2.gridx = 0;
+		gbc_lblJugador_2.gridy = 1;
+		panelTres.add(lblJugador_2, gbc_lblJugador_2);
 
 		JLabel labelNombreTres = new JLabel("Nombre: ");
 		GridBagConstraints gbc_labelNombreTres = new GridBagConstraints();
@@ -327,7 +357,8 @@ public class VentanaSeleccionarJugadores extends JFrame {
 						float peso=(float)spinnerJugadorUno.get(i).getModel().getValue();
 						terrenos.get(i).setCosto(peso);
 					}
-					controlador.agregarJugador(terrenos, nombre);
+					
+					controlador.agregarJugador(terrenos, nombre,jugador1);
 
 				}
 				if(checkBoxDos.isSelected()) {
@@ -340,7 +371,7 @@ public class VentanaSeleccionarJugadores extends JFrame {
 						float peso=(float)spinnerJugadorDos.get(i).getModel().getValue();
 						terrenos.get(i).setCosto(peso);
 					}
-					controlador.agregarJugador(terrenos, textFieldNombreDos.getText());					
+					controlador.agregarJugador(terrenos, textFieldNombreDos.getText(),jugador2);					
 				}
 				if(checkBoxTres.isSelected()) {
 
@@ -350,7 +381,7 @@ public class VentanaSeleccionarJugadores extends JFrame {
 						float peso=(float)spinnerJugadorTres.get(i).getModel().getValue();
 						terrenos.get(i).setCosto(peso);
 					}
-					controlador.agregarJugador(terrenos, textFieldNombreTres.getText());
+					controlador.agregarJugador(terrenos, textFieldNombreTres.getText(),jugador3);
 
 
 					textFieldNombreTres.getText();					
@@ -361,7 +392,10 @@ public class VentanaSeleccionarJugadores extends JFrame {
 				inicial.setComoTexto(txtInicial.getText());
 				meta.setComoTexto(textFinal.getText());
 				controlador.crearTablero(inicial,meta);
+				System.out.println("Casilla inicial: "+ inicial.getCoordenadaI() +","+ inicial.getCoordenadaJ());
+				System.out.println("Casilla final: "+ meta.getCoordenadaI() +","+ meta.getCoordenadaJ());
 
+				
 				//setVisible(false);
 				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(controlador);
 				ventanaPrincipal.setVisible(true);

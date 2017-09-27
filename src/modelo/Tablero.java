@@ -58,6 +58,21 @@ public class Tablero {
         return mapa[renglon][columna];
     }
     
+    public boolean posicionInicialEsValida() {
+    	boolean esValidaLaPosicion=true;
+    	Terreno terreno =mapa[inicio.getCoordenadaI()][inicio.getCoordenadaJ()].getTerreno(); 
+    	int idTerreno = terreno.getIdTerreno();
+    	for (Terreno t : jugadores[0].getPesos()) {
+    		if (idTerreno == t.getIdTerreno()) {
+    			if (t.getCosto()==-1) {
+    				esValidaLaPosicion=false;
+    			}
+    		}
+    			
+    	}
+    	return esValidaLaPosicion;
+    }
+    
     public String dameTerreno(Coordenada coordenada)
     {
         String terreno = new String();
