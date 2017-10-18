@@ -19,8 +19,8 @@ import modelo.Terreno;
 public class TableroIU extends JPanel implements ComponentListener, ActionListener{
     
    Controlador controlador; 
-   private int mNumeroDeFilas = 10 ; 
-   private int mNumeroDeColumnas = 10 ;
+   private int mNumeroDeFilas = 15 ; 
+   private int mNumeroDeColumnas = 15 ;
    private int mSeparacion = 2;
    private static int movimiento;
    private JButton[][] mCasillas = new JButton[mNumeroDeFilas][mNumeroDeColumnas];

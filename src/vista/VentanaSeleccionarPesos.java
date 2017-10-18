@@ -20,6 +20,7 @@ import modelo.Terreno;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+import javax.swing.JOptionPane;
 
 public class VentanaSeleccionarPesos extends JFrame {
 
@@ -29,6 +30,7 @@ public class VentanaSeleccionarPesos extends JFrame {
 	private Controlador controlador;
 	private ArrayList<JTextField> nombres = new ArrayList<JTextField>();
 	private ArrayList<JTextField> colores = new ArrayList<JTextField>();
+        private boolean bandera = true;
 
 	/**
 	 * Launch the application.
@@ -49,7 +51,25 @@ public class VentanaSeleccionarPesos extends JFrame {
 		JButton btnAvanzar = new JButton("Avanzar");
 		btnAvanzar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+                            bandera = true;
+                            for (JTextField campo : nombres){
+                                if(campo.getText().isEmpty()){
+                                    JOptionPane.showMessageDialog(new JFrame(), "Te faltan agregar nombres",  "Error",
+							    JOptionPane.ERROR_MESSAGE);
+                                    bandera = false;
+                                    break;
+                                } 
+                            }
+                            for (JTextField campo : colores){
+                                if(campo.getText().isEmpty()){
+                                    JOptionPane.showMessageDialog(new JFrame(), "Te faltan agregar colores",  "Error",
+							    JOptionPane.ERROR_MESSAGE);
+                                    bandera = false;
+                                    break;
+                                } 
+                            }
+                            if (bandera){
+                                				
 				ArrayList<Terreno> terrenos= controlador.getTerrenoSinPesos();
 				int i=0;
 				for (Terreno t: terrenos) {
@@ -65,6 +85,9 @@ public class VentanaSeleccionarPesos extends JFrame {
 				ventana.setVisible(true);
 				setVisible(false);
 				dispose();
+                                
+                            }
+
 			}
 		});
 		contentPane.add(btnAvanzar, BorderLayout.SOUTH);
@@ -133,9 +156,7 @@ public class VentanaSeleccionarPesos extends JFrame {
 			txtColor.setColumns(10);
 			nombres.add(txtNombre);
 			colores.add(txtColor);
-			gridY++;
-			
+			gridY++;		
 		}
 	}
-
 }

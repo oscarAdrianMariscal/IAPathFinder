@@ -1,5 +1,3 @@
-package vista;
-
 import controlador.Controlador;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -55,10 +53,11 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
         pDlab1.setFont(new java.awt.Font("Tahoma", 0, 20));
         txtarea31 = new JTextArea(5,15);
         txtarea31.setEditable(false);
+        JScrollBar jsb;
         
         //LIMITAR ESCRITURA EN TEXTFIELD
         int limite = 2;
-        jtf31 = new JTextField("Renglón: ",7);
+        jtf31 = new JTextField("Renglon: ",7);
         jtf31.addKeyListener(new KeyListener(){
  
             public void keyTyped(KeyEvent e)
@@ -100,7 +99,24 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
         jbtn31.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                String columnaS = (jtf32.getText());
+                String renglonS = (jtf31.getText());
+                jtf31.setText("Renglon");
+                jtf32.setText("Columna");
+                
+                int coordenadaX = columnaS.toUpperCase().codePointAt(0) - "A".codePointAt(0);
+                int renglon = Integer.parseInt(renglonS)-1;
+                //int columna = transformaCoordenadaY(columnaS);
+                System.out.println("RENGLON: " + renglon);
+                System.out.println("COLUMNA: " + coordenadaX);
+                
+                
+                //
+                //int renglonMostrar = renglon + 1
+                String terreno = controlador.getTablero().getCoordenadaEspecial(renglon, coordenadaX).getTerreno().toString();
+                Coordenada c = controlador.getTablero().getCoordenadaEspecial(renglon,coordenadaX).getCoordenada();
+                txtarea31.setText(c.toString() + "\n" + terreno);     
             }
         });
         
@@ -113,6 +129,63 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
         
         jDatos.add(scrollPaneAreaEntrada);
         contentPane.add(jDatos, BorderLayout.SOUTH); 
+    }
+    
+    private int transformaCoordenadaY(String coordenadaY)
+    {
+        int cI;
+        
+        switch(coordenadaY)
+        {
+            case "A":
+                cI = 0;
+            case "B":
+                cI = 1;
+                break;
+            case "C":
+                cI = 2;
+                break;
+            case "D":
+                cI = 3;
+                break;
+            case "E":
+                cI = 4;
+                break;
+            case "F":
+                cI = 5;
+                break;
+            case "G":
+                cI = 6;
+                break;
+            case "H":
+                cI = 7;
+                break;
+            case "I":
+                cI = 8;
+                break;
+            case "J":
+                cI = 9;
+                break;
+            case "K":
+                cI = 10;
+                break;
+            case "L":
+                cI = 11;
+                break;
+            case "M":
+                cI = 12;
+                break;
+            case "N":
+                cI = 13;
+                break;
+            case "O":
+                cI = 14;
+                break;
+            default:
+                cI = -1;
+                break;
+        }
+        return cI;
     }
 
     @Override

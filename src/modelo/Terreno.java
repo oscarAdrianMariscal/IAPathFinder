@@ -63,11 +63,11 @@ public class Terreno {
 
     @Override
     public String toString() {
-        return "TERRENO: \n" 
-                + "ID: " + idTerreno + "\n"
-                + "Nombre: " + nombreTerreno + "\n" 
-                + "Color: " + color + "\n" 
-                + "Costo: " + costo;
+        return //"TERRENO: \n" 
+                //+ "ID: " + idTerreno + "\n"
+                "Nombre: " + nombreTerreno; //+ "\n" 
+                //+ "Color: " + color + "\n" 
+                //+ "Costo: " + costo;
     }
 
 	public void setNombreTerreno(String nombreTerreno) {

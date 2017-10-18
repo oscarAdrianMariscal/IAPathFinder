@@ -79,6 +79,7 @@ public class Tablero {
         terreno = "Terreno: " + mapa[coordenada.getCoordenadaI()][coordenada.getCoordenadaJ()].getTerreno().getNombreTerreno();
         return terreno;
     }
+    
     public void reiniciarCasillasUsadas() {
     	for(Casilla []renglon: mapa) {
     		for(Casilla c : renglon) {

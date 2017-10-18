@@ -429,8 +429,6 @@ public class VentanaSeleccionarJugadores extends JFrame {
 		
 		toggleJugadorUno();
 		toggleJugadorDos();
-		toggleJugadorTres();
-		
+		toggleJugadorTres();	
 	}
-
 }

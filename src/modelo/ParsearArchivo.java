@@ -58,7 +58,9 @@ public class ParsearArchivo {
 	}
 	
 	public Casilla[][] getMapa(){
-		Casilla [][] casillas= new Casilla[tamanioI][tamanioJ];
+            Casilla [][] casillas= new Casilla[tamanioI][tamanioJ];
+            try{
+                
 		for (int i = 0; i < tamanioI; i++){
 			for ( int j = 0; j < tamanioJ ; j++){
 				Coordenada cor = new Coordenada(i,j);
@@ -66,7 +68,13 @@ public class ParsearArchivo {
 				casillas[i][j] = new Casilla(false,true,cor,ter);
 			}
 		}
-		return casillas;
+                return casillas;
+            }
+            catch(IndexOutOfBoundsException e)
+            {
+                esValido = false;
+                return casillas;
+            }
 	}
 	
 	public ArrayList<Terreno> dameTerrenos() {
