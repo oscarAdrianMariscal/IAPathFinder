@@ -13,7 +13,6 @@ public class Casilla {
         
         this.usado = usado;
         this.tieneNiebla = tieneNiebla;
-        //this.noVisitas = noVisitas;
         this.coordenada = coordenada;
         this.terreno = terreno;
         this.noVisitas = new ArrayList<>();
@@ -95,73 +94,16 @@ public class Casilla {
         }
         return cI;
     }
-    
-    private int transformaCoordenadaY(String coordenadaY)
-    {
-        int cI;
-        
-        switch(coordenadaY)
-        {
-            case "A":
-                cI = 0;
-            case "B":
-                cI = 1;
-                break;
-            case "C":
-                cI = 2;
-                break;
-            case "D":
-                cI = 3;
-                break;
-            case "E":
-                cI = 4;
-                break;
-            case "F":
-                cI = 5;
-                break;
-            case "G":
-                cI = 6;
-                break;
-            case "H":
-                cI = 7;
-                break;
-            case "I":
-                cI = 8;
-                break;
-            case "J":
-                cI = 9;
-                break;
-            case "K":
-                cI = 10;
-                break;
-            case "L":
-                cI = 11;
-                break;
-            case "M":
-                cI = 12;
-                break;
-            case "N":
-                cI = 13;
-                break;
-            case "O":
-                cI = 14;
-                break;
-            default:
-                cI = -1;
-                break;
-        }
-        return cI;
-    }
 
     @Override
     public String toString() {
         return "CASILLA:\n"  
                 +"Terreno: " + getTerreno().getNombreTerreno() + "\n"
                 +"Usado: " + usado + "\n" 
-                //+"Niebla: " + tieneNiebla + "\n" 
+                +"Niebla: " + tieneNiebla + "\n" 
                 +"NoVisitas: " + noVisitas.toString() + "\n"
-                +"Coordenada: (" + (int)(coordenada.getCoordenadaI() + 1) +", " 
-                + transformaCoordenadaJ(coordenada.getCoordenadaJ())+ ")";
+                +"Coordenada: (" + transformaCoordenadaJ(coordenada.getCoordenadaJ())+", " 
+                + (int)(coordenada.getCoordenadaI() + 1) + ")";
     }
 
     public void setTieneNiebla(boolean tieneNiebla) {
@@ -181,8 +123,7 @@ public class Casilla {
         noVisitas.add(numero);
     }
 
-	public void reiniciaNoVisitas() {
-		noVisitas.clear();
-		
-	}
+    public void reiniciaNoVisitas() {
+        noVisitas.clear();	
+    }
 }
