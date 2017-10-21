@@ -26,7 +26,7 @@ public class Casilla {
         return usado;
     }
 
-    public boolean isTieneNiebla() {
+    public boolean getTieneNiebla() {
         return tieneNiebla;
     }
 

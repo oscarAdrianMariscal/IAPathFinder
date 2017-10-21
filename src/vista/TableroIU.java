@@ -58,7 +58,7 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
         
         //mCasillas = new JButton[mNumeroDeFilas][mNumeroDeColumnas];
         movimiento = 1; 
-        
+        int filaI = 0, columnaI = 0;
         Casilla[][] aux = controlador.getTablero().getMapa();
         for( int fila = 0 ; fila < mNumeroDeFilas ; fila ++ ) {
             for( int columna = 0 ; columna < mNumeroDeColumnas ; columna ++ ) {
@@ -68,8 +68,12 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
                 nombre = nombre + "," + new Integer(columna).toString();
                 
                 //PINTAR COLOR
-                Color color = aux[fila][columna].getTerreno().getColorRgb();
-                temp.setBackground(color);
+                //Color color = aux[fila][columna].getTerreno().getColorRgb();
+                //temp.setBackground(color);
+                
+                //PINTAR NIEBLA
+                Color colorNiebla = new Color(229, 230, 250);
+                temp.setBackground(colorNiebla);
                 
                 //AGREGAR INICIO Y FIN
                 if(fila == controlador.getTablero().getInicio().getCoordenadaJ() && columna 
@@ -81,6 +85,10 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
                     controlador.getTablero().getCoordenadaEspecial(fila, columna).setUsado(true);
                     controlador.getTablero().getCoordenadaEspecial(fila, columna).setNoVisitas(movimiento);
                     movimiento++;
+                    
+                    //POSICIONES INICIALES PARA PINTAR MAPA
+                    filaI = controlador.getTablero().getInicio().getCoordenadaJ();
+                    columnaI = controlador.getTablero().getInicio().getCoordenadaI();                    
                 }
                 
                 if(fila == controlador.getTablero().getFin().getCoordenadaJ() && columna 
@@ -93,6 +101,9 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
                 this.add(temp);
             }
         }
+        
+        //PINTAR CON COLORES ORIGINALES CASILLAS CERCANAS AL INICIO
+        pintarColor(filaI, columnaI, mCasillas, aux);
     }
     
     public void moverArriba(int renglon, int columna)
@@ -110,6 +121,10 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
        }
        if(terrenos.get(posicion).getCosto() != -1)
        {
+            //PARA PINTAR COLOR ORIGINAL DE VECINOS
+            Casilla[][] aux = controlador.getTablero().getMapa();
+            pintarColor(renglon-1, columna, mCasillas, aux);
+            
             ImageIcon icono = new ImageIcon("");;  
             mCasillas[renglon][columna].setIcon(icono);
             controlador.getTablero().getCoordenadaEspecial(renglon, columna).setUsado(false);
@@ -143,6 +158,10 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
         }
         if(terrenos.get(posicion).getCosto() != -1)
         {
+           //PARA PINTAR COLOR ORIGINAL DE VECINOS
+           Casilla[][] aux = controlador.getTablero().getMapa();
+           pintarColor(renglon+1, columna, mCasillas, aux);
+            
            ImageIcon icono = new ImageIcon("");;  
            mCasillas[renglon][columna].setIcon(icono);
            controlador.getTablero().getCoordenadaEspecial(renglon, columna).setUsado(false);
@@ -176,6 +195,10 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
         }
         if(terrenos.get(posicion).getCosto() != -1)
         {
+            //PARA PINTAR COLOR ORIGINAL DE VECINOS
+            Casilla[][] aux = controlador.getTablero().getMapa();
+            pintarColor(renglon, columna-1, mCasillas, aux);
+            
             ImageIcon icono = new ImageIcon("");;  
             mCasillas[renglon][columna].setIcon(icono);
             controlador.getTablero().getCoordenadaEspecial(renglon, columna).setUsado(false);
@@ -209,6 +232,10 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
         }
         if(terrenos.get(posicion).getCosto() != -1)
         {
+            //PARA PINTAR COLOR ORIGINAL DE VECINOS
+            Casilla[][] aux = controlador.getTablero().getMapa();
+            pintarColor(renglon, columna+1, mCasillas, aux);
+            
             ImageIcon icono = new ImageIcon("");;  
             mCasillas[renglon][columna].setIcon(icono);
             controlador.getTablero().getCoordenadaEspecial(renglon, columna).setUsado(false);
@@ -225,6 +252,46 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
                 controlador.getTablero().reiniciarCasillasUsadas();
             }
         }   
+    }
+  
+    public void pintarColor(int fila, int columna, JButton[][] temp, Casilla[][] aux)
+    {
+        //ARRIBA
+        if(fila !=0)
+        {
+            Color color = aux[fila-1][columna].getTerreno().getColorRgb();
+            temp[fila-1][columna].setBackground(color);
+            controlador.getTablero().getCoordenadaEspecial(fila-1, columna).setTieneNiebla(false);
+        }
+        
+        //ABAJO
+        if(fila !=controlador.getTablero().getNoRenglones()-1)
+        {
+            Color color = aux[fila+1][columna].getTerreno().getColorRgb();
+            temp[fila+1][columna].setBackground(color);
+            controlador.getTablero().getCoordenadaEspecial(fila+1, columna).setTieneNiebla(false);
+        }  
+        
+        //IZQUIERDA
+        if(columna !=0)
+        {
+            Color color = aux[fila][columna-1].getTerreno().getColorRgb();
+            temp[fila][columna-1].setBackground(color);
+            controlador.getTablero().getCoordenadaEspecial(fila, columna-1).setTieneNiebla(false);
+        }
+        
+        //DERECHA
+        if(columna != controlador.getTablero().getNoColumnas()-1)
+        {
+            Color color = aux[fila][columna+1].getTerreno().getColorRgb();
+            temp[fila][columna+1].setBackground(color);
+            controlador.getTablero().getCoordenadaEspecial(fila, columna+1).setTieneNiebla(false);
+        }
+        
+        //PARA CASILLA ACTUAL
+        Color color = aux[fila][columna].getTerreno().getColorRgb();
+        temp[fila][columna].setBackground(color);
+        controlador.getTablero().getCoordenadaEspecial(fila, columna).setTieneNiebla(false);
     }
 
     public void componentResized(ComponentEvent e) {     
