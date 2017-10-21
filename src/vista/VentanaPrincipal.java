@@ -1,3 +1,5 @@
+package vista;
+
 import controlador.Controlador;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -45,82 +47,12 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
         contentPane.add(tableroIU, BorderLayout.CENTER);
         
         //OTROS DATOS
-        
         jDatos = new JPanel();
         jDatos.setBorder(BorderFactory.createLineBorder(Color.black));
+        
         //AGREGANDO COMPONENTES DE PANEL pDatos
-        JLabel pDlab1 = new JLabel("Verificar Terreno", SwingConstants.CENTER);
-        pDlab1.setFont(new java.awt.Font("Tahoma", 0, 20));
         txtarea31 = new JTextArea(5,15);
         txtarea31.setEditable(false);
-        JScrollBar jsb;
-        
-        //LIMITAR ESCRITURA EN TEXTFIELD
-        int limite = 2;
-        jtf31 = new JTextField("Renglon: ",7);
-        jtf31.addKeyListener(new KeyListener(){
- 
-            public void keyTyped(KeyEvent e)
-            {
-                if (jtf31.getText().length()== limite)
-                    e.consume();
-            }
- 
-            public void keyPressed(KeyEvent arg0) {
-            }
- 
-            public void keyReleased(KeyEvent arg0) {
-            }
-        });
-        
-        //LIMITAR ESCRITURA TEXTFIELD 2
-        int limite2 = 1;
-        jtf32 = new JTextField("Columna: ",7);
-        jtf32.addKeyListener(new KeyListener(){
- 
-            public void keyTyped(KeyEvent ev)
-            {
-                if (jtf32.getText().length()== limite2)
-                    ev.consume();
-            }
- 
-            public void keyPressed(KeyEvent arg0) {
-            }
- 
-            public void keyReleased(KeyEvent arg0) {
-            }
-        });
-    
-        jDatos.add(pDlab1);
-        jDatos.add(jtf31);
-        jDatos.add(jtf32);
-        
-        JButton jbtn31 = new JButton("Consultar");
-        jbtn31.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                String columnaS = (jtf32.getText());
-                String renglonS = (jtf31.getText());
-                jtf31.setText("Renglon");
-                jtf32.setText("Columna");
-                
-                int coordenadaX = columnaS.toUpperCase().codePointAt(0) - "A".codePointAt(0);
-                int renglon = Integer.parseInt(renglonS)-1;
-                //int columna = transformaCoordenadaY(columnaS);
-                System.out.println("RENGLON: " + renglon);
-                System.out.println("COLUMNA: " + coordenadaX);
-                
-                
-                //
-                //int renglonMostrar = renglon + 1
-                String terreno = controlador.getTablero().getCoordenadaEspecial(renglon, coordenadaX).getTerreno().toString();
-                Coordenada c = controlador.getTablero().getCoordenadaEspecial(renglon,coordenadaX).getCoordenada();
-                txtarea31.setText(c.toString() + "\n" + terreno);     
-            }
-        });
-        
-        jDatos.add(jbtn31);
         txtarea31.addKeyListener(this);
         
         scrollPaneAreaEntrada = new JScrollPane();
@@ -129,63 +61,6 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
         
         jDatos.add(scrollPaneAreaEntrada);
         contentPane.add(jDatos, BorderLayout.SOUTH); 
-    }
-    
-    private int transformaCoordenadaY(String coordenadaY)
-    {
-        int cI;
-        
-        switch(coordenadaY)
-        {
-            case "A":
-                cI = 0;
-            case "B":
-                cI = 1;
-                break;
-            case "C":
-                cI = 2;
-                break;
-            case "D":
-                cI = 3;
-                break;
-            case "E":
-                cI = 4;
-                break;
-            case "F":
-                cI = 5;
-                break;
-            case "G":
-                cI = 6;
-                break;
-            case "H":
-                cI = 7;
-                break;
-            case "I":
-                cI = 8;
-                break;
-            case "J":
-                cI = 9;
-                break;
-            case "K":
-                cI = 10;
-                break;
-            case "L":
-                cI = 11;
-                break;
-            case "M":
-                cI = 12;
-                break;
-            case "N":
-                cI = 13;
-                break;
-            case "O":
-                cI = 14;
-                break;
-            default:
-                cI = -1;
-                break;
-        }
-        return cI;
     }
 
     @Override
