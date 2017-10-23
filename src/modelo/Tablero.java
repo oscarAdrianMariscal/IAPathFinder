@@ -1,7 +1,5 @@
 package modelo;
 
-package modelo;
-
 public class Tablero {
     private int tamanioMaximo = 15;
     private int noRenglones;
@@ -90,8 +88,8 @@ public class Tablero {
     	}
     }
     
-    public void hacerMovimiento(Coordenada c)
+    public void hacerMovimiento(Casilla actual)
     {
-        actual.setCoordenada(c);
+        this.actual = actual;
     }
 }
