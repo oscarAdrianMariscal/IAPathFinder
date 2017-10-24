@@ -38,6 +38,11 @@ public class Casilla {
         return coordenada;
     }
     
+    public void setCoordenada(Coordenada c)
+    {
+        this.coordenada = c;
+    }
+    
     private String transformaCoordenadaJ(int coordenadaI)
     {
         String cI = new String();

@@ -33,7 +33,8 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
         
         setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(50,40,500,500);
+        setBounds(50,0,800,750);
+        setResizable(false);
         
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -49,18 +50,15 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
         //OTROS DATOS
         jDatos = new JPanel();
         jDatos.setBorder(BorderFactory.createLineBorder(Color.black));
+        jDatos.setLayout(new BorderLayout());
         
         //AGREGANDO COMPONENTES DE PANEL pDatos
-        txtarea31 = new JTextArea(5,15);
+        txtarea31 = new JTextArea(5,10);
         txtarea31.setEditable(false);
         txtarea31.addKeyListener(this);
         
-        scrollPaneAreaEntrada = new JScrollPane();
-        scrollPaneAreaEntrada.setBounds(10, 100, 513, 70);
-        scrollPaneAreaEntrada.setViewportView(txtarea31);
-        
-        jDatos.add(scrollPaneAreaEntrada);
-        contentPane.add(jDatos, BorderLayout.SOUTH); 
+        jDatos.add(txtarea31, BorderLayout.CENTER);
+        contentPane.add(jDatos, BorderLayout.EAST); 
     }
 
     @Override

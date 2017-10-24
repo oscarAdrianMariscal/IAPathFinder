@@ -9,7 +9,8 @@ public class Tablero {
     private Jugador[] jugadores;
     private Coordenada inicio;
     private Coordenada fin;
-    private Coordenada actual;
+    private Casilla actual;
+    
     
 
     public Tablero(int noRenglones, int noColumnas, Casilla[][] mapa, Terreno[] terrenos, Jugador[] jugadores, Coordenada inicio, Coordenada fin) {
@@ -89,6 +90,7 @@ public class Tablero {
     	}
     }
     
+
     public void llenarMapaConLosPesosDelJugadorActual() {
     	for(Casilla []renglon: mapa) {
     		for(Casilla c : renglon) {
@@ -100,7 +102,13 @@ public class Tablero {
     			}
     		}
     	}
+    }
     	
     	
+
+    public void hacerMovimiento(Casilla actual)
+    {
+        this.actual = actual;
+
     }
 }
