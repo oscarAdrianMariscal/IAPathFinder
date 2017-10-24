@@ -76,10 +76,8 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
                     temp.setText("I");
                     controlador.getTablero().getCoordenadaEspecial(fila, columna).setUsado(true);
                      //ACTUALIZAR MOVIMIENTO
-                    Coordenada c = new Coordenada(fila, columna);
-                    Casilla actual = new Casilla(false, false, c, controlador.getTablero().getCoordenadaEspecial(fila, columna).getTerreno());
+                    Casilla actual = controlador.getTablero().getCoordenadaEspecial(fila, columna);
                     controlador.getTablero().hacerMovimiento(actual);
-                    
                     controlador.getTablero().getCoordenadaEspecial(fila, columna).setNoVisitas(movimiento);
                     movimiento++;
                     
@@ -129,8 +127,7 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
             movimiento++;
             controlador.getTablero().getCoordenadaEspecial(renglon-1, columna).setUsado(true);
             //ACTUALIZAR MOVIMIENTO
-            Coordenada c = new Coordenada(renglon-1, columna);
-            Casilla actual = new Casilla(false, false, c, controlador.getTablero().getCoordenadaEspecial(renglon-1, columna).getTerreno());
+            Casilla actual = controlador.getTablero().getCoordenadaEspecial(renglon-1, columna);
             controlador.getTablero().hacerMovimiento(actual);
             mCasillas[renglon-1][columna].setIcon(jugadores.get(0).getImagen());
             
@@ -170,8 +167,7 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
            movimiento++;
            controlador.getTablero().getCoordenadaEspecial(renglon+1, columna).setUsado(true);
            //ACTUALIZAR MOVIMIENTO
-           Coordenada c = new Coordenada(renglon+1, columna);
-           Casilla actual = new Casilla(false, false, c, controlador.getTablero().getCoordenadaEspecial(renglon+1, columna).getTerreno());
+           Casilla actual = controlador.getTablero().getCoordenadaEspecial(renglon+1, columna);
            controlador.getTablero().hacerMovimiento(actual);
            mCasillas[renglon+1][columna].setIcon(jugadores.get(0).getImagen());
            
@@ -211,8 +207,7 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
             movimiento++;
             controlador.getTablero().getCoordenadaEspecial(renglon, columna-1).setUsado(true);
             //ACTUALIZAR MOVIMIENTO
-            Coordenada c = new Coordenada(renglon, columna-1);
-            Casilla actual = new Casilla(false, false, c, controlador.getTablero().getCoordenadaEspecial(renglon, columna-1).getTerreno());
+            Casilla actual = controlador.getTablero().getCoordenadaEspecial(renglon, columna-1);
             controlador.getTablero().hacerMovimiento(actual);
             mCasillas[renglon][columna-1].setIcon(jugadores.get(0).getImagen());
             
@@ -252,8 +247,7 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
             movimiento++;
             controlador.getTablero().getCoordenadaEspecial(renglon, columna+1).setUsado(true);
             //ACTUALIZAR MOVIMIENTO
-            Coordenada c = new Coordenada(renglon, columna+1);
-            Casilla actual = new Casilla(false, false, c, controlador.getTablero().getCoordenadaEspecial(renglon, columna+1).getTerreno());
+            Casilla actual = controlador.getTablero().getCoordenadaEspecial(renglon, columna+1);
             controlador.getTablero().hacerMovimiento(actual);
             mCasillas[renglon][columna+1].setIcon(jugadores.get(0).getImagen());
             
