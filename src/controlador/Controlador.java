@@ -17,118 +17,118 @@ import vista.TableroIU;
 
 public class Controlador {
 
-    
-    //Archivo
-    
+
+	//Archivo
+
 	public boolean esValidoElMapa;
 	public boolean esValidaPosicionInicial;
-        public boolean nuevaPartida;
+	public boolean nuevaPartida;
 
-   
-    Tablero tablero;
 
-    Casilla [][]mapaSinDatos;
-    Casilla [][]mapaConNombres;
-    ArrayList<Terreno> terrenoSinPesos;
+	Tablero tablero;
 
-    ArrayList<Terreno> terrenoConNombres;
-    ArrayList<Jugador> jugadores = new ArrayList<>();
-    
-    /*
+	Casilla [][]mapaSinDatos;
+	Casilla [][]mapaConNombres;
+	ArrayList<Terreno> terrenoSinPesos;
+
+	ArrayList<Terreno> terrenoConNombres;
+	ArrayList<Jugador> jugadores = new ArrayList<>();
+
+	/*
     public Controlador() {
     }
-    */
-    
-    public void crearTablero(Coordenada inicial,Coordenada meta) {
-    	mapaConNombres = mapaSinDatos;
-    	for (int i = 0; i < mapaSinDatos.length; i++) {
-    		for (int j = 0 ; j < mapaSinDatos[0].length;j++) {
-    			int idTerrenoActual =  mapaSinDatos[i][j].getTerreno().getIdTerreno();
-    			for (Terreno terreno: terrenoConNombres) {
-    				if (terreno.getIdTerreno()==idTerrenoActual) {
-    					mapaConNombres[i][j].setTerreno(terreno);
-    				}
-    			}
-    		}
-    	}
-    	System.out.println("");
-    	int renglones = mapaConNombres.length;
-    	int columnas = mapaConNombres[0].length;
-    	Terreno [] terrenos = terrenoConNombres.toArray(new Terreno[ terrenoConNombres.size()]);
-    	Jugador [] jugadoresArray = jugadores.toArray(new Jugador[jugadores.size()]);
-    	tablero =new Tablero(renglones, columnas, mapaConNombres, terrenos, jugadoresArray, inicial, meta);
-    	tablero.reiniciarCasillasUsadas();
-    	esValidaPosicionInicial= tablero.posicionInicialEsValida();
-    	System.out.println("");
-    }
-    
-    public void parsearArchivo(String direccion) {
-    	ParsearArchivo parseador = new ParsearArchivo(direccion);
-    	mapaSinDatos = parseador.getMapa();
-    	terrenoSinPesos= parseador.dameTerrenos();
-    	esValidoElMapa= parseador.esValido();
-    }
-    
-    public void agregarJugador(ArrayList<Terreno> terrenos,String nombre, ImageIcon imagen) {
-	Jugador jugador = new Jugador(nombre, terrenos, imagen);
-	jugadores.add(jugador);
-    }
-    
-    public void eliminarJugador(int posicion)
-    {
-        jugadores.remove(posicion);
-    }
-	
-    public ArrayList<Terreno> getTerrenoSinPesos() {
+	 */
+
+	public void crearTablero(Coordenada inicial,Coordenada meta) {
+		mapaConNombres = mapaSinDatos;
+		for (int i = 0; i < mapaSinDatos.length; i++) {
+			for (int j = 0 ; j < mapaSinDatos[0].length;j++) {
+				int idTerrenoActual =  mapaSinDatos[i][j].getTerreno().getIdTerreno();
+				for (Terreno terreno: terrenoConNombres) {
+					if (terreno.getIdTerreno()==idTerrenoActual) {
+						mapaConNombres[i][j].setTerreno(terreno);
+					}
+				}
+			}
+		}
+		System.out.println("");
+		int renglones = mapaConNombres.length;
+		int columnas = mapaConNombres[0].length;
+		Terreno [] terrenos = terrenoConNombres.toArray(new Terreno[ terrenoConNombres.size()]);
+		Jugador [] jugadoresArray = jugadores.toArray(new Jugador[jugadores.size()]);
+		tablero =new Tablero(renglones, columnas, mapaConNombres, terrenos, jugadoresArray, inicial, meta);
+		tablero.reiniciarCasillasUsadas();
+		esValidaPosicionInicial= tablero.posicionInicialEsValida();
+		System.out.println("");
+	}
+
+	public void parsearArchivo(String direccion) {
+		ParsearArchivo parseador = new ParsearArchivo(direccion);
+		mapaSinDatos = parseador.getMapa();
+		terrenoSinPesos= parseador.dameTerrenos();
+		esValidoElMapa= parseador.esValido();
+	}
+
+	public void agregarJugador(ArrayList<Terreno> terrenos,String nombre, ImageIcon imagen) {
+		Jugador jugador = new Jugador(nombre, terrenos, imagen);
+		jugadores.add(jugador);
+	}
+
+	public void eliminarJugador(int posicion)
+	{
+		jugadores.remove(posicion);
+	}
+
+	public ArrayList<Terreno> getTerrenoSinPesos() {
 		return terrenoSinPesos;
-    }
+	}
 
 
-    public ArrayList<Terreno> getTerrenoConNombres() {
-	return terrenoConNombres;
-    }
-    
-    public void setTerrenoConNombres(ArrayList<Terreno> terrenoConNombres) {
-        this.terrenoConNombres = terrenoConNombres;
-    }
-    
-    public int getTamanioTerrenoColumnas(){
-        return tablero.getNoColumnas();
-    }
-    
-    public int getTamanioTerrenoRenglones(){
-        return tablero.getNoRenglones();
-    }
-    
-    public String muestraDatosCasilla(Coordenada coordenada)
-    {
-        Casilla[][] casilla = tablero.getMapa();
-        String informacion = casilla[coordenada.getCoordenadaI()][coordenada.getCoordenadaJ()].toString();
-        return informacion;
-    }
+	public ArrayList<Terreno> getTerrenoConNombres() {
+		return terrenoConNombres;
+	}
 
-    public Tablero getTablero()
-    {
-        return tablero;
-    }
+	public void setTerrenoConNombres(ArrayList<Terreno> terrenoConNombres) {
+		this.terrenoConNombres = terrenoConNombres;
+	}
 
-    public ArrayList<Jugador> getJugadores() {
-	return jugadores;
-    }
-    
-    public ArrayList<Jugador> getArregloJugadores()
-    {
-	return jugadores;
-    }
-    
-    public void reiniciaArregloVisitas()
-    {
-        for(int i = 0; i<tablero.getNoRenglones(); i++)
-        {
-            for(int j=0; j<tablero.getNoColumnas(); j++)
-            {
-                tablero.getCoordenadaEspecial(i, j).reiniciaNoVisitas();
-            }
-        }
-    }
+	public int getTamanioTerrenoColumnas(){
+		return tablero.getNoColumnas();
+	}
+
+	public int getTamanioTerrenoRenglones(){
+		return tablero.getNoRenglones();
+	}
+
+	public String muestraDatosCasilla(Coordenada coordenada)
+	{
+		Casilla[][] casilla = tablero.getMapa();
+		String informacion = casilla[coordenada.getCoordenadaI()][coordenada.getCoordenadaJ()].toString();
+		return informacion;
+	}
+
+	public Tablero getTablero()
+	{
+		return tablero;
+	}
+
+	public ArrayList<Jugador> getJugadores() {
+		return jugadores;
+	}
+
+	public ArrayList<Jugador> getArregloJugadores()
+	{
+		return jugadores;
+	}
+
+	public void reiniciaArregloVisitas()
+	{
+		for(int i = 0; i<tablero.getNoRenglones(); i++)
+		{
+			for(int j=0; j<tablero.getNoColumnas(); j++)
+			{
+				tablero.getCoordenadaEspecial(i, j).reiniciaNoVisitas();
+			}
+		}
+	}
 }

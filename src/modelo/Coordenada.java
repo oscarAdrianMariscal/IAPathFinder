@@ -21,12 +21,14 @@ public class Coordenada {
 		return coordenadaJ;
 	}
 	public void  setComoTexto(String cadena) {
-		Pattern datePatt = Pattern.compile("([a-zA-Z])+(\\d)+");
+		Pattern datePatt = Pattern.compile("([a-zA-Z])+([\\d]+)");
 		Matcher m = datePatt.matcher(cadena);
 		if (m.matches()) {
 			String cordenadaX=m.group(1).toUpperCase();
+			String cordenadaY=m.group(2).toUpperCase();
 			coordenadaI= cordenadaX.codePointAt(0) - "A".codePointAt(0);
-			coordenadaJ = Integer.parseInt(m.group(2)) -1 ;
+			
+			coordenadaJ = Integer.parseInt(cordenadaY) -1 ;
 
 		}
 	}

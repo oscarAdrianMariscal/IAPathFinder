@@ -98,7 +98,7 @@ public class Casilla {
     @Override
     public String toString() {
         return "CASILLA:\n"  
-                +"Terreno: " + getTerreno().getNombreTerreno() + "\n"
+                +"Terreno: " + getTerreno().getNombreTerreno() + " " +getTerreno().getCosto() +  "\n"
                 +"Usado: " + usado + "\n" 
                 +"Niebla: " + tieneNiebla + "\n" 
                 +"NoVisitas: " + noVisitas.toString() + "\n"

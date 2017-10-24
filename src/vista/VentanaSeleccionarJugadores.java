@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -382,8 +383,6 @@ public class VentanaSeleccionarJugadores extends JFrame {
 						terrenos.get(i).setCosto(peso);
 					}
 					controlador.agregarJugador(terrenos, textFieldNombreTres.getText(),jugador3);
-
-
 					textFieldNombreTres.getText();					
 				}
 
@@ -391,14 +390,21 @@ public class VentanaSeleccionarJugadores extends JFrame {
 				Coordenada meta= new Coordenada(1, 1);
 				inicial.setComoTexto(txtInicial.getText());
 				meta.setComoTexto(textFinal.getText());
+				
 				controlador.crearTablero(inicial,meta);
 				System.out.println("Casilla inicial: "+ inicial.getCoordenadaI() +","+ inicial.getCoordenadaJ());
 				System.out.println("Casilla final: "+ meta.getCoordenadaI() +","+ meta.getCoordenadaJ());
-
 				
-				//setVisible(false);
-				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(controlador);
-				ventanaPrincipal.setVisible(true);
+				if( controlador.getTablero().posicionInicialEsValida()){
+					controlador.getTablero().llenarMapaConLosPesosDelJugadorActual();
+					VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(controlador);
+					ventanaPrincipal.setVisible(true);
+				}
+				else {
+					JOptionPane.showMessageDialog(new JFrame(), "posicion inicial no valida",  "Error",
+							JOptionPane.ERROR_MESSAGE);
+				}
+				
 			}
 		});
 		GridBagConstraints gbc_btnAvanzar = new GridBagConstraints();

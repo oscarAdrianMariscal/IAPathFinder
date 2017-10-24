@@ -9,7 +9,8 @@ public class Tablero {
     private Jugador[] jugadores;
     private Coordenada inicio;
     private Coordenada fin;
-    private Casilla actual;
+    private Coordenada actual;
+    
 
     public Tablero(int noRenglones, int noColumnas, Casilla[][] mapa, Terreno[] terrenos, Jugador[] jugadores, Coordenada inicio, Coordenada fin) {
         this.noRenglones = noRenglones;
@@ -86,5 +87,20 @@ public class Tablero {
     			c.setUsado(false);
     		}
     	}
+    }
+    
+    public void llenarMapaConLosPesosDelJugadorActual() {
+    	for(Casilla []renglon: mapa) {
+    		for(Casilla c : renglon) {
+    			int idTerreno = c.getTerreno().getIdTerreno();
+    			for (Terreno t : jugadores[0].getPesos()) {
+    				if (idTerreno == t.getIdTerreno()) {
+    					c.setTerreno(t);
+    				}
+    			}
+    		}
+    	}
+    	
+    	
     }
 }
