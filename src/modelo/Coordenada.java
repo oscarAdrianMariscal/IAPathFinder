@@ -7,6 +7,10 @@ public class Coordenada {
 	private int coordenadaI;
 	private int coordenadaJ;
 
+	public String dameCoordenadaEnCadena() {
+		char x =  (char)("A".codePointAt(0) + coordenadaJ);
+		return String.valueOf(x) + String.valueOf(coordenadaI+1);
+	}
 	public Coordenada(int coordenadaI, int coordenadaJ)
 	{
 		this.coordenadaI = coordenadaI;
