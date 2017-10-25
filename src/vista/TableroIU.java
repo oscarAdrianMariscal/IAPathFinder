@@ -133,16 +133,7 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
             
             if(controlador.getTablero().getFin().getCoordenadaJ() == renglon-1 && controlador.getTablero().getFin().getCoordenadaI() == columna)
             {
-                //JOptionPane.showMessageDialog(null, "Felicidades, ha llegado a la meta");
-                
-
-                JFrame frame = new JFrame("FrameDemo");
-                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                frame.getContentPane().add(controlador.getTablero().dameJTree(), BorderLayout.CENTER);
-                frame.pack();
-
-
-                frame.setVisible(true);
+                JOptionPane.showMessageDialog(null, "Felicidades, ha llegado a la meta");
                 
                 controlador.eliminarJugador(0);
                 controlador.reiniciaArregloVisitas();

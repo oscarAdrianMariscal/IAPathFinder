@@ -20,7 +20,8 @@ public class Tablero {
 	private Jugador[] jugadores;
 	private Coordenada inicio;
 	private Coordenada fin;
-	private Casilla actual;
+	private int xActual = 0;
+	private int yActual = 0;
 	private String ordenExpansion;
 	TreeNode<String> arbol;
 
@@ -35,7 +36,7 @@ public class Tablero {
 		this.inicio = inicio;
 		this.fin = fin;
 		this.ordenExpansion ="URDL";
-		this.actual = new Casilla(false, false, inicio, null);
+		//this.actual = new Casilla(false, false, inicio, null);
 		arbol = new TreeNode<String>(inicio.dameCoordenadaEnCadena());
 	}
 
@@ -147,59 +148,55 @@ public class Tablero {
 
 	public void hacerMovimiento(Casilla a)
 	{
-		System.out.println(a);
-		this.actual=a;
-		String posActual = this.actual.getCoordenada().dameCoordenadaEnCadena();
+		
+		int x = a.getCoordenada().getCoordenadaJ();
+		int y = a.getCoordenada().getCoordenadaI();
+		
 		for (char direccion: ordenExpansion.toCharArray()) {
-			//System.out.print(this.actual.getCoordenada().dameCoordenadaEnCadena() +	" ");
+			
+			TreeNode<String> padre =  arbol.findTreeNode(convertXYaCoord(xActual, yActual));	
 			if (direccion == 'U') {
-				 esValidoArriba();
+				if (esValidoArriba(x, y)) {
+					padre.addChild(convertXYaCoord(x,y-1));
+				}
 			}
-//			if (direccion == 'R') {
-//				System.out.println("R" + esValidoDerecha());
-//			}
-//			if (direccion == 'L') {
-//				System.out.println("L" +  esValidoIzquierda());
-//			}
-//			if (direccion == 'D') {
-//				System.out.println("D" +  esValidoAbajo());
-//			}
+			if (direccion == 'R') {
+				if (esValidoDerecha(x, y)) {
+					padre.addChild(convertXYaCoord(x,y+1));
+				}
+			}
+			if (direccion == 'L') {
+				if (esValidoIzquierda(x, y)) {
+					padre.addChild(convertXYaCoord(x-1,y));
+				}
+			}
+			if (direccion == 'D') {
+				
+				if (esValidoAbajo(x, y)) {
+					padre.addChild(convertXYaCoord(x+1,y));
+				}
+				
+
+			}
 		}
-		//System.out.println("-------");
-		String posAMover = actual.getCoordenada().dameCoordenadaEnCadena();
+		
 		
 	}
 
-	public boolean esValidoIzquierda() {
+	public boolean esValidoIzquierda(int x, int y) {
 		
-		int x = actual.getCoordenada().getCoordenadaJ();
-		int y = actual.getCoordenada().getCoordenadaI();
-		
-		return false;
+		return x>0 && mapa[x-1][y].getTerreno().getCosto()!=-1;
 	}
 
-	public boolean esValidoDerecha() {
-		int x = actual.getCoordenada().getCoordenadaJ();
-		int y = actual.getCoordenada().getCoordenadaI();
-		return false;
+	public boolean esValidoDerecha(int x, int y) {
+		return x<noColumnas-1 && mapa[x+1][y].getTerreno().getCosto()!=-1;
 	}
-	public boolean esValidoArriba() {
-		int x = actual.getCoordenada().getCoordenadaJ();
-		int y = actual.getCoordenada().getCoordenadaI();
-		
-		System.out.println("-----");
-		
-		//------
-		
-		
-		
-		return false;
-		
+	public boolean esValidoArriba(int x, int y ) {
+		return y>0 && mapa[x][y-1].getTerreno().getCosto()!=-1;
 	}
-	public boolean esValidoAbajo() {
-		int x = actual.getCoordenada().getCoordenadaJ();
-		int y = actual.getCoordenada().getCoordenadaI();
-		return false;
+	public boolean esValidoAbajo(int x, int y ) {
+		return y<noRenglones-1 && mapa[x][y+1].getTerreno().getCosto()!=-1;
+
 	}
 
 	public void imprimirMapa() {
@@ -215,6 +212,11 @@ public class Tablero {
 	}
 	public static String fixedLengthString(String string, int length) {
 	    return String.format("%1$"+length+ "s", string);
+	}
+	
+	public String convertXYaCoord(int x, int y) {
+		char letras =  (char)("A".codePointAt(0) + x);
+		return String.valueOf(letras) + String.valueOf(y+1);
 	}
 
 }
