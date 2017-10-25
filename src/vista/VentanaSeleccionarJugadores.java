@@ -396,8 +396,6 @@ public class VentanaSeleccionarJugadores extends JFrame {
 				System.out.println("Casilla final: "+ meta.getCoordenadaI() +","+ meta.getCoordenadaJ());
 				
 				if( controlador.getTablero().posicionInicialEsValida()){
-					controlador.getTablero().imprimirMapa();
-					controlador.getTablero().llenarMapaConLosPesosDelJugadorActual();
 					VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(controlador);
 					ventanaPrincipal.setVisible(true);
 				}

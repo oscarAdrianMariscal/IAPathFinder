@@ -21,8 +21,8 @@ public class Tablero {
 	private Jugador[] jugadores;
 	private Coordenada inicio;
 	private Coordenada fin;
-	private int xActual = 0;
-	private int yActual = 0;
+	private int xActual ;
+	private int yActual ;
 	private String ordenExpansion;
 	TreeNode<String> arbol;
 	TreeNode<String> nodoActual;
@@ -40,6 +40,7 @@ public class Tablero {
 		this.ordenExpansion ="URDL";
 		int x = inicio.getCoordenadaJ();
 		int y = inicio.getCoordenadaI();
+		llenarMapaConLosPesosDelJugadorActual();
 		
 		//inicializarArbol(x, y);
 	}
@@ -83,21 +84,9 @@ public class Tablero {
 
 	public boolean posicionInicialEsValida() {
 		
-		//return mapa[inicio.getCoordenadaI()][inicio.getCoordenadaJ()].getTerreno().getCosto()==-1;
-		return true;
-		/*
-		Terreno terreno =mapa[inicio.getCoordenadaI()][inicio.getCoordenadaJ()].getTerreno(); 
-		int idTerreno = terreno.getIdTerreno();
-		for (Terreno t : jugadores[0].getPesos()) {
-			if (idTerreno == t.getIdTerreno()) {
-				if (t.getCosto()==-1) {
-					esValidaLaPosicion=false;
-				}
-			}
-
-		}
-		*/
-		
+		int x = inicio.getCoordenadaJ();
+		int y = inicio.getCoordenadaI();
+		return (mapa[x][y].getTerreno().getCosto()!=-1);
 	}
 
 	public String dameTerreno(Coordenada coordenada)
@@ -116,7 +105,7 @@ public class Tablero {
 	}
 
 
-	public void llenarMapaConLosPesosDelJugadorActual() {
+	private void llenarMapaConLosPesosDelJugadorActual() {
 		for(Casilla []renglon: mapa) {
 			for(Casilla c : renglon) {
 				int idTerreno = c.getTerreno().getIdTerreno();
