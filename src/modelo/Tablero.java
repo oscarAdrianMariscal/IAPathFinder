@@ -229,17 +229,18 @@ public class Tablero {
 
 	public boolean esValidoIzquierda(int x, int y) {
 		
-		return x>0 && mapa[x-1][y].getTerreno().getCosto()!=-1;
+		return x>0 && mapa[y][x-1].getTerreno().getCosto()!=-1;
 	}
 
 	public boolean esValidoDerecha(int x, int y) {
-		return x<noColumnas-1 && mapa[x+1][y].getTerreno().getCosto()!=-1;
+		
+		return x<noRenglones-1 && mapa[y][x+1].getTerreno().getCosto()!=-1;
 	}
 	public boolean esValidoArriba(int x, int y ) {
-		return y>0 && mapa[x][y-1].getTerreno().getCosto()!=-1;
+		return y>0 && mapa[y-1][x].getTerreno().getCosto()!=-1;
 	}
 	public boolean esValidoAbajo(int x, int y ) {
-		return y<noRenglones-1 && mapa[x][y+1].getTerreno().getCosto()!=-1;
+		return y<noRenglones-1 && mapa[y+1][x].getTerreno().getCosto()!=-1;
 
 	}
 
