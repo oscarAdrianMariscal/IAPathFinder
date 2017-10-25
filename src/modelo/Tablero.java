@@ -155,8 +155,11 @@ public class Tablero {
 		if (arbol==null) {
 			inicializarArbol(x, y);
 		}
-		
-		//Encontramos de los hijos cual es nuestro nodo.
+		if (nodoActual.parent != null && nodoActual.parent.data.equals(convertXYaCoord(x, y))) {
+			//panico panico se regreso en su camino. 
+			nodoActual = nodoActual.parent;
+			return;
+		}
 		for (TreeNode<String> nodo : nodoActual.children) {
 			String nombreNodo = convertXYaCoord(x, y);
 			if (nodo.data.equals(nombreNodo)) {
@@ -168,31 +171,43 @@ public class Tablero {
 			if (direccion == 'U') {
 				String arriba = convertXYaCoord(x,y-1);
 				if (esValidoArriba(x, y) && (esRaiz || ! nodoActual.parent.data.equals(arriba))  ) {
-					nodoActual.addChild(arriba);
+					if (! yaExisteEnLosHijos(nodoActual, arriba))
+						nodoActual.addChild(arriba);
 				}
 			}
 			if (direccion == 'R') {
 				String derecha= convertXYaCoord(x+1,y);
 				if (esValidoDerecha(x, y) &&  (esRaiz || ! nodoActual.parent.data.equals(derecha) )) {
-					nodoActual.addChild(derecha);
+					if (! yaExisteEnLosHijos(nodoActual, derecha))
+						nodoActual.addChild(derecha);
 				}
 			}
 			if (direccion == 'D') {
 				String abajo = convertXYaCoord(x,y+1);
 				if (esValidoAbajo(x, y) && (esRaiz || ! nodoActual.parent.data.equals(abajo) )) {
-					nodoActual.addChild(abajo);
+					if (! yaExisteEnLosHijos(nodoActual, abajo))
+						nodoActual.addChild(abajo);
 				}
 			}
 			if (direccion == 'L') {
 				String izquierda = convertXYaCoord(x-1,y);
 				if (esValidoIzquierda(x, y) && (esRaiz || ! nodoActual.parent.data.equals(izquierda))) {
-					nodoActual.addChild(izquierda);
+					if (! yaExisteEnLosHijos(nodoActual, izquierda))
+						nodoActual.addChild(izquierda);
 				}
 			}
 		}
 		
 		xActual=x;
 		yActual=y;
+	}
+	
+	public boolean yaExisteEnLosHijos(TreeNode<String> nodo, String nombreHijo) {
+		for (TreeNode<String> hijo: nodo.children ){
+			if (hijo.data.equals(nombreHijo))
+				return true;
+		}
+		return false;
 	}
 	
 	public void inicializarArbol(int x, int y) {
