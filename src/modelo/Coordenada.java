@@ -36,68 +36,49 @@ public class Coordenada {
 
 		}
 	}
-        
-        private String transformaCoordenadaJ(int coordenadaJ)
-    {
-        String cI = new String();
-        
-        switch(coordenadaI)
+    
+        public String transformaCoordenadaJ(int coordenadaJ)
         {
-            case 0:
-                cI = "A";
-            case 1:
-                cI = "B";
-                break;
-            case 2:
-                cI = "C";
-                break;
-            case 3:
-                cI = "D";
-                break;
-            case 4:
-                cI = "E";
-                break;
-            case 5:
-                cI = "F";
-                break;
-            case 6:
-                cI = "G";
-                break;
-            case 7:
-                cI = "H";
-                break;
-            case 8:
-                cI = "I";
-                break;
-            case 9:
-                cI = "J";
-                break;
-            case 10:
-                cI = "K";
-                break;
-            case 11:
-                cI = "L";
-                break;
-            case 12:
-                cI = "M";
-                break;
-            case 13:
-                cI = "N";
-                break;
-            case 14:
-                cI = "O";
-                break;
-            default:
-                cI = "ERROR";
-                break;
+            String cJ = new String("ERROR");
+            if(coordenadaJ == 0)
+                cJ = "A";
+            if(coordenadaJ == 1)
+                cJ = "B";
+            if(coordenadaJ == 2)
+                cJ = "C";
+            if(coordenadaJ == 3)
+                cJ = "D";
+            if(coordenadaJ == 4)
+                cJ = "E";
+            if(coordenadaJ == 5)
+                cJ = "F";
+            if(coordenadaJ == 6)
+                cJ = "G";
+            if(coordenadaJ == 7)
+                cJ = "H";
+            if(coordenadaJ == 8)
+                cJ = "I";
+            if(coordenadaJ == 9)
+                cJ = "J";
+            if(coordenadaJ == 10)
+                cJ = "K";
+            if(coordenadaJ == 11)
+                cJ = "L";
+            if(coordenadaJ == 12)
+                cJ = "M";
+            if(coordenadaJ == 13)
+                cJ = "N";
+            if(coordenadaJ == 14)
+                cJ = "O";
+            return cJ;
         }
-        return cI;
-    }
 
-    @Override
-    public String toString() {
-        int i = getCoordenadaI() + 1;
-        int j = getCoordenadaJ();
-        return  "(" + i + ", " + transformaCoordenadaJ(j) + ")";
-    }
+        @Override
+        public String toString() {
+            //COORDENADA Y
+            int i = getCoordenadaI() + 1;
+            //COORDENADA X
+            int j = getCoordenadaJ();
+            return  "(" + transformaCoordenadaJ(j) + ", " + i + ")";
+        }
 }

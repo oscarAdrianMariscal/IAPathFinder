@@ -135,6 +135,7 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
             controlador.getTablero().getCoordenadaEspecial(renglon, columna).setUsado(false);
             controlador.getTablero().getCoordenadaEspecial(renglon-1, columna).setNoVisitas(movimiento);
             movimiento++;
+            controlador.getTablero().getCoordenadaEspecial(renglon-1, columna).setUsado(true);
             mCasillas[renglon-1][columna].setIcon(jugadores.get(0).getImagen());
 
             //ACTUALIZAR MOVIMIENTO
@@ -145,7 +146,6 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
             //SI ES POSICION FINAL A LA QUE SE MOVIO TERMINA Y LANZA MENSAJE DE TERMINADO
             if(controlador.getTablero().getFin().getCoordenadaJ() == renglon-1 && controlador.getTablero().getFin().getCoordenadaI() == columna)
             {
-
                 JOptionPane.showMessageDialog(null, "Felicidades, ha llegado a la meta");
                 abrirArbol();
                 controlador.eliminarJugador(0);
