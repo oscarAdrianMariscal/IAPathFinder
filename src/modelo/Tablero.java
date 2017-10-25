@@ -123,7 +123,16 @@ public class Tablero {
 
 	private DefaultMutableTreeNode agregarHijos (TreeNode<String> nodo, DefaultMutableTreeNode visualNodo) {	
 		for (TreeNode<String> n : nodo.children) {
-			DefaultMutableTreeNode rama = new DefaultMutableTreeNode(n.data);
+			//n.data;
+			//n
+			String coordenada = n.data;
+			String letra = coordenada.substring(0, 1);
+			String numeros = coordenada.substring(1,coordenada.length());
+			int x = letra.codePointAt(0) - "A".codePointAt(0) ;
+			int y = Integer.parseInt(numeros)-1;
+			mapa[y][x].getNoVisitas();
+			System.out.println(letra + "--" + numeros);
+			DefaultMutableTreeNode rama = new DefaultMutableTreeNode(n.data + mapa[y][x].getNoVisitas());
 			visualNodo.add(rama);
 			agregarHijos(n, rama);
 		}
@@ -132,7 +141,14 @@ public class Tablero {
 
 	public JTree dameJTree() {
 
-		DefaultMutableTreeNode rootVisual = new DefaultMutableTreeNode(arbol.data);
+		String coordenada = arbol.data;
+		String letra = coordenada.substring(0, 1);
+		String numeros = coordenada.substring(1,coordenada.length());
+		int x = letra.codePointAt(0) - "A".codePointAt(0) ;
+		int y = Integer.parseInt(numeros)-1;
+		mapa[y][x].getNoVisitas();
+		
+		DefaultMutableTreeNode rootVisual = new DefaultMutableTreeNode(arbol.data + mapa[y][x].getNoVisitas());
 		DefaultMutableTreeNode modeloDeArbolCompleto = agregarHijos(arbol, rootVisual);
 
 		return new JTree(modeloDeArbolCompleto);
