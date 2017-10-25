@@ -147,16 +147,17 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
             {
 
                 JOptionPane.showMessageDialog(null, "Felicidades, ha llegado a la meta");
-                VentanaArbol ventana = new VentanaArbol(controlador.getTablero().dameJTree());
-                ventana.setVisible(true);
-
-
-                
+                abrirArbol();
                 controlador.eliminarJugador(0);
                 controlador.reiniciaArregloVisitas();
                 controlador.getTablero().reiniciarCasillasUsadas();
             }
        }
+    }
+    
+    public void abrirArbol() {
+    	VentanaArbol ventana = new VentanaArbol(controlador.getTablero().dameJTree());
+        ventana.setVisible(true);
     }
     
     public void moverAbajo(int renglon, int columna)
@@ -203,6 +204,7 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
            if(controlador.getTablero().getFin().getCoordenadaJ() == renglon+1 && controlador.getTablero().getFin().getCoordenadaI() == columna)
             {
                 JOptionPane.showMessageDialog(null, "Felicidades, ha llegado a la meta");
+                abrirArbol();
                 controlador.eliminarJugador(0);
                 controlador.reiniciaArregloVisitas();
                 controlador.getTablero().reiniciarCasillasUsadas();
@@ -254,6 +256,7 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
             if(controlador.getTablero().getFin().getCoordenadaJ() == renglon && controlador.getTablero().getFin().getCoordenadaI() == columna-1)
             {
                 JOptionPane.showMessageDialog(null, "Felicidades, ha llegado a la meta");
+                abrirArbol();
                 controlador.eliminarJugador(0);
                 controlador.reiniciaArregloVisitas();
                 controlador.getTablero().reiniciarCasillasUsadas();
@@ -305,6 +308,7 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
             if(controlador.getTablero().getFin().getCoordenadaJ() == renglon && controlador.getTablero().getFin().getCoordenadaI() == columna+1)
             {
                 JOptionPane.showMessageDialog(null, "Felicidades, ha llegado a la meta");
+                abrirArbol();
                 controlador.eliminarJugador(0);
                 controlador.reiniciaArregloVisitas();
                 controlador.getTablero().reiniciarCasillasUsadas();

@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTree;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.ComponentView;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
@@ -24,6 +25,7 @@ public class Tablero {
 	private int yActual = 0;
 	private String ordenExpansion;
 	TreeNode<String> arbol;
+	TreeNode<String> nodoActual;
 
 
 
@@ -36,10 +38,10 @@ public class Tablero {
 		this.inicio = inicio;
 		this.fin = fin;
 		this.ordenExpansion ="URDL";
-		//this.actual = new Casilla(false, false, inicio, null);
 		int x = inicio.getCoordenadaJ();
 		int y = inicio.getCoordenadaI();
-		arbol = new TreeNode<String>(convertXYaCoord(x,y));
+		
+		//inicializarArbol(x, y);
 	}
 
 	public int getTamanioMaximo() {
@@ -150,41 +152,74 @@ public class Tablero {
 
 	public void hacerMovimiento(int x, int y)
 	{
-		System.out.println(x +":" +y);
+		if (arbol==null) {
+			inicializarArbol(x, y);
+		}
 		
-		/*
-		
+		//Encontramos de los hijos cual es nuestro nodo.
+		for (TreeNode<String> nodo : nodoActual.children) {
+			String nombreNodo = convertXYaCoord(x, y);
+			if (nodo.data.equals(nombreNodo)) {
+				nodoActual = nodo;
+			}
+		}
+		boolean esRaiz = (nodoActual.parent == null); 
 		for (char direccion: ordenExpansion.toCharArray()) {
-			
-			TreeNode<String> padre =  arbol.findTreeNode(convertXYaCoord(xActual, yActual));	
 			if (direccion == 'U') {
-				if (esValidoArriba(x, y)) {
-					padre.addChild(convertXYaCoord(x,y-1));
+				String arriba = convertXYaCoord(x,y-1);
+				if (esValidoArriba(x, y) && (esRaiz || ! nodoActual.parent.data.equals(arriba))  ) {
+					nodoActual.addChild(arriba);
 				}
 			}
 			if (direccion == 'R') {
-				if (esValidoDerecha(x, y)) {
-					padre.addChild(convertXYaCoord(x,y+1));
-				}
-			}
-			if (direccion == 'L') {
-				if (esValidoIzquierda(x, y)) {
-					padre.addChild(convertXYaCoord(x-1,y));
+				String derecha= convertXYaCoord(x+1,y);
+				if (esValidoDerecha(x, y) &&  (esRaiz || ! nodoActual.parent.data.equals(derecha) )) {
+					nodoActual.addChild(derecha);
 				}
 			}
 			if (direccion == 'D') {
-				
-				if (esValidoAbajo(x, y)) {
-					padre.addChild(convertXYaCoord(x+1,y));
+				String abajo = convertXYaCoord(x,y+1);
+				if (esValidoAbajo(x, y) && (esRaiz || ! nodoActual.parent.data.equals(abajo) )) {
+					nodoActual.addChild(abajo);
 				}
-				
-
+			}
+			if (direccion == 'L') {
+				String izquierda = convertXYaCoord(x-1,y);
+				if (esValidoIzquierda(x, y) && (esRaiz || ! nodoActual.parent.data.equals(izquierda))) {
+					nodoActual.addChild(izquierda);
+				}
 			}
 		}
 		
 		xActual=x;
 		yActual=y;
-		
+	}
+	
+	public void inicializarArbol(int x, int y) {
+		arbol = new TreeNode<String>(convertXYaCoord(x,y));
+		nodoActual= arbol;
+		/*for (char direccion: ordenExpansion.toCharArray()) {
+			if (direccion == 'U') {
+				if (esValidoArriba(x, y)) {
+					nodoActual.addChild(convertXYaCoord(x,y-1));
+				}
+			}
+			if (direccion == 'R') {
+				if (esValidoDerecha(x, y)) {
+					nodoActual.addChild(convertXYaCoord(x,y+1));
+				}
+			}
+			if (direccion == 'D') {
+				if (esValidoAbajo(x, y)) {
+					nodoActual.addChild(convertXYaCoord(x+1,y));
+				}
+			}
+			if (direccion == 'L') {
+				if (esValidoIzquierda(x, y)) {
+					nodoActual.addChild(convertXYaCoord(x-1,y));
+				}
+			}
+		}
 		*/
 	}
 
