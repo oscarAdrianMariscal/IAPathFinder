@@ -10,6 +10,7 @@ import javax.swing.text.ComponentView;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
+
 import com.tree.TreeNode;
 
 public class Tablero {
@@ -141,6 +142,8 @@ public class Tablero {
 
 	public void hacerMovimiento(int x, int y)
 	{
+		//System.out.print(x + " : " + y );
+		
 		if (arbol==null) {
 			inicializarArbol(x, y);
 		}
@@ -149,6 +152,7 @@ public class Tablero {
 			nodoActual = nodoActual.parent;
 			return;
 		}
+		
 		for (TreeNode<String> nodo : nodoActual.children) {
 			String nombreNodo = convertXYaCoord(x, y);
 			if (nodo.data.equals(nombreNodo)) {
@@ -159,6 +163,7 @@ public class Tablero {
 		for (char direccion: ordenExpansion.toCharArray()) {
 			if (direccion == 'U') {
 				String arriba = convertXYaCoord(x,y-1);
+				//System.out.println( " "+arriba + " " );
 				if (esValidoArriba(x, y) && (esRaiz || ! nodoActual.parent.data.equals(arriba))  ) {
 					if (! yaExisteEnLosHijos(nodoActual, arriba))
 						nodoActual.addChild(arriba);
@@ -166,6 +171,7 @@ public class Tablero {
 			}
 			if (direccion == 'R') {
 				String derecha= convertXYaCoord(x+1,y);
+				//System.out.println( " "+derecha + " " );
 				if (esValidoDerecha(x, y) &&  (esRaiz || ! nodoActual.parent.data.equals(derecha) )) {
 					if (! yaExisteEnLosHijos(nodoActual, derecha))
 						nodoActual.addChild(derecha);
@@ -173,6 +179,7 @@ public class Tablero {
 			}
 			if (direccion == 'D') {
 				String abajo = convertXYaCoord(x,y+1);
+				//System.out.println( " "+abajo + " " );
 				if (esValidoAbajo(x, y) && (esRaiz || ! nodoActual.parent.data.equals(abajo) )) {
 					if (! yaExisteEnLosHijos(nodoActual, abajo))
 						nodoActual.addChild(abajo);
@@ -180,6 +187,7 @@ public class Tablero {
 			}
 			if (direccion == 'L') {
 				String izquierda = convertXYaCoord(x-1,y);
+				System.out.println( " "+izquierda + " " );
 				if (esValidoIzquierda(x, y) && (esRaiz || ! nodoActual.parent.data.equals(izquierda))) {
 					if (! yaExisteEnLosHijos(nodoActual, izquierda))
 						nodoActual.addChild(izquierda);
@@ -187,8 +195,7 @@ public class Tablero {
 			}
 		}
 		
-		xActual=x;
-		yActual=y;
+		
 	}
 	
 	public boolean yaExisteEnLosHijos(TreeNode<String> nodo, String nombreHijo) {
@@ -202,29 +209,6 @@ public class Tablero {
 	public void inicializarArbol(int x, int y) {
 		arbol = new TreeNode<String>(convertXYaCoord(x,y));
 		nodoActual= arbol;
-		/*for (char direccion: ordenExpansion.toCharArray()) {
-			if (direccion == 'U') {
-				if (esValidoArriba(x, y)) {
-					nodoActual.addChild(convertXYaCoord(x,y-1));
-				}
-			}
-			if (direccion == 'R') {
-				if (esValidoDerecha(x, y)) {
-					nodoActual.addChild(convertXYaCoord(x,y+1));
-				}
-			}
-			if (direccion == 'D') {
-				if (esValidoAbajo(x, y)) {
-					nodoActual.addChild(convertXYaCoord(x+1,y));
-				}
-			}
-			if (direccion == 'L') {
-				if (esValidoIzquierda(x, y)) {
-					nodoActual.addChild(convertXYaCoord(x-1,y));
-				}
-			}
-		}
-		*/
 	}
 
 	public boolean esValidoIzquierda(int x, int y) {
@@ -234,7 +218,7 @@ public class Tablero {
 
 	public boolean esValidoDerecha(int x, int y) {
 		
-		return x<noRenglones-1 && mapa[y][x+1].getTerreno().getCosto()!=-1;
+		return x<noColumnas-1 && mapa[y][x+1].getTerreno().getCosto()!=-1;
 	}
 	public boolean esValidoArriba(int x, int y ) {
 		return y>0 && mapa[y-1][x].getTerreno().getCosto()!=-1;
@@ -262,6 +246,22 @@ public class Tablero {
 	public String convertXYaCoord(int x, int y) {
 		char letras =  (char)("A".codePointAt(0) + x);
 		return String.valueOf(letras) + String.valueOf(y+1);
+	}
+	
+	public void imprimirArbol() {
+		
+		for (TreeNode<String> node : arbol) {
+			String indent = createIndent(node.getLevel());
+			System.out.println(indent + node.data);
+		}
+	}
+
+	private static String createIndent(int depth) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < depth; i++) {
+			sb.append(' ');
+		}
+		return sb.toString();
 	}
 
 }

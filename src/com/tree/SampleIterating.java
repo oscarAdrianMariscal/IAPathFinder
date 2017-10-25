@@ -9,6 +9,14 @@ class SampleIterating {
 			System.out.println(indent + node.data);
 		}
 	}
+	
+	public void imprimirArbol() {
+		TreeNode<String> treeRoot = SampleData.getSet1();
+		for (TreeNode<String> node : treeRoot) {
+			String indent = createIndent(node.getLevel());
+			System.out.println(indent + node.data);
+		}
+	}
 
 	private static String createIndent(int depth) {
 		StringBuilder sb = new StringBuilder();

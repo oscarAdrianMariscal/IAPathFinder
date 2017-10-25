@@ -158,6 +158,7 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
     public void abrirArbol() {
     	VentanaArbol ventana = new VentanaArbol(controlador.getTablero().dameJTree());
         ventana.setVisible(true);
+        controlador.getTablero().imprimirArbol();
     }
     
     public void moverAbajo(int renglon, int columna)
