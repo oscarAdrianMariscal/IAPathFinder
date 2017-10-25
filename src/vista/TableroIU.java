@@ -59,53 +59,60 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
                 String nombre = new Integer(fila).toString();
                 nombre = nombre + "," + new Integer(columna).toString();
                 
-                //PINTAR COLOR
-                //Color color = aux[fila][columna].getTerreno().getColorRgb();
-                //temp.setBackground(color);
-                
                 //PINTAR NIEBLA
                 Color colorNiebla = new Color(229, 230, 250);
                 temp.setBackground(colorNiebla);
                 
-                //AGREGAR INICIO Y FIN
+                //AGREGAR INICIO
                 if(fila == controlador.getTablero().getInicio().getCoordenadaJ() && columna 
                         == controlador.getTablero().getInicio().getCoordenadaI())
                 {
+                    //INSERTAR A JUGADOR EN POSICION INICIAL
                     ArrayList<Jugador> jugadores = controlador.getArregloJugadores();
                     temp.setIcon(jugadores.get(0).getImagen());
                     temp.setText("I");
                     controlador.getTablero().getCoordenadaEspecial(fila, columna).setUsado(true);
-                     //ACTUALIZAR MOVIMIENTO
-                    Casilla actual = controlador.getTablero().getCoordenadaEspecial(fila, columna);
-                    controlador.getTablero().hacerMovimiento(actual);
+                    
+                    //ACTUALIZAR MOVIMIENTO
+                    int x = controlador.getTablero().getCoordenadaEspecial(fila, columna).getCoordenada().getCoordenadaJ();
+                    int y = controlador.getTablero().getCoordenadaEspecial(fila, columna).getCoordenada().getCoordenadaI();
+                    controlador.getTablero().hacerMovimiento(x,y);
+                    
+                    //AGREGAR NUMERO DE VISITA
                     controlador.getTablero().getCoordenadaEspecial(fila, columna).setNoVisitas(movimiento);
                     movimiento++;
                     
-                    //POSICIONES INICIALES PARA PINTAR MAPA
+                    //PINTAR MAPA EN POSICION INICIAL
                     filaI = controlador.getTablero().getInicio().getCoordenadaJ();
                     columnaI = controlador.getTablero().getInicio().getCoordenadaI();                    
                 }
                 
+                //AGREGAR FIN
                 if(fila == controlador.getTablero().getFin().getCoordenadaJ() && columna 
                         == controlador.getTablero().getFin().getCoordenadaI())
                 {
                     temp.setText("F");
                 }
+                
                 mCasillas[fila][columna] = temp;
                 mCasillas[fila][columna].setActionCommand(nombre);
                 this.add(temp);
             }
         }
-        
         //PINTAR CON COLORES ORIGINALES CASILLAS CERCANAS AL INICIO
         pintarColor(filaI, columnaI, mCasillas, aux);
     }
     
     public void moverArriba(int renglon, int columna)
     {
+       //OBTENER TERRENO DE POSICION ARRIBA 
        int idTerreno = controlador.getTablero().getCoordenadaEspecial(renglon-1, columna).getTerreno().getIdTerreno();
+       //OBTENER JUGADOR ACTUAL
        ArrayList<Jugador> jugadores = controlador.getArregloJugadores();
+       //OBTENER COSTOS DE JUGADOR ACTUAL
        ArrayList<Terreno> terrenos = jugadores.get(0).getTerrenosPesos();
+       
+       //OBTENER POSICION ACTUAL DE JUGADOR
        int posicion = 0;
        for(int i=0; i<terrenos.size(); i++)
        {
@@ -114,39 +121,54 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
                posicion = i;
            }
        }
+       
+       //SI JUGADOR SE PUEDE MOVER A ESE TERRENO
        if(terrenos.get(posicion).getCosto() != -1)
        {
-            //PARA PINTAR COLOR ORIGINAL DE VECINOS
+            //PINTAR COLOR DE VECINOS
             Casilla[][] aux = controlador.getTablero().getMapa();
             pintarColor(renglon-1, columna, mCasillas, aux);
             
+            //PINTAR IMAGEN DE JUGADOR EN POSICION ARRIBA
             ImageIcon icono = new ImageIcon("");;  
             mCasillas[renglon][columna].setIcon(icono);
             controlador.getTablero().getCoordenadaEspecial(renglon, columna).setUsado(false);
             controlador.getTablero().getCoordenadaEspecial(renglon-1, columna).setNoVisitas(movimiento);
             movimiento++;
-            controlador.getTablero().getCoordenadaEspecial(renglon-1, columna).setUsado(true);
-            //ACTUALIZAR MOVIMIENTO
-            Casilla actual = controlador.getTablero().getCoordenadaEspecial(renglon-1, columna);
-            controlador.getTablero().hacerMovimiento(actual);
             mCasillas[renglon-1][columna].setIcon(jugadores.get(0).getImagen());
+
+            //ACTUALIZAR MOVIMIENTO
+            int x = controlador.getTablero().getCoordenadaEspecial(renglon-1, columna).getCoordenada().getCoordenadaJ();
+            int y = controlador.getTablero().getCoordenadaEspecial(renglon-1, columna).getCoordenada().getCoordenadaI();
+            controlador.getTablero().hacerMovimiento(x,y);
             
+            //SI ES POSICION FINAL A LA QUE SE MOVIO TERMINA Y LANZA MENSAJE DE TERMINADO
             if(controlador.getTablero().getFin().getCoordenadaJ() == renglon-1 && controlador.getTablero().getFin().getCoordenadaI() == columna)
             {
+
                 JOptionPane.showMessageDialog(null, "Felicidades, ha llegado a la meta");
+                VentanaArbol ventana = new VentanaArbol(controlador.getTablero().dameJTree());
+                ventana.setVisible(true);
+
+
                 
                 controlador.eliminarJugador(0);
                 controlador.reiniciaArregloVisitas();
                 controlador.getTablero().reiniciarCasillasUsadas();
-       }
+            }
        }
     }
     
     public void moverAbajo(int renglon, int columna)
     {
+        //OBTENER TERRENO DE POSICION ABAJO
         int idTerreno = controlador.getTablero().getCoordenadaEspecial(renglon+1, columna).getTerreno().getIdTerreno();
+        //OBTENER JUGADOR ACTUAL
         ArrayList<Jugador> jugadores = controlador.getArregloJugadores();
+        //OBTENER COSTOS DE JUGADOR ACTUAL
         ArrayList<Terreno> terrenos = jugadores.get(0).getTerrenosPesos();
+        
+        //OBTENER POSICION ACTUAL DE JUGADOR
         int posicion = 0;
         for(int i=0; i<terrenos.size(); i++)
         {
@@ -155,23 +177,29 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
                posicion = i;
             }
         }
+        
+        //SI JUGADOR SE PUEDE MOVER A ESE TERRENO
         if(terrenos.get(posicion).getCosto() != -1)
         {
-           //PARA PINTAR COLOR ORIGINAL DE VECINOS
+           //PINTAR COLOR DE VECINOS
            Casilla[][] aux = controlador.getTablero().getMapa();
            pintarColor(renglon+1, columna, mCasillas, aux);
-            
+           
+           //PINTAR IMAGEN DE JUGADOR EN POSICION ABAJO
            ImageIcon icono = new ImageIcon("");;  
            mCasillas[renglon][columna].setIcon(icono);
            controlador.getTablero().getCoordenadaEspecial(renglon, columna).setUsado(false);
            controlador.getTablero().getCoordenadaEspecial(renglon+1, columna).setNoVisitas(movimiento);
            movimiento++;
            controlador.getTablero().getCoordenadaEspecial(renglon+1, columna).setUsado(true);
-           //ACTUALIZAR MOVIMIENTO
-           Casilla actual = controlador.getTablero().getCoordenadaEspecial(renglon+1, columna);
-           controlador.getTablero().hacerMovimiento(actual);
            mCasillas[renglon+1][columna].setIcon(jugadores.get(0).getImagen());
            
+           //ACTUALIZAR MOVIMIENTO
+           int x = controlador.getTablero().getCoordenadaEspecial(renglon+1, columna).getCoordenada().getCoordenadaJ();
+           int y = controlador.getTablero().getCoordenadaEspecial(renglon+1, columna).getCoordenada().getCoordenadaI();
+           controlador.getTablero().hacerMovimiento(x,y);
+       
+           //SI ES POSICION FINAL A LA QUE SE MOVIO TERMINA Y LANZA MENSAJE DE TERMINADO
            if(controlador.getTablero().getFin().getCoordenadaJ() == renglon+1 && controlador.getTablero().getFin().getCoordenadaI() == columna)
             {
                 JOptionPane.showMessageDialog(null, "Felicidades, ha llegado a la meta");
@@ -184,9 +212,14 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
     
     public void moverIzquierda(int renglon, int columna)
     { 
+        //OBTENER TERRENO DE POSICION IZQUIERDA
         int idTerreno = controlador.getTablero().getCoordenadaEspecial(renglon, columna-1).getTerreno().getIdTerreno();
+        //OBTENER JUGADOR ACTUAL
         ArrayList<Jugador> jugadores = controlador.getArregloJugadores();
+        //OBTENER COSTOS DE JUGADOR ACTUAL
         ArrayList<Terreno> terrenos = jugadores.get(0).getTerrenosPesos();
+        
+        //OBTENER POSICION ACTUAL DE JUGADOR
         int posicion = 0;
         for(int i=0; i<terrenos.size(); i++)
         {
@@ -195,23 +228,29 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
                posicion = i;
             }
         }
+        
+        //SI JUGADOR SE PUEDE MOVER A ESE TERRENO
         if(terrenos.get(posicion).getCosto() != -1)
         {
-            //PARA PINTAR COLOR ORIGINAL DE VECINOS
+            //PINTAR COLOR DE VECINOS
             Casilla[][] aux = controlador.getTablero().getMapa();
             pintarColor(renglon, columna-1, mCasillas, aux);
             
+            //PINTAR IMAGEN DE JUGADOR EN POSICION IZQUIERDA
             ImageIcon icono = new ImageIcon("");;  
             mCasillas[renglon][columna].setIcon(icono);
             controlador.getTablero().getCoordenadaEspecial(renglon, columna).setUsado(false);
             controlador.getTablero().getCoordenadaEspecial(renglon, columna-1).setNoVisitas(movimiento);
             movimiento++;
             controlador.getTablero().getCoordenadaEspecial(renglon, columna-1).setUsado(true);
-            //ACTUALIZAR MOVIMIENTO
-            Casilla actual = controlador.getTablero().getCoordenadaEspecial(renglon, columna-1);
-            controlador.getTablero().hacerMovimiento(actual);
             mCasillas[renglon][columna-1].setIcon(jugadores.get(0).getImagen());
             
+            //ACTUALIZAR MOVIMIENTO
+            int x = controlador.getTablero().getCoordenadaEspecial(renglon, columna-1).getCoordenada().getCoordenadaJ();
+            int y = controlador.getTablero().getCoordenadaEspecial(renglon, columna-1).getCoordenada().getCoordenadaI();
+            controlador.getTablero().hacerMovimiento(x,y);
+            
+            //SI ES POSICION FINAL A LA QUE SE MOVIO TERMINA Y LANZA MENSAJE DE TERMINADO
             if(controlador.getTablero().getFin().getCoordenadaJ() == renglon && controlador.getTablero().getFin().getCoordenadaI() == columna-1)
             {
                 JOptionPane.showMessageDialog(null, "Felicidades, ha llegado a la meta");
@@ -224,9 +263,14 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
     
     public void moverDerecha(int renglon, int columna)
     {
+        //OBTENER TERRENO DE POSICION DERECHA
         int idTerreno = controlador.getTablero().getCoordenadaEspecial(renglon, columna+1).getTerreno().getIdTerreno();
+        //OBTENER JUGADOR ACTUAL
         ArrayList<Jugador> jugadores = controlador.getArregloJugadores();
+        //OBTENER COSTOS DE JUGADOR ACTUAL
         ArrayList<Terreno> terrenos = jugadores.get(0).getTerrenosPesos();
+        
+        //OBTENER POSICION ACTUAL DE JUGADOR
         int posicion = 0;
         for(int i=0; i<terrenos.size(); i++)
         {
@@ -235,23 +279,29 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
                posicion = i;
             }
         }
+        
+        //SI JUGADOR SE PUEDE MOVER A ESE TERRENO
         if(terrenos.get(posicion).getCosto() != -1)
         {
-            //PARA PINTAR COLOR ORIGINAL DE VECINOS
+            //PINTAR COLOR DE VECINOS
             Casilla[][] aux = controlador.getTablero().getMapa();
             pintarColor(renglon, columna+1, mCasillas, aux);
             
+            //PINTAR IMAGEN DE JUGADOR EN POSICION DERECHA
             ImageIcon icono = new ImageIcon("");;  
             mCasillas[renglon][columna].setIcon(icono);
             controlador.getTablero().getCoordenadaEspecial(renglon, columna).setUsado(false);
             controlador.getTablero().getCoordenadaEspecial(renglon, columna+1).setNoVisitas(movimiento);
             movimiento++;
             controlador.getTablero().getCoordenadaEspecial(renglon, columna+1).setUsado(true);
-            //ACTUALIZAR MOVIMIENTO
-            Casilla actual = controlador.getTablero().getCoordenadaEspecial(renglon, columna+1);
-            controlador.getTablero().hacerMovimiento(actual);
             mCasillas[renglon][columna+1].setIcon(jugadores.get(0).getImagen());
             
+            //ACTUALIZAR MOVIMIENTO
+            int x = controlador.getTablero().getCoordenadaEspecial(renglon, columna+1).getCoordenada().getCoordenadaJ();
+            int y = controlador.getTablero().getCoordenadaEspecial(renglon, columna+1).getCoordenada().getCoordenadaI();
+            controlador.getTablero().hacerMovimiento(x,y);          
+            
+            //SI ES POSICION FINAL A LA QUE SE MOVIO TERMINA Y LANZA MENSAJE DE TERMINADO
             if(controlador.getTablero().getFin().getCoordenadaJ() == renglon && controlador.getTablero().getFin().getCoordenadaI() == columna+1)
             {
                 JOptionPane.showMessageDialog(null, "Felicidades, ha llegado a la meta");

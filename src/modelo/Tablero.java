@@ -37,7 +37,9 @@ public class Tablero {
 		this.fin = fin;
 		this.ordenExpansion ="URDL";
 		//this.actual = new Casilla(false, false, inicio, null);
-		arbol = new TreeNode<String>(inicio.dameCoordenadaEnCadena());
+		int x = inicio.getCoordenadaJ();
+		int y = inicio.getCoordenadaI();
+		arbol = new TreeNode<String>(convertXYaCoord(x,y));
 	}
 
 	public int getTamanioMaximo() {
@@ -146,11 +148,11 @@ public class Tablero {
 
 
 
-	public void hacerMovimiento(Casilla a)
+	public void hacerMovimiento(int x, int y)
 	{
+		System.out.println(x +":" +y);
 		
-		int x = a.getCoordenada().getCoordenadaJ();
-		int y = a.getCoordenada().getCoordenadaI();
+		/*
 		
 		for (char direccion: ordenExpansion.toCharArray()) {
 			
@@ -180,7 +182,10 @@ public class Tablero {
 			}
 		}
 		
+		xActual=x;
+		yActual=y;
 		
+		*/
 	}
 
 	public boolean esValidoIzquierda(int x, int y) {
