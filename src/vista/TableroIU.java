@@ -147,6 +147,11 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
             if(controlador.getTablero().getFin().getCoordenadaJ() == renglon-1 && controlador.getTablero().getFin().getCoordenadaI() == columna)
             {
                 JOptionPane.showMessageDialog(null, "Felicidades, ha llegado a la meta");
+                VentanaArbol ventana = new VentanaArbol(controlador.getTablero().dameJTree());
+                ventana.setVisible(true);
+
+
+                
                 controlador.eliminarJugador(0);
                 controlador.reiniciaArregloVisitas();
                 controlador.getTablero().reiniciarCasillasUsadas();

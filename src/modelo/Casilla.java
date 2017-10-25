@@ -43,62 +43,41 @@ public class Casilla {
         this.coordenada = c;
     }
     
-    private String transformaCoordenadaJ(int coordenadaI)
-    {
-        String cI = new String();
-        
-        switch(coordenadaI)
+    public String transformaCoordenadaX(int coordenadaX)
         {
-            case 0:
-                cI = "A";
-            case 1:
-                cI = "B";
-                break;
-            case 2:
-                cI = "C";
-                break;
-            case 3:
-                cI = "D";
-                break;
-            case 4:
-                cI = "E";
-                break;
-            case 5:
-                cI = "F";
-                break;
-            case 6:
-                cI = "G";
-                break;
-            case 7:
-                cI = "H";
-                break;
-            case 8:
-                cI = "I";
-                break;
-            case 9:
-                cI = "J";
-                break;
-            case 10:
-                cI = "K";
-                break;
-            case 11:
-                cI = "L";
-                break;
-            case 12:
-                cI = "M";
-                break;
-            case 13:
-                cI = "N";
-                break;
-            case 14:
-                cI = "O";
-                break;
-            default:
-                cI = "ERROR";
-                break;
+            String cX = new String("ERROR");
+            if(coordenadaX == 0)
+                cX = "A";
+            if(coordenadaX == 1)
+                cX = "B";
+            if(coordenadaX == 2)
+                cX = "C";
+            if(coordenadaX == 3)
+                cX = "D";
+            if(coordenadaX == 4)
+                cX = "E";
+            if(coordenadaX == 5)
+                cX = "F";
+            if(coordenadaX == 6)
+                cX = "G";
+            if(coordenadaX == 7)
+                cX = "H";
+            if(coordenadaX == 8)
+                cX = "I";
+            if(coordenadaX == 9)
+                cX = "J";
+            if(coordenadaX == 10)
+                cX = "K";
+            if(coordenadaX == 11)
+                cX = "L";
+            if(coordenadaX == 12)
+                cX = "M";
+            if(coordenadaX == 13)
+                cX = "N";
+            if(coordenadaX == 14)
+                cX = "O";
+            return cX;
         }
-        return cI;
-    }
 
     @Override
     public String toString() {
@@ -107,7 +86,7 @@ public class Casilla {
                 +"Usado: " + usado + "\n" 
                 +"Niebla: " + tieneNiebla + "\n" 
                 +"NoVisitas: " + noVisitas.toString() + "\n"
-                +"Coordenada: (" + transformaCoordenadaJ(coordenada.getCoordenadaJ())+", " 
+                +"Coordenada: (" + transformaCoordenadaX(coordenada.getCoordenadaJ())+", " 
                 + (int)(coordenada.getCoordenadaI() + 1) + ")";
     }
 
