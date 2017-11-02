@@ -105,7 +105,7 @@ public class Tablero {
 		}
 	}
 
-
+	
 	private void llenarMapaConLosPesosDelJugadorActual() {
 		for(Casilla []renglon: mapa) {
 			for(Casilla c : renglon) {
@@ -121,6 +121,7 @@ public class Tablero {
 		System.out.println("");
 	}
 
+	//Utilizado como utileria en el metodo dameJTree
 	private DefaultMutableTreeNode agregarHijos (TreeNode<String> nodo, DefaultMutableTreeNode visualNodo) {	
 		for (TreeNode<String> n : nodo.children) {
 			//n.data;
@@ -139,6 +140,7 @@ public class Tablero {
 		return visualNodo;	
 	}
 
+	//Este metodo regresa un JTree. que es usado para imprimir en pantalla el objeto TreeNode. utiliza el atributo arbol
 	public JTree dameJTree() {
 
 		String coordenada = arbol.data;
