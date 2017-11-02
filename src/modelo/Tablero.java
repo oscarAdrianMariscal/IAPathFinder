@@ -155,20 +155,22 @@ public class Tablero {
 	}
 
 
-
+	//Este metodo es el crea crea y actualiza el arbol, recibimos las coordena x,y como si fuera un plano cartesiano
 	public void hacerMovimiento(int x, int y)
 	{
-		//System.out.print(x + " : " + y );
-		
+		//Lo tengo para que se cree el arbol en el primer movimiento.
 		if (arbol==null) {
 			inicializarArbol(x, y);
 		}
+		//Para revisar si el "movimiento" es igual al padre, es decir se regreso.
 		if (nodoActual.parent != null && nodoActual.parent.data.equals(convertXYaCoord(x, y))) {
 			//panico panico se regreso en su camino. 
 			nodoActual = nodoActual.parent;
 			return;
 		}
 		
+		//Buscamos en todos los hijos del nodoActual, y obtenemos a cual nos vamos a mover. cuando lo obtenemos lo "convertimos"
+		// en el nodo actual. 
 		for (TreeNode<String> nodo : nodoActual.children) {
 			String nombreNodo = convertXYaCoord(x, y);
 			if (nodo.data.equals(nombreNodo)) {
@@ -176,15 +178,22 @@ public class Tablero {
 			}
 		}
 		boolean esRaiz = (nodoActual.parent == null); 
+		//Aquí estoy usando la cadena ordenExpansion para simular el orden de expansion, la cadena es algo como 
+		// URDL = up , right, down left por sus siglas. 
 		for (char direccion: ordenExpansion.toCharArray()) {
 			if (direccion == 'U') {
+				//Obtengo el nombre del nodo del de arriba este puede ser A1,C4... etc descripto por $CARACTER$DIGITOS
 				String arriba = convertXYaCoord(x,y-1);
 				//System.out.println( " "+arriba + " " );
+				//Aquí validamos si es valido, es decir si no se desborda del tablero de datos o el costo == -1
+				//también valido que no sea igual al padre, para no expandirlo.
 				if (esValidoArriba(x, y) && (esRaiz || ! nodoActual.parent.data.equals(arriba))  ) {
+					//Checo que el nodo no exista ya en los hijos, para no duplicar en el caso que se regrese en el camino
 					if (! yaExisteEnLosHijos(nodoActual, arriba))
 						nodoActual.addChild(arriba);
 				}
 			}
+			
 			if (direccion == 'R') {
 				String derecha= convertXYaCoord(x+1,y);
 				//System.out.println( " "+derecha + " " );
@@ -227,6 +236,7 @@ public class Tablero {
 		nodoActual= arbol;
 	}
 
+	//Valida costo sea diferente de -1 y que no nos desbordemos.
 	public boolean esValidoIzquierda(int x, int y) {
 		
 		return x>0 && mapa[y][x-1].getTerreno().getCosto()!=-1;
@@ -244,6 +254,7 @@ public class Tablero {
 
 	}
 
+	//Imprime  el tablero en consola, usado para debugger nomas.
 	public void imprimirMapa() {
 		for (int i =0 ; i< noRenglones; i++) {
 			for (int j = 0 ; j < noColumnas; j++) {
@@ -259,19 +270,21 @@ public class Tablero {
 	    return String.format("%1$"+length+ "s", string);
 	}
 	
+	//Convierte una coordenada (0,0) a A1 o (2,0) a C1 
 	public String convertXYaCoord(int x, int y) {
 		char letras =  (char)("A".codePointAt(0) + x);
 		return String.valueOf(letras) + String.valueOf(y+1);
 	}
 	
+	//Imprime el arbol en consola, solo para debuggear.
 	public void imprimirArbol() {
-		
 		for (TreeNode<String> node : arbol) {
 			String indent = createIndent(node.getLevel());
 			System.out.println(indent + node.data);
 		}
 	}
 
+	//Metodo de utileria, utilizado cmo auxiliar en imprimirArbol
 	private static String createIndent(int depth) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < depth; i++) {
