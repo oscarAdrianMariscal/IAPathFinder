@@ -19,11 +19,13 @@ import modelo.Terreno;
 public class TableroIU extends JPanel implements ComponentListener, ActionListener{
     
    Controlador controlador; 
-   private int mNumeroDeFilas = 16; 
-   private int mNumeroDeColumnas = 16;
+   private int mNumeroDeFilas = 15; 
+   private int mNumeroDeColumnas = 15;
    private int mSeparacion = 2;
    private static int movimiento;
    private JButton[][] mCasillas = new JButton[mNumeroDeFilas][mNumeroDeColumnas];
+   private JButton[] Columnas= new JButton[mNumeroDeColumnas];
+   private JButton[] Filas= new JButton[mNumeroDeColumnas];
     
    public void acomodar() {
         int ancho = this.getWidth();
@@ -33,11 +35,20 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
         int altoDeCasilla = dimensionMenor / mNumeroDeFilas ;
         int xOffset = (ancho - dimensionMenor) / 2 ; 
         int yOffset = (alto - dimensionMenor) / 2 ; 
+        for( int fila = 0 ; fila < mNumeroDeFilas ; fila ++ ) {
+                JButton temp2 = Filas[fila] ;
+                temp2.setBounds(10, yOffset +fila* altoDeCasilla+45, anchoDeCasilla - mSeparacion+7, altoDeCasilla - mSeparacion );
+               
+            }
+        for( int columna = 0 ; columna < mNumeroDeColumnas ; columna ++ ) {
+                JButton temp3 = Columnas[columna] ;
+                temp3.setBounds(xOffset + columna * anchoDeCasilla,1, anchoDeCasilla - mSeparacion, altoDeCasilla - mSeparacion );
+            }
         
         for( int fila = 0 ; fila < mNumeroDeFilas ; fila ++ ) {  
             for( int columna = 0 ; columna < mNumeroDeColumnas ; columna ++ ) {
                 JButton temp = mCasillas[fila][columna] ;
-                temp.setBounds(xOffset + columna * anchoDeCasilla, yOffset + fila * altoDeCasilla, anchoDeCasilla - mSeparacion, altoDeCasilla - mSeparacion );
+                temp.setBounds(xOffset + columna * anchoDeCasilla, yOffset + fila * altoDeCasilla+45, anchoDeCasilla - mSeparacion, altoDeCasilla - mSeparacion);
             }
         }
     }
@@ -53,8 +64,36 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
         int filaI = 0, columnaI = 0;
         Casilla[][] aux = controlador.getTablero().getMapa();
         for( int fila = 0 ; fila < mNumeroDeFilas ; fila ++ ) {
+                        JButton temp2 = new JButton(String.valueOf(fila+1));
+            Filas[fila]=temp2;
+                this.add(temp2, fila);
             for( int columna = 0 ; columna < mNumeroDeColumnas ; columna ++ ) {
                 JButton temp = new JButton();
+                String a = new String();
+            if(columna==0){a="A";
+            }if(columna==1){ a="B";
+            }if(columna==2){a="C";
+            }if(columna==3){a="D";
+            }if(columna==4){a="E";
+            }if(columna==5){a="F";
+            }if(columna==6){a="G";
+            }if(columna==7){a="H";
+            }if(columna==8){a="I";
+            }if(columna==9){a="J";
+            }if(columna==10){a="K";
+            }if(columna==11){a="L";
+            }if(columna==12){a="M";
+            }if(columna==13){a="N";
+            }if(columna==14){a="O";
+            }if(columna==15){a="P";
+            }
+JButton temp3 = new JButton(String.valueOf(a));
+                Columnas[columna]=temp3; 
+                this.add(temp3, columna);
+               
+               
+                
+                 
                 temp.addActionListener(this);
                 String nombre = new Integer(fila).toString();
                 nombre = nombre + "," + new Integer(columna).toString();
