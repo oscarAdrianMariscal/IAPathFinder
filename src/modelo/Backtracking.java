@@ -171,17 +171,19 @@ public class Backtracking implements Runnable{
 		derecha = 	new Coord(actual.x+1,actual.y);
 		abajo = 	new Coord(actual.x,actual.y+1);
 		izquierda = new Coord(actual.x-1,actual.y);
-		if (actual.toString().equals(arriba.toString())){
+		
+		if (nodoActual.parent.toString().equals(arriba.toString())){
+			controlador.moverArriba(actual.y, actual.x);
+		}
+		else if (nodoActual.parent.toString().equals(derecha.toString())){
+			controlador.moverDerecha(actual.y, actual.x);
+		}
+		else if (nodoActual.parent.toString().equals(abajo.toString())){
 			controlador.moverAbajo(actual.y, actual.x);
 		}
-		else if (actual.toString().equals(derecha.toString())){
-			controlador.moverAbajo(actual.y, actual.x);
-		}
-		else if (actual.toString().equals(abajo.toString())){
-			controlador.moverAbajo(actual.y, actual.x);
-		}
-		else if (actual.toString().equals(izquierda.toString())){
-			controlador.moverAbajo(actual.y, actual.x);
+		else if (nodoActual.parent.toString().equals(izquierda.toString())){
+			controlador.moverIzquierda(actual.y, actual.x);
+			System.out.println("izquierda");
 		}
 
 	}
