@@ -1,11 +1,8 @@
 package controlador;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 
 import modelo.Casilla;
 import modelo.Coordenada;
@@ -14,6 +11,7 @@ import modelo.ParsearArchivo;
 import modelo.Tablero;
 import modelo.Terreno;
 import vista.TableroIU;
+import vista.VentanaPrincipal;
 
 public class Controlador {
 
@@ -33,6 +31,13 @@ public class Controlador {
 
 	ArrayList<Terreno> terrenoConNombres;
 	ArrayList<Jugador> jugadores = new ArrayList<>();
+	//Para enviar los movimientos desde el algoritmo
+	VentanaPrincipal tableroVisual;
+	
+	
+	public void moverDerecha(int x,int y) {
+		tableroVisual.hacerMovimientoDerecha(x, y);
+	}
 
 	/*
     public Controlador() {
@@ -130,5 +135,9 @@ public class Controlador {
 				tablero.getCoordenadaEspecial(i, j).reiniciaNoVisitas();
 			}
 		}
+	}
+
+	public void setTableroVisual(VentanaPrincipal tableroVisual) {
+		this.tableroVisual = tableroVisual;
 	}
 }

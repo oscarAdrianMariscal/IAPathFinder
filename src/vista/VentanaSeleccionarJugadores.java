@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -24,12 +25,9 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import controlador.Controlador;
+import modelo.Backtracking;
 import modelo.Coordenada;
 import modelo.Terreno;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.MatteBorder;
-import javax.swing.ImageIcon;
 
 public class VentanaSeleccionarJugadores extends JFrame {
 
@@ -397,7 +395,13 @@ public class VentanaSeleccionarJugadores extends JFrame {
 				
 				if( controlador.getTablero().posicionInicialEsValida()){
 					VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(controlador);
+					controlador.setTableroVisual(ventanaPrincipal);
 					ventanaPrincipal.setVisible(true);
+	                Backtracking algoritmo =new Backtracking(controlador.getTablero(),controlador);
+	                VentanaArbol ventana = new VentanaArbol(algoritmo.dameJTree());
+	                ventana.setVisible(true);
+	                //controlador.getTablero().imprimirArbol();
+	                
 				}
 				else {
 					JOptionPane.showMessageDialog(new JFrame(), "posicion inicial no valida",  "Error",

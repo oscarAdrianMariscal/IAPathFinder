@@ -11,10 +11,15 @@ import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.*;
+
+import com.tree.TreeNode;
+
+import modelo.Backtracking;
 import modelo.Casilla;
 import modelo.Coordenada;
 import modelo.Jugador;
 import modelo.Terreno;
+import sun.security.x509.AlgorithmId;
 
 public class TableroIU extends JPanel implements ComponentListener, ActionListener{
     
@@ -147,7 +152,7 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
             if(controlador.getTablero().getFin().getCoordenadaJ() == renglon-1 && controlador.getTablero().getFin().getCoordenadaI() == columna)
             {
                 JOptionPane.showMessageDialog(null, "Felicidades, ha llegado a la meta");
-                abrirArbol();
+                //
                 controlador.eliminarJugador(0);
                 controlador.reiniciaArregloVisitas();
                 controlador.getTablero().reiniciarCasillasUsadas();
@@ -155,11 +160,13 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
        }
     }
     
-    public void abrirArbol() {
-    	VentanaArbol ventana = new VentanaArbol(controlador.getTablero().dameJTree());
+    public void abrirArbol(JTree arbol) {
+    	VentanaArbol ventana = new VentanaArbol(arbol);
         ventana.setVisible(true);
         controlador.getTablero().imprimirArbol();
     }
+    
+    
     
     public void moverAbajo(int renglon, int columna)
     {
@@ -205,7 +212,11 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
            if(controlador.getTablero().getFin().getCoordenadaJ() == renglon+1 && controlador.getTablero().getFin().getCoordenadaI() == columna)
             {
                 JOptionPane.showMessageDialog(null, "Felicidades, ha llegado a la meta");
-                abrirArbol();
+                //Backtracking algoritmo =new Backtracking(controlador.getTablero(),controlador);
+                //abrirArbol(algoritmo.dameJTree());
+                //
+                Backtracking algoritmoBusqueda= new Backtracking(controlador.getTablero(),controlador);
+                algoritmoBusqueda.getArbol();
                 controlador.eliminarJugador(0);
                 controlador.reiniciaArregloVisitas();
                 controlador.getTablero().reiniciarCasillasUsadas();
@@ -257,7 +268,7 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
             if(controlador.getTablero().getFin().getCoordenadaJ() == renglon && controlador.getTablero().getFin().getCoordenadaI() == columna-1)
             {
                 JOptionPane.showMessageDialog(null, "Felicidades, ha llegado a la meta");
-                abrirArbol();
+                //abrirArbol(controlador.getTablero().dameJTree());
                 controlador.eliminarJugador(0);
                 controlador.reiniciaArregloVisitas();
                 controlador.getTablero().reiniciarCasillasUsadas();
@@ -309,7 +320,9 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
             if(controlador.getTablero().getFin().getCoordenadaJ() == renglon && controlador.getTablero().getFin().getCoordenadaI() == columna+1)
             {
                 JOptionPane.showMessageDialog(null, "Felicidades, ha llegado a la meta");
-                abrirArbol();
+                //abrirArbol(controlador.getTablero().dameJTree());
+                //Backtracking algoritmo =new Backtracking(controlador.getTablero(),controlador);
+                //abrirArbol(controlador.getTablero().dameJTree(algoritmo.getArbol()));
                 controlador.eliminarJugador(0);
                 controlador.reiniciaArregloVisitas();
                 controlador.getTablero().reiniciarCasillasUsadas();

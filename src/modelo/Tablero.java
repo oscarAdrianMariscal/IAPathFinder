@@ -124,8 +124,6 @@ public class Tablero {
 	//Utilizado como utileria en el metodo dameJTree
 	private DefaultMutableTreeNode agregarHijos (TreeNode<String> nodo, DefaultMutableTreeNode visualNodo) {	
 		for (TreeNode<String> n : nodo.children) {
-			//n.data;
-			//n
 			String coordenada = n.data;
 			String letra = coordenada.substring(0, 1);
 			String numeros = coordenada.substring(1,coordenada.length());
@@ -141,9 +139,9 @@ public class Tablero {
 	}
 
 	//Este metodo regresa un JTree. que es usado para imprimir en pantalla el objeto TreeNode. utiliza el atributo arbol
-	public JTree dameJTree() {
+	public JTree dameJTree(TreeNode<String> tree) {
 
-		String coordenada = arbol.data;
+		String coordenada = tree.data;
 		String letra = coordenada.substring(0, 1);
 		String numeros = coordenada.substring(1,coordenada.length());
 		int x = letra.codePointAt(0) - "A".codePointAt(0) ;
@@ -293,6 +291,14 @@ public class Tablero {
 			sb.append(' ');
 		}
 		return sb.toString();
+	}
+
+	public String getOrdenExpansion() {
+		return ordenExpansion;
+	}
+
+	public void setOrdenExpansion(String ordenExpansion) {
+		this.ordenExpansion = ordenExpansion;
 	}
 
 }

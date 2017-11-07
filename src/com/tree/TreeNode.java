@@ -9,6 +9,7 @@ public class TreeNode<T> implements Iterable<TreeNode<T>> {
 	public T data;
 	public TreeNode<T> parent;
 	public List<TreeNode<T>> children;
+	public boolean abierto;
 
 	public boolean isRoot() {
 		return parent == null;
@@ -25,6 +26,7 @@ public class TreeNode<T> implements Iterable<TreeNode<T>> {
 		this.children = new LinkedList<TreeNode<T>>();
 		this.elementsIndex = new LinkedList<TreeNode<T>>();
 		this.elementsIndex.add(this);
+		this.abierto = true;
 	}
 
 	public TreeNode<T> addChild(T child) {
