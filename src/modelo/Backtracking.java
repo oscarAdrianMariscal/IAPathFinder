@@ -39,7 +39,7 @@ public class Backtracking {
 		char letras =  (char)("A".codePointAt(0) + x);
 		return String.valueOf(letras) + String.valueOf(y+1);
 	}
-	
+
 	public Coord coordAXy(String coordenada) {
 		String numero = coordenada.substring(1,coordenada.length());
 		Coord c = new Coord(coordenada.codePointAt(0)-"A".codePointAt(0), Integer.parseInt(numero)-1 );
@@ -48,8 +48,8 @@ public class Backtracking {
 
 	public Backtracking(Tablero t , Controlador c) {
 		tablero = t;
-		mapa = tablero.getMapa();
-		ordenExpansion = tablero.getOrdenExpansion();
+
+		//ordenExpansion = tablero.getOrdenExpansion();
 		inicio = new Coord(tablero.getInicio().getCoordenadaJ(),tablero.getInicio().getCoordenadaI());
 		meta = new Coord( tablero.getFin().getCoordenadaI(),tablero.getFin().getCoordenadaJ());
 		arbol = new TreeNode<String>(convertXYaCoord(inicio.x,inicio.y));
@@ -59,8 +59,8 @@ public class Backtracking {
 		controlador = c;
 		hacerBacktracking(inicio);
 	}
-	
-	
+
+
 
 	/*
 	 	Backtracking
@@ -89,29 +89,32 @@ public class Backtracking {
 			derecha = 	new Coord(actual.x+1,actual.y);
 			abajo = 	new Coord(actual.x,actual.y+1);
 			izquierda = new Coord(actual.x-1,actual.y);
-			checkarValidaciones(actual);
+			//checkarValidaciones(actual);
 
 			if (tablero.esValidoArriba(actual.x, actual.y)) {
 				if (agregarHijo(arriba)) {
+					controlador.moverArriba(actual.y, actual.x);
 					hacerBacktracking(arriba);
 					return;
 				}
 			}
 			if (tablero.esValidoDerecha(actual.x, actual.y)) {
 				if (agregarHijo(derecha)){
-					
+					controlador.moverDerecha(actual.y, actual.x);
 					hacerBacktracking(derecha);
 					return;
 				}
 			}
 			if (tablero.esValidoAbajo(actual.x, actual.y)) {
 				if (agregarHijo(abajo)) {
+					controlador.moverAbajo(actual.y, actual.x);
 					hacerBacktracking(abajo);
 					return;	
 				}
 			}
 			if (tablero.esValidoIzquierda(actual.x, actual.y)) {
 				if (agregarHijo(izquierda)) {
+					controlador.moverIzquierda(actual.y, actual.x);
 					hacerBacktracking(izquierda);
 					return;
 				}
@@ -119,6 +122,7 @@ public class Backtracking {
 			TreeNode<String> nodo = arbol.findTreeNode(actual.toString());
 			nodo.abierto=false;
 			nodoActual=nodo;
+			moverVisualAlPadre(actual);
 			hacerBacktracking(coordAXy(nodo.parent.data) );
 		}
 	}
@@ -135,7 +139,7 @@ public class Backtracking {
 		System.out.println("Abajo: " + tablero.esValidoAbajo(abajo.x, abajo.y));
 		System.out.println("izquierda: " + tablero.esValidoIzquierda(izquierda.x, izquierda.y));
 		System.out.println("---------------------");
-		
+
 	}
 
 	public boolean agregarHijo(Coord posicion) {
@@ -150,16 +154,37 @@ public class Backtracking {
 				seEncontroLaMeta = true;
 			}
 			return true;
-			
+
 		}
 		return false;
+	}
+
+	public void moverVisualAlPadre(Coord actual) {
+		Coord arriba,derecha,abajo,izquierda;
+		arriba = 	new Coord(actual.x,actual.y-1);
+		derecha = 	new Coord(actual.x+1,actual.y);
+		abajo = 	new Coord(actual.x,actual.y+1);
+		izquierda = new Coord(actual.x-1,actual.y);
+		if (actual.toString().equals(arriba.toString())){
+			controlador.moverAbajo(actual.y, actual.x);
+		}
+		else if (actual.toString().equals(derecha.toString())){
+			controlador.moverAbajo(actual.y, actual.x);
+		}
+		else if (actual.toString().equals(abajo.toString())){
+			controlador.moverAbajo(actual.y, actual.x);
+		}
+		else if (actual.toString().equals(izquierda.toString())){
+			controlador.moverAbajo(actual.y, actual.x);
+		}
+
 	}
 
 	public TreeNode<String> getArbol() {
 		return arbol;
 	}
-	
-	
+
+
 	private DefaultMutableTreeNode agregarHijos (TreeNode<String> nodo, DefaultMutableTreeNode visualNodo) {	
 		for (TreeNode<String> n : nodo.children) {
 			String coordenada = n.data;
@@ -168,19 +193,19 @@ public class Backtracking {
 			int x = letra.codePointAt(0) - "A".codePointAt(0) ;
 			int y = Integer.parseInt(numeros)-1;
 			mapa[y][x].getNoVisitas();
-			System.out.println(letra + "--" + numeros);
+
 			DefaultMutableTreeNode rama = new DefaultMutableTreeNode(n.data + mapa[y][x].getNoVisitas());
 			visualNodo.add(rama);
 			agregarHijos(n, rama);
 		}
 		return visualNodo;	
 	}
-	
+
 	public void moverJugadorDerecha(Coord cord) {
 		controlador.moverDerecha(cord.x, cord.y);
 	}
-	
-	
+
+
 	public JTree dameJTree() {
 
 		String coordenada = arbol.data;
@@ -188,7 +213,7 @@ public class Backtracking {
 		String numeros = coordenada.substring(1,coordenada.length());
 		int x = letra.codePointAt(0) - "A".codePointAt(0) ;
 		int y = Integer.parseInt(numeros)-1;
-		
+		mapa = tablero.getMapa();
 		DefaultMutableTreeNode rootVisual = new DefaultMutableTreeNode(arbol.data + mapa[y][x].getNoVisitas());
 		DefaultMutableTreeNode modeloDeArbolCompleto = agregarHijos(arbol, rootVisual);
 

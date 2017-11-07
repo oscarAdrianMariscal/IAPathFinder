@@ -1,8 +1,9 @@
 package controlador;
 
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
+
+import javax.swing.JFrame;
 
 import modelo.Casilla;
 import modelo.Coordenada;
@@ -15,29 +16,18 @@ import vista.VentanaPrincipal;
 
 public class Controlador {
 
-
-	//Archivo
-
 	public boolean esValidoElMapa;
 	public boolean esValidaPosicionInicial;
 	public boolean nuevaPartida;
-
-
 	Tablero tablero;
-
 	Casilla [][]mapaSinDatos;
 	Casilla [][]mapaConNombres;
 	ArrayList<Terreno> terrenoSinPesos;
-
 	ArrayList<Terreno> terrenoConNombres;
 	ArrayList<Jugador> jugadores = new ArrayList<>();
-	//Para enviar los movimientos desde el algoritmo
-	VentanaPrincipal tableroVisual;
-	
-	
-	public void moverDerecha(int x,int y) {
-		tableroVisual.hacerMovimientoDerecha(x, y);
-	}
+
+        VentanaPrincipal vP;
+
 
 	/*
     public Controlador() {
@@ -137,7 +127,28 @@ public class Controlador {
 		}
 	}
 
-	public void setTableroVisual(VentanaPrincipal tableroVisual) {
-		this.tableroVisual = tableroVisual;
-	}
+        
+        public void moverArriba(int renglon, int columna)
+        {
+            vP.hacerMovimientoArriba(renglon, columna);
+        }
+        
+        public void moverAbajo(int renglon, int columna)
+        {
+            vP.hacerMovimientoAbajo(renglon, columna);
+        }
+        
+        public void moverIzquierda(int renglon, int columna)
+        {
+            vP.hacerMovimientoIzquierda(renglon, columna);
+        }
+        
+        public void moverDerecha(int renglon, int columna)
+        {
+            vP.hacerMovimientoDerecha(renglon, columna);
+        }
+
+		public void setvP(VentanaPrincipal vP) {
+			this.vP = vP;
+		}
 }

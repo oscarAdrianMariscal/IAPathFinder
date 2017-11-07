@@ -33,7 +33,7 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
         
         setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(50,0,800,750);
+        setBounds(50,0,950,750);
         setResizable(false);
         
         contentPane = new JPanel();
@@ -73,7 +73,7 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
             if (e.VK_ESCAPE==e.getKeyCode())
             {
                 int respuesta = JOptionPane.showConfirmDialog(this,
-                "Esta seguro que desea salir?", "Confirmación",
+                "Esta seguro que desea salir?", "Confirmaciï¿½n",
                 JOptionPane.YES_NO_OPTION);
                 if (respuesta == JOptionPane.YES_NO_OPTION)
                 {
