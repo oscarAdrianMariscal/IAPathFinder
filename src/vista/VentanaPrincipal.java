@@ -1,18 +1,26 @@
 package vista;
 
-import controlador.Controlador;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.*;
-import modelo.Tablero;
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import javax.swing.border.EmptyBorder;
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import controlador.Controlador;
+import modelo.Backtracking;
 import modelo.Casilla;
 import modelo.Coordenada;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VentanaPrincipal extends JFrame implements KeyListener {
     
@@ -25,13 +33,14 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
     JTextArea txtarea31;
     JTextField jtf31;
     JTextField jtf32;
+    private JButton btnNewButton;
     
     public VentanaPrincipal(Controlador controlador)
     {
         this.controlador = controlador;
         tableroIU = new TableroIU(controlador);
         
-        setLayout(new BorderLayout());
+        getContentPane().setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(50,0,950,750);
         setResizable(false);
@@ -58,11 +67,29 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
         txtarea31.addKeyListener(this);
         
         jDatos.add(txtarea31, BorderLayout.CENTER);
-        contentPane.add(jDatos, BorderLayout.EAST); 
+        contentPane.add(jDatos, BorderLayout.EAST);
+        
+        btnNewButton = new JButton("Ejecutar algoritmo");
+        btnNewButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		ejecutarAlgoritmo();
+        	}
+        });
+        jDatos.add(btnNewButton, BorderLayout.NORTH);
+        
+        
+
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
+    }
+    
+    public void ejecutarAlgoritmo() {
+    	new Thread(new Backtracking(controlador.getTablero(),controlador)).start();
+    	Backtracking algoritmo =new Backtracking(controlador.getTablero(),controlador);
+        //VentanaArbol ventana = new VentanaArbol(algoritmo.dameJTree());
+        //ventana.setVisible(true); 
     }
  
     /**Este metodo se ejecuta cuando se suelta una tecla*/

@@ -7,7 +7,7 @@ import com.tree.TreeNode;
 
 import controlador.Controlador;
 
-public class Backtracking {
+public class Backtracking implements Runnable{
 
 	class Coord
 	{
@@ -57,7 +57,7 @@ public class Backtracking {
 		nodoActual= arbol;
 		seEncontroLaMeta =false;
 		controlador = c;
-		hacerBacktracking(inicio);
+		
 	}
 
 
@@ -91,6 +91,12 @@ public class Backtracking {
 			izquierda = new Coord(actual.x-1,actual.y);
 			//checkarValidaciones(actual);
 
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			if (tablero.esValidoArriba(actual.x, actual.y)) {
 				if (agregarHijo(arriba)) {
 					controlador.moverArriba(actual.y, actual.x);
@@ -219,6 +225,14 @@ public class Backtracking {
 
 		return new JTree(modeloDeArbolCompleto);
 	}
+
+	@Override
+	public void run() {
+		hacerBacktracking(inicio);
+		
+	}
+	
+	
 
 
 

@@ -395,12 +395,14 @@ public class VentanaSeleccionarJugadores extends JFrame {
 				
 				if( controlador.getTablero().posicionInicialEsValida()){
 					VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(controlador);
-					ventanaPrincipal.setVisible(true);
 					controlador.setvP(ventanaPrincipal);
-	                Backtracking algoritmo =new Backtracking(controlador.getTablero(),controlador);
-	                VentanaArbol ventana = new VentanaArbol(algoritmo.dameJTree());
+					ventanaPrincipal.setVisible(true);
+					
+					
+//	                Backtracking algoritmo =new Backtracking(controlador.getTablero(),controlador);
+//	                VentanaArbol ventana = new VentanaArbol(algoritmo.dameJTree());
 	                
-	                ventana.setVisible(true); 
+//	                ventana.setVisible(true); 
 	                //controlador.getTablero().imprimirArbol();
 	                
 				}
