@@ -14,7 +14,8 @@ public class VentanaArbol extends JFrame {
 
 	private JPanel contentPane;
 
-	public VentanaArbol(JTree arbol) {
+	public VentanaArbol(JTree arbol,String titulo) {
+		setTitle(titulo);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 //super("Arbol Generado");
 		setBounds(100, 100, 450, 300);
@@ -25,7 +26,7 @@ public class VentanaArbol extends JFrame {
                 JScrollPane scrPane = new JScrollPane(contentPane);
 		JButton button = new JButton("New button");
 		contentPane.add(arbol, BorderLayout.CENTER);
-                add(scrPane);
+                getContentPane().add(scrPane);
 	}
 
 }

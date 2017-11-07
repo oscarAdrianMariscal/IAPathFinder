@@ -2,6 +2,8 @@ package vista;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -13,14 +15,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JTree;
 import javax.swing.border.EmptyBorder;
 
 import controlador.Controlador;
 import modelo.Backtracking;
 import modelo.Casilla;
 import modelo.Coordenada;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class VentanaPrincipal extends JFrame implements KeyListener {
     
@@ -86,10 +87,19 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
     }
     
     public void ejecutarAlgoritmo() {
-    	new Thread(new Backtracking(controlador.getTablero(),controlador)).start();
     	Backtracking algoritmo =new Backtracking(controlador.getTablero(),controlador);
-        //VentanaArbol ventana = new VentanaArbol(algoritmo.dameJTree());
-        //ventana.setVisible(true); 
+    	Thread hilo = new Thread(algoritmo);
+    	hilo.start();
+    	
+    	
+    	
+    	//
+
+    }
+    
+    public void mostarArbol(JTree arbol,String titulo) {
+    	VentanaArbol ventana = new VentanaArbol(arbol,titulo);
+        ventana.setVisible(true); 
     }
  
     /**Este metodo se ejecuta cuando se suelta una tecla*/

@@ -1,9 +1,9 @@
 package controlador;
 
 import java.util.ArrayList;
-import javax.swing.ImageIcon;
 
-import javax.swing.JFrame;
+import javax.swing.ImageIcon;
+import javax.swing.JTree;
 
 import modelo.Casilla;
 import modelo.Coordenada;
@@ -11,7 +11,7 @@ import modelo.Jugador;
 import modelo.ParsearArchivo;
 import modelo.Tablero;
 import modelo.Terreno;
-import vista.TableroIU;
+import vista.VentanaArbol;
 import vista.VentanaPrincipal;
 
 public class Controlador {
@@ -150,5 +150,9 @@ public class Controlador {
 
 		public void setvP(VentanaPrincipal vP) {
 			this.vP = vP;
+		}
+		
+		public void mostrarArbol(JTree arbol, String titulo) {
+	        vP.mostarArbol(arbol,titulo);
 		}
 }

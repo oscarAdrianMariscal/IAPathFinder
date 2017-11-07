@@ -1,7 +1,10 @@
 package modelo;
 
+import java.util.Enumeration;
+
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.MutableTreeNode;
 
 import com.tree.TreeNode;
 
@@ -224,15 +227,33 @@ public class Backtracking implements Runnable{
 		mapa = tablero.getMapa();
 		DefaultMutableTreeNode rootVisual = new DefaultMutableTreeNode(arbol.data + mapa[y][x].getNoVisitas());
 		DefaultMutableTreeNode modeloDeArbolCompleto = agregarHijos(arbol, rootVisual);
-
 		return new JTree(modeloDeArbolCompleto);
 	}
+	
+	public JTree dameSolucion() {
+		TreeNode<String> nodo= nodoActual;
+		DefaultMutableTreeNode rootVisual = new DefaultMutableTreeNode(nodo.data);
+		DefaultMutableTreeNode rama = rootVisual; 
+		do {
+			nodo = nodo.parent;
+			
+			DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(nodo.data); 
+			rama.add(hijo);
+			rama = hijo;
+			
+		}while (!nodo.isRoot());
+		return new JTree(rootVisual);
+	}
+	
 
 	@Override
 	public void run() {
 		hacerBacktracking(inicio);
 		
+		controlador.mostrarArbol(dameJTree(), "El arbol de expansion");
+		controlador.mostrarArbol(dameSolucion() , "La solución");
 	}
+	
 	
 	
 
