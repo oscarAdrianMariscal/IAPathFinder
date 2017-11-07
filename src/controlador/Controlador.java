@@ -3,10 +3,8 @@ package controlador;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-
 import modelo.Casilla;
 import modelo.Coordenada;
 import modelo.Jugador;
@@ -14,25 +12,20 @@ import modelo.ParsearArchivo;
 import modelo.Tablero;
 import modelo.Terreno;
 import vista.TableroIU;
+import vista.VentanaPrincipal;
 
 public class Controlador {
-
-
-	//Archivo
 
 	public boolean esValidoElMapa;
 	public boolean esValidaPosicionInicial;
 	public boolean nuevaPartida;
-
-
 	Tablero tablero;
-
 	Casilla [][]mapaSinDatos;
 	Casilla [][]mapaConNombres;
 	ArrayList<Terreno> terrenoSinPesos;
-
 	ArrayList<Terreno> terrenoConNombres;
 	ArrayList<Jugador> jugadores = new ArrayList<>();
+        VentanaPrincipal vP;
 
 	/*
     public Controlador() {
@@ -131,4 +124,24 @@ public class Controlador {
 			}
 		}
 	}
+        
+        public void moverArriba(int renglon, int columna)
+        {
+            vP.hacerMovimientoArriba(renglon, columna);
+        }
+        
+        public void moverAbajo(int renglon, int columna)
+        {
+            vP.hacerMovimientoAbajo(renglon, columna);
+        }
+        
+        public void moverIzquierda(int renglon, int columna)
+        {
+            vP.hacerMovimientoIzquierda(renglon, columna);
+        }
+        
+        public void moverDerecha(int renglon, int columna)
+        {
+            vP.hacerMovimientoDerecha(renglon, columna);
+        }
 }
