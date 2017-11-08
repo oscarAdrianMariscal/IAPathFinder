@@ -32,6 +32,7 @@ public class Backtracking implements Runnable{
 	Coord inicio;
 	Coord meta;
 	Controlador controlador;
+	static int visitaActual;
 
 	//Deberia de crear una clase de utilerias en java, para no reescribir este código.
 	public String convertXYaCoord(int x, int y) {
@@ -47,12 +48,13 @@ public class Backtracking implements Runnable{
 
 	public Backtracking(Tablero t , Controlador c) {
 		tablero = t;
-
+		visitaActual=1;
 		//ordenExpansion = tablero.getOrdenExpansion();
 		inicio = new Coord(tablero.getInicio().getCoordenadaI(),tablero.getInicio().getCoordenadaJ());
 		meta = new Coord( tablero.getFin().getCoordenadaI(),tablero.getFin().getCoordenadaJ());
 		arbol = new TreeNode<String>(convertXYaCoord(inicio.x,inicio.y));
-		//actual = inicio;
+		arbol.visitas.add(visitaActual);
+		visitaActual++;
 		nodoActual= arbol;
 		seEncontroLaMeta =false;
 		controlador = c;
@@ -88,6 +90,7 @@ public class Backtracking implements Runnable{
 			derecha = 	new Coord(actual.x+1,actual.y);
 			abajo = 	new Coord(actual.x,actual.y+1);
 			izquierda = new Coord(actual.x-1,actual.y);
+			
 			boolean yaSeIntrodujoArriba = arbol.findTreeNode(arriba.toString()) !=null;
 			boolean yaSeIntrodujoDerecha = arbol.findTreeNode(arriba.toString()) !=null;
 			boolean yaSeIntrodujoAbajo = arbol.findTreeNode(arriba.toString()) !=null;
@@ -153,7 +156,13 @@ public class Backtracking implements Runnable{
 			TreeNode<String> nodo = arbol.findTreeNode(actual.toString());
 			nodo.abierto=false;
 			nodoActual=nodo;
+			//Agregar dos veces
+			if (nodoActual.visitas.get(nodoActual.visitas.size()-1)+1 != visitaActual) {
+				nodoActual.visitas.add(visitaActual);
+				visitaActual++;				
+			}
 			moverVisualAlPadre(actual);
+			nodoActual = nodo.parent;
 			hacerBacktracking(coordAXy(nodo.parent.data) );
 		}
 	}
@@ -180,6 +189,8 @@ public class Backtracking implements Runnable{
 		TreeNode<String> nodo = arbol.findTreeNode(posicion.toString());
 		if (nodo == null) {
 			nodoActual = nodoActual.addChild(posicion.toString());
+			nodoActual.visitas.add(visitaActual);
+			visitaActual++;
 			if (nodoActual.data.equals(meta.toString())) {
 				seEncontroLaMeta = true;
 			}
@@ -227,7 +238,8 @@ public class Backtracking implements Runnable{
 			int y = Integer.parseInt(numeros)-1;
 			mapa[y][x].getNoVisitas();
 
-			DefaultMutableTreeNode rama = new DefaultMutableTreeNode(n.data + mapa[y][x].getNoVisitas());
+			DefaultMutableTreeNode rama = new DefaultMutableTreeNode(n.data + n.visitas);
+			
 			visualNodo.add(rama);
 			agregarHijos(n, rama);
 		}
@@ -246,8 +258,8 @@ public class Backtracking implements Runnable{
 		String numeros = coordenada.substring(1,coordenada.length());
 		int x = letra.codePointAt(0) - "A".codePointAt(0) ;
 		int y = Integer.parseInt(numeros)-1;
-		mapa = tablero.getMapa();
-		DefaultMutableTreeNode rootVisual = new DefaultMutableTreeNode(arbol.data + mapa[y][x].getNoVisitas());
+		mapa = controlador.getTablero().getMapa();
+		DefaultMutableTreeNode rootVisual = new DefaultMutableTreeNode(arbol.data + arbol.visitas);
 		DefaultMutableTreeNode modeloDeArbolCompleto = agregarHijos(arbol, rootVisual);
 		return new JTree(modeloDeArbolCompleto);
 	}
@@ -276,23 +288,7 @@ public class Backtracking implements Runnable{
 		controlador.mostrarArbol(dameSolucion() , "La solución");
 	}
 
-	/*
-	 for (char direccion: ordenExpansion.toCharArray()) {
-
-            if (direccion == 'U') {
-
-			}
-
-			if (direccion == 'R') {
-
-			}
-			if (direccion == 'D') {
-
-			}
-			if (direccion == 'L') {
-
-			}
-		}
-
-	 */
+	public void setControlador(Controlador controlador) {
+		this.controlador = controlador;
+	}
 }

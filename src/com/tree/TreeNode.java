@@ -1,5 +1,6 @@
 package com.tree;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,6 +11,7 @@ public class TreeNode<T> implements Iterable<TreeNode<T>> {
 	public TreeNode<T> parent;
 	public List<TreeNode<T>> children;
 	public boolean abierto;
+	public ArrayList<Integer> visitas= new ArrayList<>();
 
 	public boolean isRoot() {
 		return parent == null;

@@ -22,6 +22,7 @@ import controlador.Controlador;
 import modelo.Backtracking;
 import modelo.Casilla;
 import modelo.Coordenada;
+import javax.swing.BoxLayout;
 
 public class VentanaPrincipal extends JFrame implements KeyListener {
     
@@ -35,13 +36,15 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
     JTextField jtf31;
     JTextField jtf32;
     private JButton btnNewButton;
+    private JButton btnMostarArbol;
+    Backtracking algoritmo;
     
     public VentanaPrincipal(Controlador controlador)
     {
         this.controlador = controlador;
         tableroIU = new TableroIU(controlador);
         
-        setLayout(new BorderLayout());
+        getContentPane().setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(50,0,980,700);
         setResizable(false);
@@ -70,13 +73,25 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
         jDatos.add(txtarea31, BorderLayout.CENTER);
         contentPane.add(jDatos, BorderLayout.EAST); 
         
+        JPanel panelAcciones = new JPanel();
+        jDatos.add(panelAcciones, BorderLayout.NORTH);
+        panelAcciones.setLayout(new BoxLayout(panelAcciones, BoxLayout.Y_AXIS));
+        
         btnNewButton = new JButton("Ejecutar algoritmo");
+        panelAcciones.add(btnNewButton);
+        
+        btnMostarArbol = new JButton("Mostrar arboles");
+        btnMostarArbol.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		mostarArbolesDeSolucionYExpansion();
+        	}
+        });
+        panelAcciones.add(btnMostarArbol);
         btnNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		ejecutarAlgoritmo();
         	}
         });
-        jDatos.add(btnNewButton, BorderLayout.NORTH);
     }
     
 
@@ -84,6 +99,11 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
     public void keyPressed(KeyEvent e) {
     }
  
+    public void mostarArbolesDeSolucionYExpansion() {
+    	algoritmo.setControlador(controlador);
+    	mostarArbol(algoritmo.dameJTree(), "Arbol de expansion");
+    	mostarArbol(algoritmo.dameSolucion(), "Solucion"); 
+    }
     /**Este metodo se ejecuta cuando se suelta una tecla*/
     @Override
     public void keyReleased(KeyEvent e) {
@@ -194,9 +214,10 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
     }
     
     public void ejecutarAlgoritmo() {
-    	Backtracking algoritmo =new Backtracking(controlador.getTablero(),controlador);
+    	algoritmo =new Backtracking(controlador.getTablero(),controlador);
     	Thread hilo = new Thread(algoritmo);
     	hilo.start();
+    	
 
     }
 
