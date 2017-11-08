@@ -152,5 +152,6 @@ public class Controlador {
 	
 	public void mostrarArbol(JTree arbol, String titulo) {
 	       	vP.mostarArbol(arbol,titulo);
+	       	//
 	}
 }

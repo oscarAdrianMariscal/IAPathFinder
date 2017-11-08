@@ -195,7 +195,7 @@ JButton temp3 = new JButton(String.valueOf(a));
     }
     
     public void abrirArbol() {
-    	VentanaArbol ventana = new VentanaArbol(controlador.getTablero().dameJTree());
+    	VentanaArbol ventana = new VentanaArbol(controlador.getTablero().dameJTree(),"");
         ventana.setVisible(true);
         controlador.getTablero().imprimirArbol();
     }

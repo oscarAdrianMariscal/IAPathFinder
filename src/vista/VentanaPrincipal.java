@@ -60,6 +60,7 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
         jDatos.add(txtarea31, BorderLayout.CENTER);
         contentPane.add(jDatos, BorderLayout.EAST); 
     }
+    
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -173,4 +174,8 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
 	VentanaPrincipal frame = new VentanaPrincipal(controlador);
 	frame.setVisible(true);			
     }
+
+	public void mostarArbol(JTree arbol, String titulo) {
+		VentanaArbol ventana =new VentanaArbol(arbol, titulo);
+	}
 }
