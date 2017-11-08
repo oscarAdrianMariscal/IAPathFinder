@@ -53,7 +53,7 @@ public class Backtracking implements Runnable{
 		tablero = t;
 
 		//ordenExpansion = tablero.getOrdenExpansion();
-		inicio = new Coord(tablero.getInicio().getCoordenadaJ(),tablero.getInicio().getCoordenadaI());
+		inicio = new Coord(tablero.getInicio().getCoordenadaI(),tablero.getInicio().getCoordenadaJ());
 		meta = new Coord( tablero.getFin().getCoordenadaI(),tablero.getFin().getCoordenadaJ());
 		arbol = new TreeNode<String>(convertXYaCoord(inicio.x,inicio.y));
 		//actual = inicio;
