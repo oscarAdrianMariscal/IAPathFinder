@@ -11,15 +11,10 @@ import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.*;
-
-import com.tree.TreeNode;
-
-import modelo.Backtracking;
 import modelo.Casilla;
 import modelo.Coordenada;
 import modelo.Jugador;
 import modelo.Terreno;
-import sun.security.x509.AlgorithmId;
 
 public class TableroIU extends JPanel implements ComponentListener, ActionListener{
     
@@ -34,7 +29,7 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
     
    public void acomodar() {
         int ancho = this.getWidth();
-        int alto = this.getHeight();
+        int alto = this.getHeight()-40;
         int dimensionMenor = Math.min( ancho , alto ); 
         int anchoDeCasilla = dimensionMenor / mNumeroDeColumnas ; 
         int altoDeCasilla = dimensionMenor / mNumeroDeFilas ;
@@ -42,18 +37,18 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
         int yOffset = (alto - dimensionMenor) / 2 ; 
         for( int fila = 0 ; fila < mNumeroDeFilas ; fila ++ ) {
                 JButton temp2 = Filas[fila] ;
-                temp2.setBounds(10, yOffset +fila* altoDeCasilla+45, anchoDeCasilla - mSeparacion+7, altoDeCasilla - mSeparacion );
+                temp2.setBounds(10, yOffset +fila* altoDeCasilla+45, anchoDeCasilla - mSeparacion+9, altoDeCasilla - mSeparacion );
                
             }
         for( int columna = 0 ; columna < mNumeroDeColumnas ; columna ++ ) {
                 JButton temp3 = Columnas[columna] ;
-                temp3.setBounds(xOffset + columna * anchoDeCasilla,1, anchoDeCasilla - mSeparacion, altoDeCasilla - mSeparacion );
+                temp3.setBounds(xOffset + columna * anchoDeCasilla,1, anchoDeCasilla - mSeparacion+4, altoDeCasilla - mSeparacion-10 );
             }
         
         for( int fila = 0 ; fila < mNumeroDeFilas ; fila ++ ) {  
             for( int columna = 0 ; columna < mNumeroDeColumnas ; columna ++ ) {
                 JButton temp = mCasillas[fila][columna] ;
-                temp.setBounds(xOffset + columna * anchoDeCasilla, yOffset + fila * altoDeCasilla+45, anchoDeCasilla - mSeparacion, altoDeCasilla - mSeparacion);
+                temp.setBounds(xOffset + columna * anchoDeCasilla, yOffset + fila * altoDeCasilla+45, anchoDeCasilla - mSeparacion+1, altoDeCasilla - mSeparacion);
             }
         }
     }
@@ -191,7 +186,7 @@ JButton temp3 = new JButton(String.valueOf(a));
             if(controlador.getTablero().getFin().getCoordenadaJ() == renglon-1 && controlador.getTablero().getFin().getCoordenadaI() == columna)
             {
                 JOptionPane.showMessageDialog(null, "Felicidades, ha llegado a la meta");
-                //
+                abrirArbol();
                 controlador.eliminarJugador(0);
                 controlador.reiniciaArregloVisitas();
                 controlador.getTablero().reiniciarCasillasUsadas();
@@ -199,13 +194,11 @@ JButton temp3 = new JButton(String.valueOf(a));
        }
     }
     
-    public void abrirArbol(JTree arbol,String titulo) {
-    	VentanaArbol ventana = new VentanaArbol(arbol,titulo);
+    public void abrirArbol() {
+    	VentanaArbol ventana = new VentanaArbol(controlador.getTablero().dameJTree());
         ventana.setVisible(true);
         controlador.getTablero().imprimirArbol();
     }
-    
-    
     
     public void moverAbajo(int renglon, int columna)
     {
@@ -251,6 +244,7 @@ JButton temp3 = new JButton(String.valueOf(a));
            if(controlador.getTablero().getFin().getCoordenadaJ() == renglon+1 && controlador.getTablero().getFin().getCoordenadaI() == columna)
             {
                 JOptionPane.showMessageDialog(null, "Felicidades, ha llegado a la meta");
+                abrirArbol();
                 controlador.eliminarJugador(0);
                 controlador.reiniciaArregloVisitas();
                 controlador.getTablero().reiniciarCasillasUsadas();
@@ -302,7 +296,7 @@ JButton temp3 = new JButton(String.valueOf(a));
             if(controlador.getTablero().getFin().getCoordenadaJ() == renglon && controlador.getTablero().getFin().getCoordenadaI() == columna-1)
             {
                 JOptionPane.showMessageDialog(null, "Felicidades, ha llegado a la meta");
-                //abrirArbol(controlador.getTablero().dameJTree());
+                abrirArbol();
                 controlador.eliminarJugador(0);
                 controlador.reiniciaArregloVisitas();
                 controlador.getTablero().reiniciarCasillasUsadas();
@@ -354,6 +348,7 @@ JButton temp3 = new JButton(String.valueOf(a));
             if(controlador.getTablero().getFin().getCoordenadaJ() == renglon && controlador.getTablero().getFin().getCoordenadaI() == columna+1)
             {
                 JOptionPane.showMessageDialog(null, "Felicidades, ha llegado a la meta");
+                abrirArbol();
                 controlador.eliminarJugador(0);
                 controlador.reiniciaArregloVisitas();
                 controlador.getTablero().reiniciarCasillasUsadas();
