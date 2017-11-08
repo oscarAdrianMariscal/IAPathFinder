@@ -1,10 +1,8 @@
 package controlador;
 
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 import javax.swing.JTree;
-
 import modelo.Casilla;
 import modelo.Coordenada;
 import modelo.Jugador;
@@ -148,11 +146,11 @@ public class Controlador {
             vP.hacerMovimientoDerecha(renglon, columna);
         }
 
-		public void setvP(VentanaPrincipal vP) {
-			this.vP = vP;
-		}
-		
-		public void mostrarArbol(JTree arbol, String titulo) {
-	        vP.mostarArbol(arbol,titulo);
-		}
+	public void setvP(VentanaPrincipal vP) {
+		this.vP = vP;
+	}
+	
+	public void mostrarArbol(JTree arbol, String titulo) {
+	       	vP.mostarArbol(arbol,titulo);
+	}
 }

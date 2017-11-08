@@ -1,13 +1,10 @@
-package modelo;
+﻿package modelo;
 
 import java.util.Enumeration;
-
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
-
 import com.tree.TreeNode;
-
 import controlador.Controlador;
 
 public class Backtracking implements Runnable{
@@ -253,10 +250,4 @@ public class Backtracking implements Runnable{
 		controlador.mostrarArbol(dameJTree(), "El arbol de expansion");
 		controlador.mostrarArbol(dameSolucion() , "La solución");
 	}
-	
-	
-	
-
-
-
 }
