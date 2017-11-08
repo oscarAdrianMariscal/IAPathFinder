@@ -91,11 +91,9 @@ public class Backtracking implements Runnable{
 			abajo = 	new Coord(actual.x,actual.y+1);
 			izquierda = new Coord(actual.x-1,actual.y);
 			
-			boolean yaSeIntrodujoArriba = arbol.findTreeNode(arriba.toString()) !=null;
-			boolean yaSeIntrodujoDerecha = arbol.findTreeNode(arriba.toString()) !=null;
-			boolean yaSeIntrodujoAbajo = arbol.findTreeNode(arriba.toString()) !=null;
-			boolean yaSeIntrodujoIzquierda = arbol.findTreeNode(arriba.toString()) !=null;
-
+			if (numeroDeHijos(actual)<2) {
+				nodoActual.abierto=false;
+			}
 			//checkarValidaciones(actual);
 
 			try {
@@ -106,7 +104,7 @@ public class Backtracking implements Runnable{
 			}
 
 			//"preguntando por las direcciones por orden
-
+			
 			for (char direccion: ordenExpansion.toCharArray()) {
 
 				if (direccion == 'U') {
@@ -238,7 +236,7 @@ public class Backtracking implements Runnable{
 			int y = Integer.parseInt(numeros)-1;
 			mapa[y][x].getNoVisitas();
 
-			DefaultMutableTreeNode rama = new DefaultMutableTreeNode(n.data + n.visitas);
+			DefaultMutableTreeNode rama = new DefaultMutableTreeNode(n.data + n.visitas + n.abierto);
 			
 			visualNodo.add(rama);
 			agregarHijos(n, rama);
@@ -259,9 +257,33 @@ public class Backtracking implements Runnable{
 		int x = letra.codePointAt(0) - "A".codePointAt(0) ;
 		int y = Integer.parseInt(numeros)-1;
 		mapa = controlador.getTablero().getMapa();
-		DefaultMutableTreeNode rootVisual = new DefaultMutableTreeNode(arbol.data + arbol.visitas);
+		DefaultMutableTreeNode rootVisual = new DefaultMutableTreeNode(arbol.data + arbol.visitas + " " + arbol.abierto);
 		DefaultMutableTreeNode modeloDeArbolCompleto = agregarHijos(arbol, rootVisual);
 		return new JTree(modeloDeArbolCompleto);
+	}
+	
+	public int numeroDeHijos(Coord actual) {
+		Coord arriba,derecha,abajo,izquierda;
+		int numeroHijos=0;
+		arriba = 	new Coord(actual.x,actual.y-1);
+		derecha = 	new Coord(actual.x+1,actual.y);
+		abajo = 	new Coord(actual.x,actual.y+1);
+		izquierda = new Coord(actual.x-1,actual.y);
+		
+		if (tablero.esValidoArriba(actual.x, actual.y) && arbol.findTreeNode(arriba.toString())==null) {
+			numeroHijos++;
+		}
+		if (tablero.esValidoDerecha(actual.x, actual.y) && arbol.findTreeNode(derecha.toString())==null) {
+			numeroHijos++;
+		}
+		if ( tablero.esValidoAbajo(actual.x, actual.y) && arbol.findTreeNode(abajo.toString())==null) {
+			numeroHijos++;
+		}
+		if( tablero.esValidoIzquierda(actual.x, actual.y) && arbol.findTreeNode(izquierda.toString())==null) {
+			numeroHijos++;
+		}
+		return numeroHijos;
+		
 	}
 
 	public JTree dameSolucion() {
