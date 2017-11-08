@@ -1,4 +1,3 @@
-
 package modelo;
 
 import java.awt.BorderLayout;
@@ -28,6 +27,7 @@ public class Tablero {
 	private String ordenExpansion;
 	TreeNode<String> arbol;
 	TreeNode<String> nodoActual;
+        TreeNode<String> encontrar;
 
 
 
@@ -128,6 +128,7 @@ public class Tablero {
 			//n.data;
 			//n
 			String coordenada = n.data;
+
 			String letra = coordenada.substring(0, 1);
 			String numeros = coordenada.substring(1,coordenada.length());
 			int x = letra.codePointAt(0) - "A".codePointAt(0) ;
@@ -137,6 +138,7 @@ public class Tablero {
 			DefaultMutableTreeNode rama = new DefaultMutableTreeNode(n.data + mapa[y][x].getNoVisitas());
 			visualNodo.add(rama);
 			agregarHijos(n, rama);
+                       
 		}
 		return visualNodo;	
 	}
@@ -161,8 +163,10 @@ public class Tablero {
 	//Este metodo es el crea crea y actualiza el arbol, recibimos las coordena x,y como si fuera un plano cartesiano
 	public void hacerMovimiento(int x, int y)
 	{
-		//Lo tengo para que se cree el arbol en el primer movimiento.
-		if (arbol==null) {
+            	
+//Lo tengo para que se cree el arbol en el primer movimiento.
+                       
+            if (arbol==null) {
 			inicializarArbol(x, y);
 		}
 		//Para revisar si el "movimiento" es igual al padre, es decir se regreso.
@@ -176,15 +180,23 @@ public class Tablero {
 		// en el nodo actual. 
 		for (TreeNode<String> nodo : nodoActual.children) {
 			String nombreNodo = convertXYaCoord(x, y);
+//                        String nodFin = convertXYaCoord();
 			if (nodo.data.equals(nombreNodo)) {
 				nodoActual = nodo;
 			}
 		}
+                
+                
+                //if(arbol.findTreeNode(Nodo).equals(Nodo)){
+        //nodoActual=Nodo;
+        //}
+                
 		boolean esRaiz = (nodoActual.parent == null); 
 		//Aquí estoy usando la cadena ordenExpansion para simular el orden de expansion, la cadena es algo como 
 		// URDL = up , right, down left por sus siglas. 
 		for (char direccion: ordenExpansion.toCharArray()) {
-			if (direccion == 'U') {
+		
+                if (direccion == 'U') {
 				//Obtengo el nombre del nodo del de arriba este puede ser A1,C4... etc descripto por $CARACTER$DIGITOS
 				String arriba = convertXYaCoord(x,y-1);
 				//System.out.println( " "+arriba + " " );
@@ -192,7 +204,7 @@ public class Tablero {
 				//también valido que no sea igual al padre, para no expandirlo.
 				if (esValidoArriba(x, y) && (esRaiz || ! nodoActual.parent.data.equals(arriba))  ) {
 					//Checo que el nodo no exista ya en los hijos, para no duplicar en el caso que se regrese en el camino
-					if (! yaExisteEnLosHijos(nodoActual, arriba))
+					if (arbol.findTreeNode(arriba)==null)
 						nodoActual.addChild(arriba);
 				}
 			}
@@ -201,7 +213,7 @@ public class Tablero {
 				String derecha= convertXYaCoord(x+1,y);
 				//System.out.println( " "+derecha + " " );
 				if (esValidoDerecha(x, y) &&  (esRaiz || ! nodoActual.parent.data.equals(derecha) )) {
-					if (! yaExisteEnLosHijos(nodoActual, derecha))
+					if (arbol.findTreeNode(derecha)==null)
 						nodoActual.addChild(derecha);
 				}
 			}
@@ -209,7 +221,7 @@ public class Tablero {
 				String abajo = convertXYaCoord(x,y+1);
 				//System.out.println( " "+abajo + " " );
 				if (esValidoAbajo(x, y) && (esRaiz || ! nodoActual.parent.data.equals(abajo) )) {
-					if (! yaExisteEnLosHijos(nodoActual, abajo))
+					if (arbol.findTreeNode(abajo)==null)
 						nodoActual.addChild(abajo);
 				}
 			}
@@ -217,7 +229,7 @@ public class Tablero {
 				String izquierda = convertXYaCoord(x-1,y);
 				System.out.println( " "+izquierda + " " );
 				if (esValidoIzquierda(x, y) && (esRaiz || ! nodoActual.parent.data.equals(izquierda))) {
-					if (! yaExisteEnLosHijos(nodoActual, izquierda))
+					if (arbol.findTreeNode(izquierda)==null)
 						nodoActual.addChild(izquierda);
 				}
 			}
@@ -297,4 +309,3 @@ public class Tablero {
 	}
 
 }
-
