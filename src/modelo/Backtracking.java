@@ -32,7 +32,6 @@ public class Backtracking implements Runnable{
 	Coord inicio;
 	Coord meta;
 	Controlador controlador;
-	//Coord actual;
 
 	//Deberia de crear una clase de utilerias en java, para no reescribir este código.
 	public String convertXYaCoord(int x, int y) {
@@ -57,7 +56,7 @@ public class Backtracking implements Runnable{
 		nodoActual= arbol;
 		seEncontroLaMeta =false;
 		controlador = c;
-		
+		ordenExpansion = controlador.getOrdenDeExpansion();
 	}
 
 
@@ -89,6 +88,11 @@ public class Backtracking implements Runnable{
 			derecha = 	new Coord(actual.x+1,actual.y);
 			abajo = 	new Coord(actual.x,actual.y+1);
 			izquierda = new Coord(actual.x-1,actual.y);
+			boolean yaSeIntrodujoArriba = arbol.findTreeNode(arriba.toString()) !=null;
+			boolean yaSeIntrodujoDerecha = arbol.findTreeNode(arriba.toString()) !=null;
+			boolean yaSeIntrodujoAbajo = arbol.findTreeNode(arriba.toString()) !=null;
+			boolean yaSeIntrodujoIzquierda = arbol.findTreeNode(arriba.toString()) !=null;
+
 			//checkarValidaciones(actual);
 
 			try {
@@ -97,34 +101,55 @@ public class Backtracking implements Runnable{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			if (tablero.esValidoArriba(actual.x, actual.y)) {
-				if (agregarHijo(arriba)) {
-					controlador.moverArriba(actual.y, actual.x);
-					hacerBacktracking(arriba);
-					return;
+
+			//"preguntando por las direcciones por orden
+
+			for (char direccion: ordenExpansion.toCharArray()) {
+
+				if (direccion == 'U') {
+					if (tablero.esValidoArriba(actual.x, actual.y)) {
+						if (agregarHijo(arriba)) {
+							controlador.moverArriba(actual.y, actual.x);
+							hacerBacktracking(arriba);
+							return;
+						}
+					}
+				}
+
+				if (direccion == 'R') {
+
+					if (tablero.esValidoDerecha(actual.x, actual.y)) {
+						if (agregarHijo(derecha)){
+							controlador.moverDerecha(actual.y, actual.x);
+							hacerBacktracking(derecha);
+							return;
+						}
+					}
+				}
+				if (direccion == 'D') {
+					if (tablero.esValidoAbajo(actual.x, actual.y)) {
+						if (agregarHijo(abajo)) {
+							controlador.moverAbajo(actual.y, actual.x);
+							hacerBacktracking(abajo);
+							return;	
+						}
+					}
+				}
+				if (direccion == 'L') {
+					if (tablero.esValidoIzquierda(actual.x, actual.y)) {
+						if (agregarHijo(izquierda)) {
+							controlador.moverIzquierda(actual.y, actual.x);
+							hacerBacktracking(izquierda);
+							return;
+						}
+					}
 				}
 			}
-			if (tablero.esValidoDerecha(actual.x, actual.y)) {
-				if (agregarHijo(derecha)){
-					controlador.moverDerecha(actual.y, actual.x);
-					hacerBacktracking(derecha);
-					return;
-				}
-			}
-			if (tablero.esValidoAbajo(actual.x, actual.y)) {
-				if (agregarHijo(abajo)) {
-					controlador.moverAbajo(actual.y, actual.x);
-					hacerBacktracking(abajo);
-					return;	
-				}
-			}
-			if (tablero.esValidoIzquierda(actual.x, actual.y)) {
-				if (agregarHijo(izquierda)) {
-					controlador.moverIzquierda(actual.y, actual.x);
-					hacerBacktracking(izquierda);
-					return;
-				}
-			}
+
+
+
+
+
 			TreeNode<String> nodo = arbol.findTreeNode(actual.toString());
 			nodo.abierto=false;
 			nodoActual=nodo;
@@ -149,7 +174,6 @@ public class Backtracking implements Runnable{
 	}
 
 	public boolean agregarHijo(Coord posicion) {
-		//Esta tratando de agregar el padre.
 		if (nodoActual.parent != null && nodoActual.data.equals(posicion.toString())) {
 			return false;
 		}
@@ -165,13 +189,14 @@ public class Backtracking implements Runnable{
 		return false;
 	}
 
+
 	public void moverVisualAlPadre(Coord actual) {
 		Coord arriba,derecha,abajo,izquierda;
 		arriba = 	new Coord(actual.x,actual.y-1);
 		derecha = 	new Coord(actual.x+1,actual.y);
 		abajo = 	new Coord(actual.x,actual.y+1);
 		izquierda = new Coord(actual.x-1,actual.y);
-		
+
 		if (nodoActual.parent.toString().equals(arriba.toString())){
 			controlador.moverArriba(actual.y, actual.x);
 		}
@@ -226,28 +251,48 @@ public class Backtracking implements Runnable{
 		DefaultMutableTreeNode modeloDeArbolCompleto = agregarHijos(arbol, rootVisual);
 		return new JTree(modeloDeArbolCompleto);
 	}
-	
+
 	public JTree dameSolucion() {
 		TreeNode<String> nodo= nodoActual;
 		DefaultMutableTreeNode rootVisual = new DefaultMutableTreeNode(nodo.data);
 		DefaultMutableTreeNode rama = rootVisual; 
 		do {
 			nodo = nodo.parent;
-			
+
 			DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(nodo.data); 
 			rama.add(hijo);
 			rama = hijo;
-			
+
 		}while (!nodo.isRoot());
 		return new JTree(rootVisual);
 	}
-	
+
 
 	@Override
 	public void run() {
 		hacerBacktracking(inicio);
-		
+
 		controlador.mostrarArbol(dameJTree(), "El arbol de expansion");
 		controlador.mostrarArbol(dameSolucion() , "La solución");
 	}
+
+	/*
+	 for (char direccion: ordenExpansion.toCharArray()) {
+
+            if (direccion == 'U') {
+
+			}
+
+			if (direccion == 'R') {
+
+			}
+			if (direccion == 'D') {
+
+			}
+			if (direccion == 'L') {
+
+			}
+		}
+
+	 */
 }

@@ -23,8 +23,8 @@ public class Controlador {
 	ArrayList<Terreno> terrenoSinPesos;
 	ArrayList<Terreno> terrenoConNombres;
 	ArrayList<Jugador> jugadores = new ArrayList<>();
-
-        VentanaPrincipal vP;
+	String ordenDeExpansion;
+	VentanaPrincipal vP;
 
 
 	/*
@@ -125,33 +125,40 @@ public class Controlador {
 		}
 	}
 
-        
-        public void moverArriba(int renglon, int columna)
-        {
-            vP.hacerMovimientoArriba(renglon, columna);
-        }
-        
-        public void moverAbajo(int renglon, int columna)
-        {
-            vP.hacerMovimientoAbajo(renglon, columna);
-        }
-        
-        public void moverIzquierda(int renglon, int columna)
-        {
-            vP.hacerMovimientoIzquierda(renglon, columna);
-        }
-        
-        public void moverDerecha(int renglon, int columna)
-        {
-            vP.hacerMovimientoDerecha(renglon, columna);
-        }
+
+	public void moverArriba(int renglon, int columna)
+	{
+		vP.hacerMovimientoArriba(renglon, columna);
+	}
+
+	public void moverAbajo(int renglon, int columna)
+	{
+		vP.hacerMovimientoAbajo(renglon, columna);
+	}
+
+	public void moverIzquierda(int renglon, int columna)
+	{
+		vP.hacerMovimientoIzquierda(renglon, columna);
+	}
+
+	public void moverDerecha(int renglon, int columna)
+	{
+		vP.hacerMovimientoDerecha(renglon, columna);
+	}
 
 	public void setvP(VentanaPrincipal vP) {
 		this.vP = vP;
 	}
-	
+
 	public void mostrarArbol(JTree arbol, String titulo) {
-	       	vP.mostarArbol(arbol,titulo);
-	       	//
+		vP.mostarArbol(arbol,titulo);
+	}
+
+	public String getOrdenDeExpansion() {
+		return ordenDeExpansion;
+	}
+
+	public void setOrdenDeExpansion(String ordenDeExpansion) {
+		this.ordenDeExpansion = ordenDeExpansion;
 	}
 }

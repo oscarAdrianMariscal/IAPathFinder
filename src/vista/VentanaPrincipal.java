@@ -1,16 +1,25 @@
 ﻿package vista;
 
-import controlador.Controlador;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.*;
-import modelo.Tablero;
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import javax.swing.border.EmptyBorder;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JTree;
+import javax.swing.border.EmptyBorder;
+
+import controlador.Controlador;
+import modelo.Backtracking;
 import modelo.Casilla;
 import modelo.Coordenada;
 
@@ -25,6 +34,7 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
     JTextArea txtarea31;
     JTextField jtf31;
     JTextField jtf32;
+    private JButton btnNewButton;
     
     public VentanaPrincipal(Controlador controlador)
     {
@@ -59,6 +69,14 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
         
         jDatos.add(txtarea31, BorderLayout.CENTER);
         contentPane.add(jDatos, BorderLayout.EAST); 
+        
+        btnNewButton = new JButton("Ejecutar algoritmo");
+        btnNewButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		ejecutarAlgoritmo();
+        	}
+        });
+        jDatos.add(btnNewButton, BorderLayout.NORTH);
     }
     
 
@@ -174,8 +192,16 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
 	VentanaPrincipal frame = new VentanaPrincipal(controlador);
 	frame.setVisible(true);			
     }
+    
+    public void ejecutarAlgoritmo() {
+    	Backtracking algoritmo =new Backtracking(controlador.getTablero(),controlador);
+    	Thread hilo = new Thread(algoritmo);
+    	hilo.start();
 
-	public void mostarArbol(JTree arbol, String titulo) {
-		VentanaArbol ventana =new VentanaArbol(arbol, titulo);
-	}
+    }
+
+    public void mostarArbol(JTree arbol,String titulo) {
+    	VentanaArbol ventana = new VentanaArbol(arbol,titulo);
+        ventana.setVisible(true); 
+    }
 }

@@ -26,6 +26,7 @@ import controlador.Controlador;
 import modelo.Backtracking;
 import modelo.Coordenada;
 import modelo.Terreno;
+import java.awt.Font;
 
 public class VentanaSeleccionarJugadores extends JFrame {
 
@@ -45,6 +46,7 @@ public class VentanaSeleccionarJugadores extends JFrame {
 	private JCheckBox chckbxUsarUno;
 	private JCheckBox checkBoxDos;
 	private JCheckBox checkBoxTres;
+	private JTextField txtUrdl;
 
 
 
@@ -302,9 +304,9 @@ public class VentanaSeleccionarJugadores extends JFrame {
 		contentPane.add(panel, BorderLayout.SOUTH);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{0, 0, 0};
-		gbl_panel.rowHeights = new int[]{0, 0, 0, 0};
+		gbl_panel.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
 		gbl_panel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 
 		JLabel lblCasillaInicial = new JLabel("Casilla inicial: ");
@@ -394,6 +396,7 @@ public class VentanaSeleccionarJugadores extends JFrame {
 				if( controlador.getTablero().posicionInicialEsValida()){
 					VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(controlador);
 					controlador.setvP(ventanaPrincipal);
+					controlador.setOrdenDeExpansion(txtUrdl.getText());
 					ventanaPrincipal.setVisible(true);
 	                
 				}
@@ -404,10 +407,37 @@ public class VentanaSeleccionarJugadores extends JFrame {
 				
 			}
 		});
+		
+		JLabel lblComoOrdenDe = new JLabel("Como orden de expansion se usa las iniciales de Up Right Down Left");
+		lblComoOrdenDe.setFont(new Font("Dialog", Font.ITALIC, 10));
+		GridBagConstraints gbc_lblComoOrdenDe = new GridBagConstraints();
+		gbc_lblComoOrdenDe.gridwidth = 2;
+		gbc_lblComoOrdenDe.insets = new Insets(0, 0, 5, 5);
+		gbc_lblComoOrdenDe.gridx = 0;
+		gbc_lblComoOrdenDe.gridy = 2;
+		panel.add(lblComoOrdenDe, gbc_lblComoOrdenDe);
+		
+		JLabel lblOrdenexpansion = new JLabel("ordenExpansion: ");
+		GridBagConstraints gbc_lblOrdenexpansion = new GridBagConstraints();
+		gbc_lblOrdenexpansion.anchor = GridBagConstraints.EAST;
+		gbc_lblOrdenexpansion.insets = new Insets(0, 0, 5, 5);
+		gbc_lblOrdenexpansion.gridx = 0;
+		gbc_lblOrdenexpansion.gridy = 3;
+		panel.add(lblOrdenexpansion, gbc_lblOrdenexpansion);
+		
+		txtUrdl = new JTextField();
+		txtUrdl.setText("URDL");
+		GridBagConstraints gbc_txtUrdl = new GridBagConstraints();
+		gbc_txtUrdl.insets = new Insets(0, 0, 5, 0);
+		gbc_txtUrdl.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtUrdl.gridx = 1;
+		gbc_txtUrdl.gridy = 3;
+		panel.add(txtUrdl, gbc_txtUrdl);
+		txtUrdl.setColumns(10);
 		GridBagConstraints gbc_btnAvanzar = new GridBagConstraints();
 		gbc_btnAvanzar.gridwidth = 2;
 		gbc_btnAvanzar.gridx = 0;
-		gbc_btnAvanzar.gridy = 2;
+		gbc_btnAvanzar.gridy = 4;
 		panel.add(btnAvanzar, gbc_btnAvanzar);
 
 		gridYInicial =4;
