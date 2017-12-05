@@ -27,6 +27,8 @@ import modelo.Backtracking;
 import modelo.Coordenada;
 import modelo.Terreno;
 import java.awt.Font;
+import java.math.RoundingMode;
+import java.text.NumberFormat;
 
 public class VentanaSeleccionarJugadores extends JFrame {
 
@@ -354,6 +356,10 @@ public class VentanaSeleccionarJugadores extends JFrame {
 					for (int i = 0; i < spinnerJugadorUno.size() ; i++) {
 
 						float peso=(float)spinnerJugadorUno.get(i).getModel().getValue();
+                                               /* NumberFormat numberFormat = NumberFormat.getInstance();
+                                                numberFormat.setMaximumFractionDigits(2);
+                                                numberFormat.setRoundingMode( RoundingMode.DOWN);
+                                                float peso2 = Float.parseFloat(numberFormat.format(peso));*/
 						terrenos.get(i).setCosto(peso);
 					}
 					
@@ -362,12 +368,14 @@ public class VentanaSeleccionarJugadores extends JFrame {
 				}
 				if(checkBoxDos.isSelected()) {
 
-
-
 					ArrayList<Terreno> terrenos = controlador.getTerrenoConNombres();
 					for (int i = 0; i < spinnerJugadorDos.size() ; i++) {
 
 						float peso=(float)spinnerJugadorDos.get(i).getModel().getValue();
+						/*NumberFormat numberFormat = NumberFormat.getInstance();
+                                                numberFormat.setMaximumFractionDigits(2);
+                                                numberFormat.setRoundingMode( RoundingMode.DOWN);
+                                                float peso2 = Float.parseFloat(numberFormat.format(peso));*/
 						terrenos.get(i).setCosto(peso);
 					}
 					controlador.agregarJugador(terrenos, textFieldNombreDos.getText(),jugador2);					
@@ -378,6 +386,10 @@ public class VentanaSeleccionarJugadores extends JFrame {
 					for (int i = 0; i < spinnerJugadorTres.size() ; i++) {
 
 						float peso=(float)spinnerJugadorTres.get(i).getModel().getValue();
+						/*NumberFormat numberFormat = NumberFormat.getInstance();
+                                                numberFormat.setMaximumFractionDigits(2);
+                                                numberFormat.setRoundingMode( RoundingMode.DOWN);
+                                                float peso2 = Float.parseFloat(numberFormat.format(peso));*/
 						terrenos.get(i).setCosto(peso);
 					}
 					controlador.agregarJugador(terrenos, textFieldNombreTres.getText(),jugador3);
@@ -397,11 +409,12 @@ public class VentanaSeleccionarJugadores extends JFrame {
 					VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(controlador);
 					controlador.setvP(ventanaPrincipal);
 					controlador.setOrdenDeExpansion(txtUrdl.getText());
+                                        controlador.setTipoDistancia(0);
 					ventanaPrincipal.setVisible(true);
 	                
 				}
 				else {
-					JOptionPane.showMessageDialog(new JFrame(), "posicion inicial no valida",  "Error",
+					JOptionPane.showMessageDialog(new JFrame(), "posicion inicial o final no validas",  "Error",
 							JOptionPane.ERROR_MESSAGE);
 				}
 				
