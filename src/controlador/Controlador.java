@@ -25,7 +25,8 @@ public class Controlador {
 	ArrayList<Jugador> jugadores = new ArrayList<>();
 	String ordenDeExpansion;
 	VentanaPrincipal vP;
-        int tipoDistancia;
+        int tipoDistancia;              //0: Euclideana, 1: Manhattan
+        int tipoAlgoritmo;              //0: Backtracking, 1: A Estrella
         //int prioridadEmpatados;      //FIFO O LIFO
 
 
@@ -103,6 +104,16 @@ public class Controlador {
         public void setTipoDistancia(int tipoDistancia)
         {
             this.tipoDistancia = tipoDistancia;
+        }
+        
+        public int getTipoAlgoritmo()
+        {
+            return tipoAlgoritmo;
+        }
+        
+        public void setTipoAlgoritmo(int tipoAlgoritmo)
+        {
+            this.tipoAlgoritmo = tipoAlgoritmo;
         }
 
 	public String muestraDatosCasilla(Coordenada coordenada)

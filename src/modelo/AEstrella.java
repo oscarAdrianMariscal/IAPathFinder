@@ -1,7 +1,5 @@
 ﻿package modelo;
 
-package modelo;
-
 import com.tree.TreeNodeS;
 import java.util.Enumeration;
 import javax.swing.JTree;
