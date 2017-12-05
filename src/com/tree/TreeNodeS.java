@@ -1,5 +1,3 @@
-package com.tree;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -13,6 +11,8 @@ public class TreeNodeS<T> implements Iterable<TreeNodeS<T>>{
 	public boolean abierto;
 	public ArrayList<Integer> visitas= new ArrayList<>();
         
+        //Costo
+        float Costo;
         //Suma de costos
         float GN;
         //Suma de distancias
@@ -68,6 +68,15 @@ public class TreeNodeS<T> implements Iterable<TreeNodeS<T>>{
 
 		return null;
 	}
+        //OBTENER COSTO ANTERIOR + COSTO ACTUAL
+        public void setCosto(float Costo){
+            this.Costo = Costo;
+        }
+        
+        public float getCosto()
+        {
+            return Costo;
+        }
         
         //OBTENER COSTO ANTERIOR + COSTO ACTUAL
         public void setGN(float GN){
@@ -91,14 +100,18 @@ public class TreeNodeS<T> implements Iterable<TreeNodeS<T>>{
         }
 
         //OBTENER F(N)
-        public void setFN()
+        public void setFN(float FN)
         {
-             this.FN = GN + HN;
+             this.FN = FN;
         }
         
         public float getFN()
         {
             return FN;
+        }
+        
+        public TreeNodeS<T> getPreviousNode() {
+                return parent;
         }
 
 	@Override

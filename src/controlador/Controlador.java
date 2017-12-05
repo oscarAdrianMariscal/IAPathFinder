@@ -25,6 +25,8 @@ public class Controlador {
 	ArrayList<Jugador> jugadores = new ArrayList<>();
 	String ordenDeExpansion;
 	VentanaPrincipal vP;
+        int tipoDistancia;
+        //int prioridadEmpatados;      //FIFO O LIFO
 
 
 	/*
@@ -92,6 +94,16 @@ public class Controlador {
 	public int getTamanioTerrenoRenglones(){
 		return tablero.getNoRenglones();
 	}
+        
+        public int getTipoDistancia()
+        {
+            return tablero.getTipoDistancia();
+        }
+        
+        public void setTipoDistancia(int tipoDistancia)
+        {
+            this.tipoDistancia = tipoDistancia;
+        }
 
 	public String muestraDatosCasilla(Coordenada coordenada)
 	{
@@ -161,4 +173,13 @@ public class Controlador {
 	public void setOrdenDeExpansion(String ordenDeExpansion) {
 		this.ordenDeExpansion = ordenDeExpansion;
 	}
+        
+        /*public int getPrioridadEmpatados() {
+            return prioridadEmpatados;
+        }
+        
+        public void setPrioridadEmpatados(int prioridadEmpatados) {
+            this.prioridadEmpatados = prioridadEmpatados;
+        }*/
+        
 }

@@ -39,6 +39,7 @@ public class AEstrella implements Runnable{
 	Controlador controlador;
 	static int visitaActual;
         int tipoDistancia;
+        private ArrayList<TreeNodeS<String>> listaCostos;
        
 	//Deberia de crear una clase de utilerias en java, para no reescribir este código.
 	public String convertXYaCoord(int x, int y) {
@@ -71,9 +72,13 @@ public class AEstrella implements Runnable{
         {
             System.out.println(actual.toString());
            
+            //nodoActual.setGN(0);
+            listaCostos = new ArrayList<TreeNodeS<String>>();
             nodoActual.setGN(0);
+            listaCostos.add(nodoActual);
             
-            while(!seEncontroLaMeta) {        
+            while(!seEncontroLaMeta && listaCostos.size() != 0) {
+                
                 Coord arriba,derecha,abajo,izquierda;
                 arriba = 	new Coord(actual.x,actual.y-1);
                 derecha = 	new Coord(actual.x+1,actual.y);
@@ -85,7 +90,15 @@ public class AEstrella implements Runnable{
                         if (tablero.esValidoArriba(actual.x, actual.y)) {
                             if (agregarHijo(arriba)) {
                                 //controlador.moverArriba(actual.y, actual.x);
-     
+                                System.out.println("Lo expandi ARRIBA");
+                                float GN = nodoActual.getPreviousNode().getGN() + nodoActual.getCosto();
+                                nodoActual.setGN(GN);
+                                float FN = GN + obtenerHeuristica(arriba, meta);
+                                nodoActual.setFN(FN);
+                                System.out.println("GN: " + nodoActual.getGN());
+                                System.out.println("FN: " + nodoActual.getFN());
+                                //REGRESO EL NODO ACTUAL AL PADRE
+                                nodoActual = nodoActual.getPreviousNode();
                             }
                         }
                     }
@@ -94,13 +107,31 @@ public class AEstrella implements Runnable{
                         if (tablero.esValidoDerecha(actual.x, actual.y)) {
                             if (agregarHijo(derecha)){
                                 //controlador.moverDerecha(actual.y, actual.x);
+                                System.out.println("Lo expandi DERECHA");
+                                float GN = nodoActual.getPreviousNode().getGN() + nodoActual.getCosto();
+                                nodoActual.setGN(GN);
+                                float FN = GN + obtenerHeuristica(derecha, meta);
+                                nodoActual.setFN(FN);
+                                System.out.println("GN: " + nodoActual.getGN());
+                                System.out.println("FN: " + nodoActual.getFN());
+                                //REGRESO EL NODO ACTUAL AL PADRE
+                                nodoActual = nodoActual.getPreviousNode();
                             }
                         }
                     }
                     if (direccion == 'D') {
                         if (tablero.esValidoAbajo(actual.x, actual.y)) {
                             if (agregarHijo(abajo)) {
-                                //controlador.moverAbajo(actual.y, actual.x);	
+                                //controlador.moverAbajo(actual.y, actual.x);
+                                System.out.println("Lo expandi ABAJO");
+                                float GN = nodoActual.getPreviousNode().getGN() + nodoActual.getCosto();
+                                nodoActual.setGN(GN);
+                                float FN = GN + obtenerHeuristica(abajo, meta);
+                                nodoActual.setFN(FN);
+                                System.out.println("GN: " + nodoActual.getGN());
+                                System.out.println("FN: " + nodoActual.getFN());
+                                //REGRESO EL NODO ACTUAL AL PADRE
+                                nodoActual = nodoActual.getPreviousNode();
                             }
                         }
                     }
@@ -108,13 +139,51 @@ public class AEstrella implements Runnable{
                         if (tablero.esValidoIzquierda(actual.x, actual.y)) {
                             if (agregarHijo(izquierda)) {
                                 //controlador.moverIzquierda(actual.y, actual.x);
+                                System.out.println("Lo expandi IZQUIERDA");
+                                float GN = nodoActual.getPreviousNode().getGN() + nodoActual.getCosto();
+                                nodoActual.setGN(GN);
+                                float FN = GN + obtenerHeuristica(arriba, meta);
+                                nodoActual.setFN(FN);
+                                System.out.println("GN: " + nodoActual.getGN());
+                                System.out.println("FN: " + nodoActual.getFN());
+                                //REGRESO EL NODO ACTUAL AL PADRE
+                                nodoActual = nodoActual.getPreviousNode();
                             }
                         }
                     }
                 }
-
             }    
         }
+        
+        /*private class ListaNodosOrdenadas {
+                  //Lista de nodos.
+                private ArrayList<TreeNodeS<String>> list = new ArrayList<TreeNodeS<String>>();
+                
+                public TreeNodeS getFirst() {
+                        return list.get(0);
+                }
+
+                public void clear() {
+                        list.clear();
+                }
+
+                public void add(TreeNodeS<String> node) {
+                        list.add(node);
+                        Collections.sort(list);
+                }
+
+                public void remove(TreeNodeS n) {
+                        list.remove(n);
+                }
+
+                public int size() {
+                        return list.size();
+                }
+                // devuelve si esta ese nodo en la lista.
+                public boolean contains(TreeNodeS<String> n) {
+                        return list.contains(n);
+                }
+        }*/
    
 	//Para debug
 	public void checkarValidaciones(Coord actual) {
@@ -175,6 +244,7 @@ public class AEstrella implements Runnable{
 		TreeNodeS<String> nodo = arbol.findTreeNode(posicion.toString());
 		if (nodo == null) {
 			nodoActual = nodoActual.addChild(posicion.toString());
+                        nodoActual.setCosto(tablero.getCoordenadaEspecial(posicion.x, posicion.y).getTerreno().getCosto());
 			nodoActual.visitas.add(visitaActual);
 			visitaActual++;
 			if (nodoActual.data.equals(meta.toString())) {
@@ -292,8 +362,7 @@ public class AEstrella implements Runnable{
 
 	@Override
 	public void run() {
-		//encontrarCaminoMasCorto(inicio);
-                //calcularCaminoMasCorto()
+		encuentraCaminoMasCorto(inicio);
 
 		//controlador.mostrarArbol(dameJTree(), "El arbol de expansion");
 		//controlador.mostrarArbol(dameSolucion() , "La solución");

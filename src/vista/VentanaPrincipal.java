@@ -23,6 +23,7 @@ import modelo.Backtracking;
 import modelo.Casilla;
 import modelo.Coordenada;
 import javax.swing.BoxLayout;
+import modelo.AEstrella;
 
 public class VentanaPrincipal extends JFrame implements KeyListener {
     
@@ -38,6 +39,7 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
     private JButton btnNewButton;
     private JButton btnMostarArbol;
     Backtracking algoritmo;
+    AEstrella algoritmo2;
     
     public VentanaPrincipal(Controlador controlador)
     {
@@ -214,11 +216,13 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
     }
     
     public void ejecutarAlgoritmo() {
-    	algoritmo =new Backtracking(controlador.getTablero(),controlador);
+    	/*algoritmo =new Backtracking(controlador.getTablero(),controlador);
     	Thread hilo = new Thread(algoritmo);
-    	hilo.start();
-    	
-
+    	hilo.start();*/
+        
+        algoritmo2 = new AEstrella(controlador.getTablero(), controlador);
+        Thread hilo2 = new Thread(algoritmo2);
+        hilo2.start();
     }
 
     public void mostarArbol(JTree arbol,String titulo) {
