@@ -41,7 +41,7 @@ public class AEstrella implements Runnable{
         int tipoDistancia;
         private ArrayList<TreeNodeS<String>> listaCostos;
        
-	//Deberia de crear una clase de utilerias en java, para no reescribir este código.
+	//Deberia de crear una clase de utilerias en java, para no reescribir este cï¿½digo.
 	public String convertXYaCoord(int x, int y) {
 		char letras =  (char)("A".codePointAt(0) + x);
 		return String.valueOf(letras) + String.valueOf(y+1);
@@ -98,7 +98,7 @@ public class AEstrella implements Runnable{
                                 System.out.println("GN: " + nodoActual.getGN());
                                 System.out.println("FN: " + nodoActual.getFN());
                                 //REGRESO EL NODO ACTUAL AL PADRE
-                                nodoActual = nodoActual.getPreviousNode();
+                                //nodoActual = nodoActual.getPreviousNode();
                             }
                         }
                     }
@@ -115,7 +115,7 @@ public class AEstrella implements Runnable{
                                 System.out.println("GN: " + nodoActual.getGN());
                                 System.out.println("FN: " + nodoActual.getFN());
                                 //REGRESO EL NODO ACTUAL AL PADRE
-                                nodoActual = nodoActual.getPreviousNode();
+                                //nodoActual = nodoActual.getPreviousNode();
                             }
                         }
                     }
@@ -131,7 +131,7 @@ public class AEstrella implements Runnable{
                                 System.out.println("GN: " + nodoActual.getGN());
                                 System.out.println("FN: " + nodoActual.getFN());
                                 //REGRESO EL NODO ACTUAL AL PADRE
-                                nodoActual = nodoActual.getPreviousNode();
+                                //nodoActual = nodoActual.getPreviousNode();
                             }
                         }
                     }
@@ -147,7 +147,7 @@ public class AEstrella implements Runnable{
                                 System.out.println("GN: " + nodoActual.getGN());
                                 System.out.println("FN: " + nodoActual.getFN());
                                 //REGRESO EL NODO ACTUAL AL PADRE
-                                nodoActual = nodoActual.getPreviousNode();
+                                //nodoActual = nodoActual.getPreviousNode();
                             }
                         }
                     }
@@ -363,9 +363,17 @@ public class AEstrella implements Runnable{
 	@Override
 	public void run() {
 		encuentraCaminoMasCorto(inicio);
-
-		//controlador.mostrarArbol(dameJTree(), "El arbol de expansion");
-		//controlador.mostrarArbol(dameSolucion() , "La solución");
+		/*JTree arbol = dameJTree();
+		DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Raiz");
+		DefaultMutableTreeNode hoja = new DefaultMutableTreeNode("hoja");
+		
+		raiz.add(hoja);
+		JTree prueba = new JTree(raiz);
+		System.out.println("Hey");
+		controlador.mostrarArbol(prueba, "El arbol de expansion");
+		//controlador.mostrarArbol(dameSolucion() , "La soluciï¿½n");
+		 * 
+		 */
 	}
 
 	public void setControlador(Controlador controlador) {

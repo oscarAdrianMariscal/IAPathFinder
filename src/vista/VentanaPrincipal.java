@@ -102,9 +102,15 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
     }
  
     public void mostarArbolesDeSolucionYExpansion() {
-    	algoritmo.setControlador(controlador);
-    	mostarArbol(algoritmo.dameJTree(), "Arbol de expansion");
-    	mostarArbol(algoritmo.dameSolucion(), "Solucion"); 
+    	//TODO AQUI REMPLAZAR POR CODIGO CORRECTO CUANDO QUEDE EL ALGORITMO.
+    	//algoritmo.setControlador(controlador);
+    	//mostarArbol(algoritmo.dameJTree(), "Arbol de expansion");
+    	//mostarArbol(algoritmo.dameSolucion(), "Solucion");
+    	
+    	algoritmo2.setControlador(controlador);
+    	mostarArbol(algoritmo2.dameJTree(), "Arbol de expansion");
+    	//mostarArbol(algoritmo.dameSolucion(), "Solucion");
+    	
     }
     /**Este metodo se ejecuta cuando se suelta una tecla*/
     @Override
