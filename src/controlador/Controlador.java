@@ -97,7 +97,7 @@ public class Controlador {
         
         public int getTipoDistancia()
         {
-            return tablero.getTipoDistancia();
+            return tipoDistancia;
         }
         
         public void setTipoDistancia(int tipoDistancia)
