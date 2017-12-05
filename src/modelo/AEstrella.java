@@ -1,5 +1,7 @@
 ﻿package modelo;
 
+package modelo;
+
 import com.tree.TreeNodeS;
 import java.util.Enumeration;
 import javax.swing.JTree;
@@ -59,8 +61,8 @@ public class AEstrella implements Runnable{
 		inicio = new Coord(tablero.getInicio().getCoordenadaI(),tablero.getInicio().getCoordenadaJ());
 		meta = new Coord( tablero.getFin().getCoordenadaI(),tablero.getFin().getCoordenadaJ());
 		arbol = new TreeNodeS<String>(convertXYaCoord(inicio.x,inicio.y));
-		arbol.visitas.add(visitaActual);
-		visitaActual++;
+		//arbol.visitas.add(visitaActual);
+		//visitaActual++;
 		nodoActual= arbol;
 		seEncontroLaMeta =false;
 		controlador = c;
@@ -91,11 +93,13 @@ public class AEstrella implements Runnable{
             
             while(!seEncontroLaMeta && listaAbierta.size() != 0) {
                 
-                TreeNodeS<String> nodo1 = listaAbierta.getFirst();
-                TreeNodeS<String> nodo2 = arbol.findTreeNode(nodo1.data);
-                nodoActual = nodo2;
-                listaAbierta.remove(nodo1);
+                TreeNodeS<String> nodo = listaAbierta.getFirst();
+                nodoActual = arbol.findTreeNode(nodo.data);
+                nodoActual.visitas.add(visitaActual);
+                visitaActual++;
+                listaAbierta.remove(nodo);
                 System.out.println("TAM - removi:" + listaAbierta.size());
+                System.out.println(actual.toString());
                 actual = coordAXy(nodoActual.data);
                 
                 Coord arriba,derecha,abajo,izquierda;
@@ -116,6 +120,7 @@ public class AEstrella implements Runnable{
                                 nodoActual.setHN(HN);
                                 float FN = GN + HN;
                                 nodoActual.setFN(FN);
+                                System.out.println(nodoActual.data);
                                 System.out.println("GN: " + nodoActual.getGN());
                                 System.out.println("HN: " + nodoActual.getHN());
                                 System.out.println("FN: " + nodoActual.getFN());
@@ -139,6 +144,7 @@ public class AEstrella implements Runnable{
                                 nodoActual.setHN(HN);
                                 float FN = GN + HN;
                                 nodoActual.setFN(FN);
+                                System.out.println(nodoActual.data);
                                 System.out.println("GN: " + nodoActual.getGN());
                                 System.out.println("HN: " + nodoActual.getHN());
                                 System.out.println("FN: " + nodoActual.getFN());
@@ -161,6 +167,7 @@ public class AEstrella implements Runnable{
                                 nodoActual.setHN(HN);
                                 float FN = GN + HN;
                                 nodoActual.setFN(FN);
+                                System.out.println(nodoActual.data);
                                 System.out.println("GN: " + nodoActual.getGN());
                                 System.out.println("HN: " + nodoActual.getHN());
                                 System.out.println("FN: " + nodoActual.getFN());
@@ -183,6 +190,7 @@ public class AEstrella implements Runnable{
                                 nodoActual.setHN(HN);
                                 float FN = GN + HN;
                                 nodoActual.setFN(FN);
+                                System.out.println(nodoActual.data);
                                 System.out.println("GN: " + nodoActual.getGN());
                                 System.out.println("HN: " + nodoActual.getHN());
                                 System.out.println("FN: " + nodoActual.getFN());
@@ -295,10 +303,12 @@ public class AEstrella implements Runnable{
 		if (nodo == null) {
 			nodoActual = nodoActual.addChild(posicion.toString());
                         nodoActual.setCosto(tablero.getCoordenadaEspecial(posicion.x, posicion.y).getTerreno().getCosto());
-			nodoActual.visitas.add(visitaActual);
-			visitaActual++;
+			//nodoActual.visitas.add(visitaActual);
+			//visitaActual++;
 			if (nodoActual.data.equals(meta.toString())) {
 				seEncontroLaMeta = true;
+                                nodoActual.visitas.add(visitaActual);
+                                visitaActual++;
                                 System.out.println("FELICIDADES");
 			}
 			return true;
@@ -325,6 +335,29 @@ public class AEstrella implements Runnable{
 			controlador.moverAbajo(actual.y, actual.x);
 		}
 		else if (nodoActual.parent.toString().equals(izquierda.toString())){
+			controlador.moverIzquierda(actual.y, actual.x);
+			System.out.println("izquierda");
+		}
+
+	}
+        
+        public void moverVisual(Coord actual) {
+		Coord arriba,derecha,abajo,izquierda;
+		arriba = 	new Coord(actual.x,actual.y-1);
+		derecha = 	new Coord(actual.x+1,actual.y);
+		abajo = 	new Coord(actual.x,actual.y+1);
+		izquierda = new Coord(actual.x-1,actual.y);
+
+		if (nodoActual.toString().equals(arriba.toString())){
+			controlador.moverArriba(actual.y, actual.x);
+		}
+		else if (nodoActual.toString().equals(derecha.toString())){
+			controlador.moverDerecha(actual.y, actual.x);
+		}
+		else if (nodoActual.toString().equals(abajo.toString())){
+			controlador.moverAbajo(actual.y, actual.x);
+		}
+		else if (nodoActual.toString().equals(izquierda.toString())){
 			controlador.moverIzquierda(actual.y, actual.x);
 			System.out.println("izquierda");
 		}
@@ -421,10 +454,9 @@ public class AEstrella implements Runnable{
 		raiz.add(hoja);
 		JTree prueba = new JTree(raiz);
 		System.out.println("Hey");
-		controlador.mostrarArbol(prueba, "El arbol de expansion");
-		//controlador.mostrarArbol(dameSolucion() , "La soluci�n");
-		 * 
-		 */
+		controlador.mostrarArbol(prueba, "El arbol de expansion");*/
+		controlador.mostrarArbol(dameSolucion() , "La soluci�n");
+		 
 	}
 
 	public void setControlador(Controlador controlador) {
