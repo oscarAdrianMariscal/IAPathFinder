@@ -1,10 +1,11 @@
 package com.tree;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class TreeNodeS<T> implements Iterable<TreeNodeS<T>>{
+public class TreeNodeS<T> implements Iterable<TreeNodeS<T>>, Comparable<TreeNodeS<T>>{
 
 	public T data;
 	public TreeNodeS<T> parent;
@@ -124,5 +125,16 @@ public class TreeNodeS<T> implements Iterable<TreeNodeS<T>>{
     public Iterator<TreeNodeS<T>> iterator() {
         TreeNodeIterS<T> iter = new TreeNodeIterS<T>(this);
 	return iter;
+    }
+
+    @Override
+    public int compareTo(TreeNodeS<T> t) {
+        if (FN < t.FN) {
+                return -1;
+            }
+            if (FN > t.FN) {
+                return 1;
+            }
+            return 0;
     }
 }
