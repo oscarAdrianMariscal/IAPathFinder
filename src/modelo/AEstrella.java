@@ -91,8 +91,12 @@ public class AEstrella implements Runnable{
             
             while(!seEncontroLaMeta && listaAbierta.size() != 0) {
                 
-                nodoActual = listaAbierta.getFirst();
-                listaAbierta.remove(nodoActual);
+                TreeNodeS<String> nodo1 = listaAbierta.getFirst();
+                TreeNodeS<String> nodo2 = arbol.findTreeNode(nodo1.data);
+                nodoActual = nodo2;
+                listaAbierta.remove(nodo1);
+                System.out.println("TAM - removi:" + listaAbierta.size());
+                actual = coordAXy(nodoActual.data);
                 
                 Coord arriba,derecha,abajo,izquierda;
                 arriba = 	new Coord(actual.x,actual.y-1);
@@ -116,6 +120,7 @@ public class AEstrella implements Runnable{
                                 System.out.println("HN: " + nodoActual.getHN());
                                 System.out.println("FN: " + nodoActual.getFN());
                                 listaAbierta.add(nodoActual);
+                                System.out.println("TAM:" + listaAbierta.size());
                                 
                                 //REGRESO EL NODO ACTUAL AL PADRE
                                 nodoActual = nodoActual.parent;
@@ -138,6 +143,7 @@ public class AEstrella implements Runnable{
                                 System.out.println("HN: " + nodoActual.getHN());
                                 System.out.println("FN: " + nodoActual.getFN());
                                 listaAbierta.add(nodoActual);
+                                System.out.println("TAM:" + listaAbierta.size());
                                 
                                 //REGRESO EL NODO ACTUAL AL PADRE
                                 nodoActual = nodoActual.parent;
@@ -159,6 +165,7 @@ public class AEstrella implements Runnable{
                                 System.out.println("HN: " + nodoActual.getHN());
                                 System.out.println("FN: " + nodoActual.getFN());
                                 listaAbierta.add(nodoActual);
+                                System.out.println("TAM:" + listaAbierta.size());
                                 
                                 //REGRESO EL NODO ACTUAL AL PADRE
                                 nodoActual = nodoActual.parent;
@@ -180,6 +187,7 @@ public class AEstrella implements Runnable{
                                 System.out.println("HN: " + nodoActual.getHN());
                                 System.out.println("FN: " + nodoActual.getFN());
                                 listaAbierta.add(nodoActual);
+                                 System.out.println("TAM:" + listaAbierta.size());
                                 
                                 //REGRESO EL NODO ACTUAL AL PADRE
                                 nodoActual = nodoActual.parent;
