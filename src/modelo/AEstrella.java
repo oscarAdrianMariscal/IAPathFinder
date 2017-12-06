@@ -427,14 +427,39 @@ public class AEstrella implements Runnable{
 		return numeroHijos;
 		
 	}
-
-	public JTree dameSolucion() {
+	
+	public TreeNodeS<String> invertirSolucion () {
 		TreeNodeS<String> nodo= nodoActual;
-		DefaultMutableTreeNode rootVisual = new DefaultMutableTreeNode(nodo.data);
-		DefaultMutableTreeNode rama = rootVisual; 
+		TreeNodeS<String> paraInvertir= nodoActual;
+		
 		do {
 			nodo = nodo.parent;
+			paraInvertir = paraInvertir.addChild(nodo.data);;
 
+		}while (!nodo.isRoot());
+		
+		TreeNodeS<String> invertido= paraInvertir;
+		paraInvertir = paraInvertir.parent;
+		do {
+			invertido = invertido.addChild(paraInvertir.data);
+			paraInvertir = paraInvertir.parent;
+		}while(!paraInvertir.isRoot());
+		
+		return invertido;
+
+	}
+
+	public JTree dameSolucion() {
+		TreeNodeS<String> nodo= invertirSolucion();
+		DefaultMutableTreeNode rootVisual = new DefaultMutableTreeNode(nodo.data);
+		DefaultMutableTreeNode rama = rootVisual;
+		//
+		TreeNodeS<String> paraInvertir= nodoActual;
+		
+		do {
+			nodo = nodo.parent;
+			paraInvertir.addChild(nodo.data);
+			paraInvertir = paraInvertir.children.get(0);
 			DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(nodo.data); 
 			rama.add(hijo);
 			rama = hijo;
