@@ -378,7 +378,7 @@ public class AEstrella implements Runnable{
 			int y = Integer.parseInt(numeros)-1;
 			mapa[y][x].getNoVisitas();
 
-			DefaultMutableTreeNode rama = new DefaultMutableTreeNode(n.data + n.visitas + n.abierto);
+			DefaultMutableTreeNode rama = new DefaultMutableTreeNode(n.data + n.visitas + n.abierto  + "F(N): " + n.getFN() + "H(N): " + n.getHN());
 			
 			visualNodo.add(rama);
 			agregarHijos(n, rama);
@@ -399,7 +399,7 @@ public class AEstrella implements Runnable{
 		int x = letra.codePointAt(0) - "A".codePointAt(0) ;
 		int y = Integer.parseInt(numeros)-1;
 		mapa = controlador.getTablero().getMapa();
-		DefaultMutableTreeNode rootVisual = new DefaultMutableTreeNode(arbol.data + arbol.visitas + " " + arbol.abierto);
+		DefaultMutableTreeNode rootVisual = new DefaultMutableTreeNode(arbol.data + arbol.visitas + " " + arbol.abierto + "F(N): " + arbol.getFN() + "H(N): " + arbol.getHN());
 		DefaultMutableTreeNode modeloDeArbolCompleto = agregarHijos(arbol, rootVisual);
 		return new JTree(modeloDeArbolCompleto);
 	}
@@ -428,25 +428,16 @@ public class AEstrella implements Runnable{
 		
 	}
 	
-	public TreeNodeS<String> invertirSolucion () {
+	public TreeNodeS<String> invertirSolucion(){
 		TreeNodeS<String> nodo= nodoActual;
-		TreeNodeS<String> paraInvertir= nodoActual;
+		TreeNodeS<String> arbolInvertido;
 		
-		do {
+		arbolInvertido = new TreeNodeS<String>(nodo.data);
+		while (!nodo.isRoot()) {
+			arbolInvertido = arbolInvertido.addChild(nodo.data);
 			nodo = nodo.parent;
-			paraInvertir = paraInvertir.addChild(nodo.data);;
-
-		}while (!nodo.isRoot());
-		
-		TreeNodeS<String> invertido= paraInvertir;
-		paraInvertir = paraInvertir.parent;
-		do {
-			invertido = invertido.addChild(paraInvertir.data);
-			paraInvertir = paraInvertir.parent;
-		}while(!paraInvertir.isRoot());
-		
-		return invertido;
-
+		}
+		return arbolInvertido;
 	}
 
 	public JTree dameSolucion() {
@@ -454,12 +445,10 @@ public class AEstrella implements Runnable{
 		DefaultMutableTreeNode rootVisual = new DefaultMutableTreeNode(nodo.data);
 		DefaultMutableTreeNode rama = rootVisual;
 		//
-		TreeNodeS<String> paraInvertir= nodoActual;
+		
 		
 		do {
 			nodo = nodo.parent;
-			paraInvertir.addChild(nodo.data);
-			paraInvertir = paraInvertir.children.get(0);
 			DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(nodo.data); 
 			rama.add(hijo);
 			rama = hijo;
