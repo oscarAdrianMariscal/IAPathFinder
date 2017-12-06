@@ -73,12 +73,14 @@ public class AEstrella implements Runnable{
 	public void encuentraCaminoMasCorto(Coord actual)
 	{
 		
+		//BRINCAR
 		controlador.hacerMovimientoArbitrario(actual.x, actual.y);
 		try {
 			Thread.sleep(SLEEP_TIME);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		
 		System.out.println(actual.toString());
 		listaAbierta = new ListaNodosOrdenadas();
 
@@ -114,6 +116,7 @@ public class AEstrella implements Runnable{
 			derecha = 	new Coord(actual.x+1,actual.y);
 			abajo = 	new Coord(actual.x,actual.y+1);
 			izquierda = new Coord(actual.x-1,actual.y);
+			//BRINCAR
 			controlador.hacerMovimientoArbitrario(actual.x, actual.y);
 			try {
 				Thread.sleep(SLEEP_TIME);
@@ -326,7 +329,6 @@ public class AEstrella implements Runnable{
 		TreeNodeS<String> nodo = arbol.findTreeNode(posicion.toString());
 		if (nodo == null) {
 			nodoActual = nodoActual.addChild(posicion.toString());
-			controlador.hacerMovimientoArbitrario(posicion.x, posicion.y);
 			//Aquí solo obtiene la casilla. 
 
 			nodoActual.setCosto(controlador.getTablero().getMapa()[posicion.y][posicion.x].getTerreno().getCosto());
@@ -485,22 +487,18 @@ public class AEstrella implements Runnable{
 
 		return new JTree(rootVisual);
 	}
-	/*
 
 	public void mueveMono()
 	{
-		for(int i=1; i<LSolucion.size(); i++)
-		{
-			System.out.println("NODO: " + LSolucion.get(i).data);
+		for (TreeNodeS<String > nodo  : LSolucion) {
+			controlador.hacerMovimientoArbitrario(coordAXy(nodo.data).x, coordAXy(nodo.data).y);
 			try {
-				Thread.sleep(500);
+				Thread.sleep(SLEEP_TIME);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			moverVisual(coordAXy(LSolucion.get(i).data));
 		}
-	}*/
+	}
 
 
 	@Override
@@ -508,6 +506,8 @@ public class AEstrella implements Runnable{
 		encuentraCaminoMasCorto(inicio);
 		controlador.mostrarArbol(dameJTree(), "El arbol de expansion");
 		controlador.mostrarArbol(dameSolucion() , "La solucion");
+		//Descomentar si se quiere solucionar por solucion
+		//mueveMono();
 		//mueveMono();
 		//columna
 	}
@@ -515,4 +515,6 @@ public class AEstrella implements Runnable{
 	public void setControlador(Controlador controlador) {
 		this.controlador = controlador;
 	}
+	
+	
 }

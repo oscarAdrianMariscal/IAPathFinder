@@ -207,6 +207,8 @@ JButton temp3 = new JButton(String.valueOf(a));
         mCasillas[yActual][xActual].setIcon(icono);
         ImageIcon jugador = controlador.getArregloJugadores().get(0).getImagen();
         mCasillas[y][x].setIcon(jugador);
+        Casilla[][] aux = controlador.getTablero().getMapa();
+        pintarColor(y, x, mCasillas, aux);
         xActual = x;
         yActual = y;
     	
