@@ -434,8 +434,8 @@ public class AEstrella implements Runnable{
 		
 		arbolInvertido = new TreeNodeS<String>(nodo.data);
 		while (!nodo.isRoot()) {
-			arbolInvertido = arbolInvertido.addChild(nodo.data);
 			nodo = nodo.parent;
+			arbolInvertido = arbolInvertido.addChild(nodo.data);
 		}
 		return arbolInvertido;
 	}
