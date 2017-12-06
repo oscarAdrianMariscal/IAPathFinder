@@ -406,11 +406,13 @@ public class VentanaSeleccionarJugadores extends JFrame {
 				System.out.println("Casilla final: "+ meta.getCoordenadaI() +","+ meta.getCoordenadaJ());
 				
 				if( controlador.getTablero().posicionInicialEsValida()){
-					VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(controlador);
-					controlador.setvP(ventanaPrincipal);
+					//VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(controlador);
+					//controlador.setvP(ventanaPrincipal);
 					controlador.setOrdenDeExpansion(txtUrdl.getText());
-                                        controlador.setTipoDistancia(0);
-					ventanaPrincipal.setVisible(true);
+                                        //controlador.setTipoDistancia(0);
+					//ventanaPrincipal.setVisible(true);
+                                        VentanaSeleccionarAlgoritmo vSeleccionarAlgoritmo = new VentanaSeleccionarAlgoritmo(controlador);
+                                        vSeleccionarAlgoritmo.setVisible(true);
 	                
 				}
 				else {

@@ -222,13 +222,18 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
     }
     
     public void ejecutarAlgoritmo() {
-    	/*algoritmo =new Backtracking(controlador.getTablero(),controlador);
-    	Thread hilo = new Thread(algoritmo);
-    	hilo.start();*/
-        
-        algoritmo2 = new AEstrella(controlador.getTablero(), controlador);
-        Thread hilo2 = new Thread(algoritmo2);
-        hilo2.start();
+        if(controlador.getTipoAlgoritmo() == 0)
+        {
+            algoritmo =new Backtracking(controlador.getTablero(),controlador);
+            Thread hilo = new Thread(algoritmo);
+            hilo.start();
+        }
+        else
+        {
+            algoritmo2 = new AEstrella(controlador.getTablero(), controlador);
+            Thread hilo2 = new Thread(algoritmo2);
+            hilo2.start();
+        }
     }
 
     public void mostarArbol(JTree arbol,String titulo) {
