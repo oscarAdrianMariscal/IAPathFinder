@@ -126,7 +126,10 @@ public class AEstrella implements Runnable{
                                 System.out.println("TAM:" + listaAbierta.size());
                                 
                                 //REGRESO EL NODO ACTUAL AL PADRE
-                                nodoActual = nodoActual.parent;
+                                if(!seEncontroLaMeta)
+                                {
+                                    nodoActual = nodoActual.parent;
+                                }
                             }
                         }
                     }
@@ -150,7 +153,10 @@ public class AEstrella implements Runnable{
                                 System.out.println("TAM:" + listaAbierta.size());
                                 
                                 //REGRESO EL NODO ACTUAL AL PADRE
-                                nodoActual = nodoActual.parent;
+                                if(!seEncontroLaMeta)
+                                {
+                                    nodoActual = nodoActual.parent;
+                                }
                             }
                         }
                     }
@@ -173,7 +179,10 @@ public class AEstrella implements Runnable{
                                 System.out.println("TAM:" + listaAbierta.size());
                                 
                                 //REGRESO EL NODO ACTUAL AL PADRE
-                                nodoActual = nodoActual.parent;
+                                if(!seEncontroLaMeta)
+                                {
+                                    nodoActual = nodoActual.parent;
+                                }
                             }
                         }
                     }
@@ -196,7 +205,10 @@ public class AEstrella implements Runnable{
                                  System.out.println("TAM:" + listaAbierta.size());
                                 
                                 //REGRESO EL NODO ACTUAL AL PADRE
-                                nodoActual = nodoActual.parent;
+                                if(!seEncontroLaMeta)
+                                {
+                                    nodoActual = nodoActual.parent;
+                                }
                             }
                         }
                     }
@@ -378,7 +390,7 @@ public class AEstrella implements Runnable{
 			int y = Integer.parseInt(numeros)-1;
 			mapa[y][x].getNoVisitas();
 
-			DefaultMutableTreeNode rama = new DefaultMutableTreeNode(n.data + n.visitas + n.abierto  + "F(N): " + n.getFN() + "H(N): " + n.getHN());
+			DefaultMutableTreeNode rama = new DefaultMutableTreeNode(n.data + n.visitas + n.abierto  + "F(N): " + n.getFN() + " G(N): " + n.getGN() + " H(N): " + n.getHN());
 			
 			visualNodo.add(rama);
 			agregarHijos(n, rama);
@@ -441,19 +453,24 @@ public class AEstrella implements Runnable{
 	}
 
 	public JTree dameSolucion() {
+                ArrayList<TreeNodeS<String>> LSolucion = new ArrayList<TreeNodeS<String>>();
 		TreeNodeS<String> nodo= invertirSolucion();
+                LSolucion.add(nodo);
 		DefaultMutableTreeNode rootVisual = new DefaultMutableTreeNode(nodo.data);
 		DefaultMutableTreeNode rama = rootVisual;
 		//
-		
-		
 		do {
 			nodo = nodo.parent;
 			DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(nodo.data); 
 			rama.add(hijo);
+                        LSolucion.add(nodo);
 			rama = hijo;
 
 		}while (!nodo.isRoot());
+                for(int i=0; i<LSolucion.size(); i++)
+                {
+                    System.out.println("NODO: " + LSolucion.get(i).data);
+                }
 		return new JTree(rootVisual);
 	}
 
@@ -469,6 +486,7 @@ public class AEstrella implements Runnable{
 		JTree prueba = new JTree(raiz);
 		System.out.println("Hey");
 		controlador.mostrarArbol(prueba, "El arbol de expansion");*/
+                controlador.mostrarArbol(dameJTree(), "El arbol de expansion");
 		controlador.mostrarArbol(dameSolucion() , "La soluci�n");
 		 
 	}
