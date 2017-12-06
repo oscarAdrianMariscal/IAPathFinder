@@ -26,6 +26,8 @@ public class TableroIU extends JPanel implements ComponentListener, ActionListen
    private JButton[][] mCasillas = new JButton[mNumeroDeFilas][mNumeroDeColumnas];
    private JButton[] Columnas= new JButton[mNumeroDeColumnas];
    private JButton[] Filas= new JButton[mNumeroDeColumnas];
+   int xActual;
+   int yActual;
     
    public void acomodar() {
         int ancho = this.getWidth();
@@ -198,6 +200,16 @@ JButton temp3 = new JButton(String.valueOf(a));
     	VentanaArbol ventana = new VentanaArbol(arbol,titulo);
         ventana.setVisible(true);
         controlador.getTablero().imprimirArbol();
+    }
+    
+    public void hacerMovimientoArbitrario (int x, int y ) {
+    	ImageIcon icono = new ImageIcon("");
+        mCasillas[yActual][xActual].setIcon(icono);
+        ImageIcon jugador = controlador.getArregloJugadores().get(0).getImagen();
+        mCasillas[y][x].setIcon(jugador);
+        xActual = x;
+        yActual = y;
+    	
     }
     
     public void moverAbajo(int renglon, int columna)

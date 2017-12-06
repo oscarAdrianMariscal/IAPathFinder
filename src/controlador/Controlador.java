@@ -168,6 +168,11 @@ public class Controlador {
 	{
 		vP.hacerMovimientoDerecha(renglon, columna);
 	}
+	
+	public void hacerMovimientoArbitrario(int renglon, int columna)
+	{
+		vP.hacerMovimientoArbitrario(renglon, columna);;
+	}
 
 	public void setvP(VentanaPrincipal vP) {
 		this.vP = vP;

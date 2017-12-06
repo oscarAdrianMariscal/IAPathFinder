@@ -14,6 +14,7 @@ import java.util.Collections;
 
 public class AEstrella implements Runnable{
 
+	public int SLEEP_TIME = 800;
 	class Coord
 	{
 		public int x; 
@@ -38,10 +39,10 @@ public class AEstrella implements Runnable{
 	Coord meta;
 	Controlador controlador;
 	static int visitaActual;
-        int tipoDistancia;
-        private ListaNodosOrdenadas listaAbierta;
-        ArrayList<TreeNodeS<String>> LSolucion = new ArrayList<TreeNodeS<String>>();
-       
+	int tipoDistancia;
+	private ListaNodosOrdenadas listaAbierta;
+	ArrayList<TreeNodeS<String>> LSolucion = new ArrayList<TreeNodeS<String>>();
+
 	//Deberia de crear una clase de utilerias en java, para no reescribir este c�digo.
 	public String convertXYaCoord(int x, int y) {
 		char letras =  (char)("A".codePointAt(0) + x);
@@ -55,7 +56,7 @@ public class AEstrella implements Runnable{
 	}
 
 	public AEstrella(Tablero t, Controlador c) {
-                tablero = t;
+		tablero = t;
 		visitaActual=1;
 		inicio = new Coord(tablero.getInicio().getCoordenadaI(),tablero.getInicio().getCoordenadaJ());
 		meta = new Coord( tablero.getFin().getCoordenadaI(),tablero.getFin().getCoordenadaJ());
@@ -66,194 +67,206 @@ public class AEstrella implements Runnable{
 		seEncontroLaMeta =false;
 		controlador = c;
 		ordenExpansion = controlador.getOrdenDeExpansion();
-                tipoDistancia = controlador.getTipoDistancia();
+		tipoDistancia = controlador.getTipoDistancia();
 	}
-        
-        public void encuentraCaminoMasCorto(Coord actual)
-        {
-            System.out.println(actual.toString());
-            listaAbierta = new ListaNodosOrdenadas();
-            
-            float GNP = 0 + nodoActual.getCosto();
-            nodoActual.setGN(GNP);
-            float HNP = obtenerHeuristica(actual, meta);
-            nodoActual.setHN(HNP);
-            float FNP = GNP + HNP;
-            nodoActual.setFN(FNP);
-            
-            System.out.println("PADRE");
-            System.out.println("GN: " + nodoActual.getGN());
-            System.out.println("HN: " + nodoActual.getHN());
-            System.out.println("FN: " + nodoActual.getFN());
-            
-            listaAbierta.add(nodoActual);
-            System.out.println("LISTA ORDENADA");
-            System.out.println("TAM:" + listaAbierta.size());
-            
-            while(!seEncontroLaMeta && listaAbierta.size() != 0) {
-                
-                TreeNodeS<String> nodo = listaAbierta.getFirst();
-                nodoActual = arbol.findTreeNode(nodo.data);
-                nodoActual.visitas.add(visitaActual);
-                visitaActual++;
-                listaAbierta.remove(nodo);
-                System.out.println("TAM - removi:" + listaAbierta.size());
-                System.out.println(actual.toString());
-                actual = coordAXy(nodoActual.data);
-                
-                Coord arriba,derecha,abajo,izquierda;
-                arriba = 	new Coord(actual.x,actual.y-1);
-                derecha = 	new Coord(actual.x+1,actual.y);
-                abajo = 	new Coord(actual.x,actual.y+1);
-                izquierda = new Coord(actual.x-1,actual.y);
-                
-                for (char direccion: ordenExpansion.toCharArray()) {
-                    if (direccion == 'U') {
-                        if (tablero.esValidoArriba(actual.x, actual.y)) {
-                            if (agregarHijo(arriba)) {
-                                //controlador.moverArriba(actual.y, actual.x);
-                                System.out.println("Lo expandi ARRIBA");
-                                float GN = nodoActual.parent.getGN() + nodoActual.getCosto();
-                                nodoActual.setGN(GN);
-                                float HN = obtenerHeuristica(arriba, meta);
-                                nodoActual.setHN(HN);
-                                float FN = GN + HN;
-                                nodoActual.setFN(FN);
-                                System.out.println(nodoActual.data);
-                                System.out.println("GN: " + nodoActual.getGN());
-                                System.out.println("HN: " + nodoActual.getHN());
-                                System.out.println("FN: " + nodoActual.getFN());
-                                listaAbierta.add(nodoActual);
-                                System.out.println("TAM:" + listaAbierta.size());
-                                
-                                //REGRESO EL NODO ACTUAL AL PADRE
-                                if(!seEncontroLaMeta)
-                                {
-                                    nodoActual = nodoActual.parent;
-                                }
-                            }
-                        }
-                    }
 
-                    if (direccion == 'R') {
-                        if (tablero.esValidoDerecha(actual.x, actual.y)) {
-                            if (agregarHijo(derecha)){
-                                //controlador.moverDerecha(actual.y, actual.x);
-                                System.out.println("Lo expandi DERECHA");
-                                float GN = nodoActual.parent.getGN() + nodoActual.getCosto();
-                                nodoActual.setGN(GN);
-                                float HN = obtenerHeuristica(arriba, meta);
-                                nodoActual.setHN(HN);
-                                float FN = GN + HN;
-                                nodoActual.setFN(FN);
-                                System.out.println(nodoActual.data);
-                                System.out.println("GN: " + nodoActual.getGN());
-                                System.out.println("HN: " + nodoActual.getHN());
-                                System.out.println("FN: " + nodoActual.getFN());
-                                listaAbierta.add(nodoActual);
-                                System.out.println("TAM:" + listaAbierta.size());
-                                
-                                //REGRESO EL NODO ACTUAL AL PADRE
-                                if(!seEncontroLaMeta)
-                                {
-                                    nodoActual = nodoActual.parent;
-                                }
-                            }
-                        }
-                    }
-                    if (direccion == 'D') {
-                        if (tablero.esValidoAbajo(actual.x, actual.y)) {
-                            if (agregarHijo(abajo)) {
-                                //controlador.moverAbajo(actual.y, actual.x);
-                                System.out.println("Lo expandi ABAJO");
-                                float GN = nodoActual.parent.getGN() + nodoActual.getCosto();
-                                nodoActual.setGN(GN);
-                                float HN = obtenerHeuristica(arriba, meta);
-                                nodoActual.setHN(HN);
-                                float FN = GN + HN;
-                                nodoActual.setFN(FN);
-                                System.out.println(nodoActual.data);
-                                System.out.println("GN: " + nodoActual.getGN());
-                                System.out.println("HN: " + nodoActual.getHN());
-                                System.out.println("FN: " + nodoActual.getFN());
-                                listaAbierta.add(nodoActual);
-                                System.out.println("TAM:" + listaAbierta.size());
-                                
-                                //REGRESO EL NODO ACTUAL AL PADRE
-                                if(!seEncontroLaMeta)
-                                {
-                                    nodoActual = nodoActual.parent;
-                                }
-                            }
-                        }
-                    }
-                    if (direccion == 'L') {
-                        if (tablero.esValidoIzquierda(actual.x, actual.y)) {
-                            if (agregarHijo(izquierda)) {
-                                //controlador.moverIzquierda(actual.y, actual.x);
-                                System.out.println("Lo expandi IZQUIERDA");
-                                float GN = nodoActual.parent.getGN() + nodoActual.getCosto();
-                                nodoActual.setGN(GN);
-                                float HN = obtenerHeuristica(arriba, meta);
-                                nodoActual.setHN(HN);
-                                float FN = GN + HN;
-                                nodoActual.setFN(FN);
-                                System.out.println(nodoActual.data);
-                                System.out.println("GN: " + nodoActual.getGN());
-                                System.out.println("HN: " + nodoActual.getHN());
-                                System.out.println("FN: " + nodoActual.getFN());
-                                listaAbierta.add(nodoActual);
-                                 System.out.println("TAM:" + listaAbierta.size());
-                                
-                                //REGRESO EL NODO ACTUAL AL PADRE
-                                if(!seEncontroLaMeta)
-                                {
-                                    nodoActual = nodoActual.parent;
-                                }
-                            }
-                        }
-                    }
-                }
-                nodoActual.abierto = false;
-            }    
-        }
-        
-        private class ListaNodosOrdenadas {
-                  //Lista de nodos.
-                private ArrayList<TreeNodeS<String>> list = new ArrayList<TreeNodeS<String>>();
-                
-                public TreeNodeS getFirst() {
-                        return list.get(0);
-                }
+	public void encuentraCaminoMasCorto(Coord actual)
+	{
+		
+		controlador.hacerMovimientoArbitrario(actual.x, actual.y);
+		try {
+			Thread.sleep(SLEEP_TIME);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		System.out.println(actual.toString());
+		listaAbierta = new ListaNodosOrdenadas();
 
-                public void clear() {
-                        list.clear();
-                }
+		float GNP = 0 + nodoActual.getCosto();
+		nodoActual.setGN(GNP);
+		float HNP = obtenerHeuristica(actual, meta);
+		nodoActual.setHN(HNP);
+		float FNP = GNP + HNP;
+		nodoActual.setFN(FNP);
 
-                public void add(TreeNodeS<String> node) {
-                        list.add(node);
-                        Collections.sort(list);
-                }
+		System.out.println("PADRE");
+		System.out.println("GN: " + nodoActual.getGN());
+		System.out.println("HN: " + nodoActual.getHN());
+		System.out.println("FN: " + nodoActual.getFN());
 
-                public void remove(TreeNodeS n) {
-                        list.remove(n);
-                }
+		listaAbierta.add(nodoActual);
+		System.out.println("LISTA ORDENADA");
+		System.out.println("TAM:" + listaAbierta.size());
 
-                public int size() {
-                        return list.size();
-                }
-                // devuelve si esta ese nodo en la lista.
-                public boolean contains(TreeNodeS<String> n) {
-                        return list.contains(n);
-                }
-                
-                @Override
-                public String toString()
-                {
-                    return list.toString();
-                }
-        }
-   
+		while(!seEncontroLaMeta && listaAbierta.size() != 0) {
+
+			TreeNodeS<String> nodo = listaAbierta.getFirst();
+			nodoActual = arbol.findTreeNode(nodo.data);
+			nodoActual.visitas.add(visitaActual);
+			visitaActual++;
+			listaAbierta.remove(nodo);
+			System.out.println("TAM - removi:" + listaAbierta.size());
+			System.out.println(actual.toString());
+			actual = coordAXy(nodoActual.data);
+
+			Coord arriba,derecha,abajo,izquierda;
+			arriba = 	new Coord(actual.x,actual.y-1);
+			derecha = 	new Coord(actual.x+1,actual.y);
+			abajo = 	new Coord(actual.x,actual.y+1);
+			izquierda = new Coord(actual.x-1,actual.y);
+			controlador.hacerMovimientoArbitrario(actual.x, actual.y);
+			try {
+				Thread.sleep(SLEEP_TIME);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			for (char direccion: ordenExpansion.toCharArray()) {
+				if (direccion == 'U') {
+					if (tablero.esValidoArriba(actual.x, actual.y)) {
+						if (agregarHijo(arriba)) {
+							//controlador.moverArriba(actual.y, actual.x);
+							System.out.println("Lo expandi ARRIBA");
+							float GN = nodoActual.parent.getGN() + nodoActual.getCosto();
+							nodoActual.setGN(GN);
+							float HN = obtenerHeuristica(arriba, meta);
+							nodoActual.setHN(HN);
+							float FN = GN + HN;
+							nodoActual.setFN(FN);
+							System.out.println(nodoActual.data);
+							System.out.println("GN: " + nodoActual.getGN());
+							System.out.println("HN: " + nodoActual.getHN());
+							System.out.println("FN: " + nodoActual.getFN());
+							listaAbierta.add(nodoActual);
+							System.out.println("TAM:" + listaAbierta.size());
+
+							//REGRESO EL NODO ACTUAL AL PADRE
+							if(!seEncontroLaMeta)
+							{
+								nodoActual = nodoActual.parent;
+							}
+						}
+					}
+				}
+
+				if (direccion == 'R') {
+					if (tablero.esValidoDerecha(actual.x, actual.y)) {
+						if (agregarHijo(derecha)){
+							//controlador.moverDerecha(actual.y, actual.x);
+							System.out.println("Lo expandi DERECHA");
+							float GN = nodoActual.parent.getGN() + nodoActual.getCosto();
+							nodoActual.setGN(GN);
+							float HN = obtenerHeuristica(arriba, meta);
+							nodoActual.setHN(HN);
+							float FN = GN + HN;
+							nodoActual.setFN(FN);
+							System.out.println(nodoActual.data);
+							System.out.println("GN: " + nodoActual.getGN());
+							System.out.println("HN: " + nodoActual.getHN());
+							System.out.println("FN: " + nodoActual.getFN());
+							listaAbierta.add(nodoActual);
+							System.out.println("TAM:" + listaAbierta.size());
+
+							//REGRESO EL NODO ACTUAL AL PADRE
+							if(!seEncontroLaMeta)
+							{
+								nodoActual = nodoActual.parent;
+							}
+						}
+					}
+				}
+				if (direccion == 'D') {
+					if (tablero.esValidoAbajo(actual.x, actual.y)) {
+						if (agregarHijo(abajo)) {
+							//controlador.moverAbajo(actual.y, actual.x);
+							System.out.println("Lo expandi ABAJO");
+							float GN = nodoActual.parent.getGN() + nodoActual.getCosto();
+							nodoActual.setGN(GN);
+							float HN = obtenerHeuristica(arriba, meta);
+							nodoActual.setHN(HN);
+							float FN = GN + HN;
+							nodoActual.setFN(FN);
+							System.out.println(nodoActual.data);
+							System.out.println("GN: " + nodoActual.getGN());
+							System.out.println("HN: " + nodoActual.getHN());
+							System.out.println("FN: " + nodoActual.getFN());
+							listaAbierta.add(nodoActual);
+							System.out.println("TAM:" + listaAbierta.size());
+
+							//REGRESO EL NODO ACTUAL AL PADRE
+							if(!seEncontroLaMeta)
+							{
+								nodoActual = nodoActual.parent;
+							}
+						}
+					}
+				}
+				if (direccion == 'L') {
+					if (tablero.esValidoIzquierda(actual.x, actual.y)) {
+						if (agregarHijo(izquierda)) {
+							//controlador.moverIzquierda(actual.y, actual.x);
+							System.out.println("Lo expandi IZQUIERDA");
+							float GN = nodoActual.parent.getGN() + nodoActual.getCosto();
+							nodoActual.setGN(GN);
+							float HN = obtenerHeuristica(arriba, meta);
+							nodoActual.setHN(HN);
+							float FN = GN + HN;
+							nodoActual.setFN(FN);
+							System.out.println(nodoActual.data);
+							System.out.println("GN: " + nodoActual.getGN());
+							System.out.println("HN: " + nodoActual.getHN());
+							System.out.println("FN: " + nodoActual.getFN());
+							listaAbierta.add(nodoActual);
+							System.out.println("TAM:" + listaAbierta.size());
+
+							//REGRESO EL NODO ACTUAL AL PADRE
+							if(!seEncontroLaMeta)
+							{
+								nodoActual = nodoActual.parent;
+							}
+						}
+					}
+				}
+			}
+			nodoActual.abierto = false;
+		}    
+	}
+
+	private class ListaNodosOrdenadas {
+		//Lista de nodos.
+		private ArrayList<TreeNodeS<String>> list = new ArrayList<TreeNodeS<String>>();
+
+		public TreeNodeS getFirst() {
+			return list.get(0);
+		}
+
+		public void clear() {
+			list.clear();
+		}
+
+		public void add(TreeNodeS<String> node) {
+			list.add(node);
+			Collections.sort(list);
+		}
+
+		public void remove(TreeNodeS n) {
+			list.remove(n);
+		}
+
+		public int size() {
+			return list.size();
+		}
+		// devuelve si esta ese nodo en la lista.
+		public boolean contains(TreeNodeS<String> n) {
+			return list.contains(n);
+		}
+
+		@Override
+		public String toString()
+		{
+			return list.toString();
+		}
+	}
+
 	//Para debug
 	public void checkarValidaciones(Coord actual) {
 		Coord arriba,derecha,abajo,izquierda;
@@ -269,42 +282,42 @@ public class AEstrella implements Runnable{
 		System.out.println("---------------------");
 
 	}
-        
-        public float obtenerHeuristica(Coord uno, Coord dos)
-        {
-            //DISTANCIA EUCLIDEANA
-            if(tipoDistancia == 0)
-            {
-                return distanciaEuclideana(uno, dos);
-            }
-            else {  //DISTANCIA MANHATTAN
-                return distanciaManhattan(uno, dos);
-            }
-        }
-        
-        public float distanciaEuclideana(Coord uno, Coord dos)
-        {
-            float distancia = (float) Math.sqrt(Math.pow((dos.x - uno.x),2)+
-                                Math.pow((dos.y - uno.y),2));
-            
-            NumberFormat numberFormat = NumberFormat.getInstance();
-            numberFormat.setMaximumFractionDigits(2);
-            numberFormat.setRoundingMode( RoundingMode.DOWN);
-            float distanciaF = Float.parseFloat(numberFormat.format(distancia));
-            return distanciaF;                  
-        }
-        
-        public float distanciaManhattan(Coord uno, Coord dos)
-        {
-            float distancia = (float) (Math.abs((uno.x - dos.x)) + 
-                              Math.abs((uno.y - dos.y)));
-            
-            NumberFormat numberFormat = NumberFormat.getInstance();
-            numberFormat.setMaximumFractionDigits(2);
-            numberFormat.setRoundingMode( RoundingMode.DOWN);
-            float distanciaF = Float.parseFloat(numberFormat.format(distancia));
-            return distanciaF;
-        }
+
+	public float obtenerHeuristica(Coord uno, Coord dos)
+	{
+		//DISTANCIA EUCLIDEANA
+		if(tipoDistancia == 0)
+		{
+			return distanciaEuclideana(uno, dos);
+		}
+		else {  //DISTANCIA MANHATTAN
+			return distanciaManhattan(uno, dos);
+		}
+	}
+
+	public float distanciaEuclideana(Coord uno, Coord dos)
+	{
+		float distancia = (float) Math.sqrt(Math.pow((dos.x - uno.x),2)+
+				Math.pow((dos.y - uno.y),2));
+
+		NumberFormat numberFormat = NumberFormat.getInstance();
+		numberFormat.setMaximumFractionDigits(2);
+		numberFormat.setRoundingMode( RoundingMode.DOWN);
+		float distanciaF = Float.parseFloat(numberFormat.format(distancia));
+		return distanciaF;                  
+	}
+
+	public float distanciaManhattan(Coord uno, Coord dos)
+	{
+		float distancia = (float) (Math.abs((uno.x - dos.x)) + 
+				Math.abs((uno.y - dos.y)));
+
+		NumberFormat numberFormat = NumberFormat.getInstance();
+		numberFormat.setMaximumFractionDigits(2);
+		numberFormat.setRoundingMode( RoundingMode.DOWN);
+		float distanciaF = Float.parseFloat(numberFormat.format(distancia));
+		return distanciaF;
+	}
 
 	public boolean agregarHijo(Coord posicion) {
 		if (nodoActual.parent != null && nodoActual.data.equals(posicion.toString())) {
@@ -313,16 +326,17 @@ public class AEstrella implements Runnable{
 		TreeNodeS<String> nodo = arbol.findTreeNode(posicion.toString());
 		if (nodo == null) {
 			nodoActual = nodoActual.addChild(posicion.toString());
+			controlador.hacerMovimientoArbitrario(posicion.x, posicion.y);
 			//Aquí solo obtiene la casilla. 
-			
-            nodoActual.setCosto(controlador.getTablero().getMapa()[posicion.y][posicion.x].getTerreno().getCosto());
+
+			nodoActual.setCosto(controlador.getTablero().getMapa()[posicion.y][posicion.x].getTerreno().getCosto());
 			//nodoActual.visitas.add(visitaActual);
 			//visitaActual++;
 			if (nodoActual.data.equals(meta.toString())) {
 				seEncontroLaMeta = true;
-                                nodoActual.visitas.add(visitaActual);
-                                visitaActual++;
-                                System.out.println("FELICIDADES");
+				nodoActual.visitas.add(visitaActual);
+				visitaActual++;
+				System.out.println("FELICIDADES");
 			}
 			return true;
 
@@ -353,8 +367,8 @@ public class AEstrella implements Runnable{
 		}
 
 	}
-        
-        public void moverVisual(Coord actual) {
+
+	public void moverVisual(Coord actual) {
 		Coord arriba,derecha,abajo,izquierda;
 		arriba = 	new Coord(actual.x,actual.y-1);
 		derecha = 	new Coord(actual.x+1,actual.y);
@@ -392,7 +406,7 @@ public class AEstrella implements Runnable{
 			mapa[y][x].getNoVisitas();
 
 			DefaultMutableTreeNode rama = new DefaultMutableTreeNode(n.data + n.visitas + n.abierto  + "F(N): " + n.getFN() + " G(N): " + n.getGN() + " H(N): " + n.getHN());
-			
+
 			visualNodo.add(rama);
 			agregarHijos(n, rama);
 		}
@@ -416,7 +430,7 @@ public class AEstrella implements Runnable{
 		DefaultMutableTreeNode modeloDeArbolCompleto = agregarHijos(arbol, rootVisual);
 		return new JTree(modeloDeArbolCompleto);
 	}
-	
+
 	public int numeroDeHijos(Coord actual) {
 		Coord arriba,derecha,abajo,izquierda;
 		int numeroHijos=0;
@@ -424,7 +438,7 @@ public class AEstrella implements Runnable{
 		derecha = 	new Coord(actual.x+1,actual.y);
 		abajo = 	new Coord(actual.x,actual.y+1);
 		izquierda = new Coord(actual.x-1,actual.y);
-		
+
 		if (tablero.esValidoArriba(actual.x, actual.y) && arbol.findTreeNode(arriba.toString())==null) {
 			numeroHijos++;
 		}
@@ -438,13 +452,13 @@ public class AEstrella implements Runnable{
 			numeroHijos++;
 		}
 		return numeroHijos;
-		
+
 	}
-	
+
 	public TreeNodeS<String> invertirSolucion(){
 		TreeNodeS<String> nodo= nodoActual;
 		TreeNodeS<String> arbolInvertido;
-		
+
 		arbolInvertido = new TreeNodeS<String>(nodo.data);
 		while (!nodo.isRoot()) {
 			nodo = nodo.parent;
@@ -454,9 +468,9 @@ public class AEstrella implements Runnable{
 	}
 
 	public JTree dameSolucion() {
-                //ArrayList<TreeNodeS<String>> LSolucion = new ArrayList<TreeNodeS<String>>();
+		//ArrayList<TreeNodeS<String>> LSolucion = new ArrayList<TreeNodeS<String>>();
 		TreeNodeS<String> nodo= invertirSolucion();
-                LSolucion.add(nodo);
+		LSolucion.add(nodo);
 		DefaultMutableTreeNode rootVisual = new DefaultMutableTreeNode(nodo.data);
 		DefaultMutableTreeNode rama = rootVisual;
 		//
@@ -464,38 +478,38 @@ public class AEstrella implements Runnable{
 			nodo = nodo.parent;
 			DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(nodo.data); 
 			rama.add(hijo);
-                        LSolucion.add(nodo);
+			LSolucion.add(nodo);
 			rama = hijo;
 
 		}while (!nodo.isRoot());
-                
+
 		return new JTree(rootVisual);
 	}
-        
-        public void mueveMono()
-        {
-            for(int i=1; i<LSolucion.size(); i++)
-                {
-                    System.out.println("NODO: " + LSolucion.get(i).data);
-                    try {
+	/*
+
+	public void mueveMono()
+	{
+		for(int i=1; i<LSolucion.size(); i++)
+		{
+			System.out.println("NODO: " + LSolucion.get(i).data);
+			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-                    moverVisual(coordAXy(LSolucion.get(i).data));
-                }
-        }
+			moverVisual(coordAXy(LSolucion.get(i).data));
+		}
+	}*/
 
 
 	@Override
 	public void run() {
 		encuentraCaminoMasCorto(inicio);
-
-                controlador.mostrarArbol(dameJTree(), "El arbol de expansion");
+		controlador.mostrarArbol(dameJTree(), "El arbol de expansion");
 		controlador.mostrarArbol(dameSolucion() , "La solucion");
-                mueveMono();
-		 
+		//mueveMono();
+		//columna
 	}
 
 	public void setControlador(Controlador controlador) {

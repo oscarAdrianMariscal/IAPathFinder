@@ -206,6 +206,10 @@ public class VentanaPrincipal extends JFrame implements KeyListener {
         }
     }
     
+    public void hacerMovimientoArbitrario(int x, int y) {
+    	tableroIU.hacerMovimientoArbitrario(x, y);
+    }
+    
     public void hacerMovimientoDerecha(int renglon, int columna)
     {
         if(columna != controlador.getTablero().getNoColumnas()-1)
