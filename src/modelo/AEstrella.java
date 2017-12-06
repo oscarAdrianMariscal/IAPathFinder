@@ -40,6 +40,7 @@ public class AEstrella implements Runnable{
 	static int visitaActual;
         int tipoDistancia;
         private ListaNodosOrdenadas listaAbierta;
+        ArrayList<TreeNodeS<String>> LSolucion = new ArrayList<TreeNodeS<String>>();
        
 	//Deberia de crear una clase de utilerias en java, para no reescribir este c�digo.
 	public String convertXYaCoord(int x, int y) {
@@ -453,7 +454,7 @@ public class AEstrella implements Runnable{
 	}
 
 	public JTree dameSolucion() {
-                ArrayList<TreeNodeS<String>> LSolucion = new ArrayList<TreeNodeS<String>>();
+                //ArrayList<TreeNodeS<String>> LSolucion = new ArrayList<TreeNodeS<String>>();
 		TreeNodeS<String> nodo= invertirSolucion();
                 LSolucion.add(nodo);
 		DefaultMutableTreeNode rootVisual = new DefaultMutableTreeNode(nodo.data);
@@ -467,27 +468,33 @@ public class AEstrella implements Runnable{
 			rama = hijo;
 
 		}while (!nodo.isRoot());
-                for(int i=0; i<LSolucion.size(); i++)
-                {
-                    System.out.println("NODO: " + LSolucion.get(i).data);
-                }
+                
 		return new JTree(rootVisual);
 	}
+        
+        public void mueveMono()
+        {
+            for(int i=1; i<LSolucion.size(); i++)
+                {
+                    System.out.println("NODO: " + LSolucion.get(i).data);
+                    try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+                    moverVisual(coordAXy(LSolucion.get(i).data));
+                }
+        }
 
 
 	@Override
 	public void run() {
 		encuentraCaminoMasCorto(inicio);
-		/*JTree arbol = dameJTree();
-		DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Raiz");
-		DefaultMutableTreeNode hoja = new DefaultMutableTreeNode("hoja");
-		
-		raiz.add(hoja);
-		JTree prueba = new JTree(raiz);
-		System.out.println("Hey");
-		controlador.mostrarArbol(prueba, "El arbol de expansion");*/
+
                 controlador.mostrarArbol(dameJTree(), "El arbol de expansion");
-		controlador.mostrarArbol(dameSolucion() , "La soluci�n");
+		controlador.mostrarArbol(dameSolucion() , "La solucion");
+                mueveMono();
 		 
 	}
 
