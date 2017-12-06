@@ -300,7 +300,9 @@ public class AEstrella implements Runnable{
 		TreeNodeS<String> nodo = arbol.findTreeNode(posicion.toString());
 		if (nodo == null) {
 			nodoActual = nodoActual.addChild(posicion.toString());
-                        nodoActual.setCosto(tablero.getCoordenadaEspecial(posicion.x, posicion.y).getTerreno().getCosto());
+			//Aquí solo obtiene la casilla. 
+			
+            nodoActual.setCosto(controlador.getTablero().getMapa()[posicion.y][posicion.x].getTerreno().getCosto());
 			//nodoActual.visitas.add(visitaActual);
 			//visitaActual++;
 			if (nodoActual.data.equals(meta.toString())) {
